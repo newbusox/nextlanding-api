@@ -46,7 +46,7 @@ app_logger = {
 LOGGING['loggers'] = {
   '': {
     'handlers': ['console_handler'],
-    'level': 'WARNING',
+    'level': 'INFO',
     'propagate': True
   },
   'django.request': {
@@ -90,6 +90,6 @@ ALLOWED_HOSTS = ['.herokuapp.com']
 
 ########## CORS CONFIGURATION
 CORS_ORIGIN_REGEX_WHITELIST = (
-  '^http(s)?://ui.nextlanding\.com/?',
+  '^http(s)?://qa.nextlanding\.com/?',
 )
 ########## END CORS CONFIGURATION

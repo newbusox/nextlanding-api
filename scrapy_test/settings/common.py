@@ -65,7 +65,7 @@ DATABASES = {
 
 ########## GENERAL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
-TIME_ZONE = 'America/New_York'
+TIME_ZONE = 'UTC'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en-us'
@@ -247,31 +247,14 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 ########## LOGGING CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-    'require_debug_false': {
-        '()': 'django.utils.log.RequireDebugFalse'
-        }
+  'version': 1,
+  'disable_existing_loggers': True,
+  'formatters': {
+    'standard': {
+      'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
     },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler'
-        }
     },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins', 'console'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
+  'handlers': {}
 }
 ########## END LOGGING CONFIGURATION
 

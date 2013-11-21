@@ -45,6 +45,69 @@ CACHES = {
 }
 ########## END CACHE CONFIGURATION
 
+########## LOGGING CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
+#celery hijacks its logging to prevent other libs from screwing it up. In dev only, it'd be nice to write to a log file.
+#http://docs.celeryproject.org/en/latest/configuration.html#logging
+#why: http://stackoverflow.com/a/6942030/173957
+CELERYD_HIJACK_ROOT_LOGGER = False
+
+LOGGING['handlers']['console_handler'] = {
+  'level': 'DEBUG',
+  'class': 'logging.StreamHandler',
+  'formatter': 'standard'
+}
+
+LOGGING['handlers']['file_handler'] = {
+  'level': 'DEBUG',
+  'class': 'logging.handlers.RotatingFileHandler',
+  'filename': 'logs/app.log',
+  'maxBytes': 1024 * 1024 * 5, # 5 MB
+  'backupCount': 5,
+  'formatter': 'standard',
+  }
+
+LOGGING['handlers']['request_handler'] = {
+  'level': 'DEBUG',
+  'class': 'logging.handlers.RotatingFileHandler',
+  'filename': 'logs/django_request.log',
+  'maxBytes': 1024 * 1024 * 5, # 5 MB
+  'backupCount': 5,
+  'formatter': 'standard',
+  }
+
+LOGGING['handlers']['exception_handler'] = {
+  'level': 'ERROR',
+  'class': 'logging.handlers.RotatingFileHandler',
+  'filename': 'logs/error.log',
+  'maxBytes': 1024 * 1024 * 5, # 5 MB
+  'backupCount': 5,
+  'formatter': 'standard',
+  }
+
+app_logger = {
+  'handlers': ['console_handler', 'file_handler', 'exception_handler'],
+  'level': 'DEBUG',
+  'propagate': False
+}
+
+LOGGING['loggers'] = {
+  '': {
+    'handlers': ['console_handler', 'file_handler'],
+    'level': 'DEBUG',
+    'propagate': True
+  },
+  'django.request': {
+    'handlers': ['request_handler', 'exception_handler'],
+    'level': 'DEBUG',
+    'propagate': False
+  },
+  'aggregates': app_logger,
+  'apps': app_logger,
+  'libs': app_logger,
+  'celery.task': app_logger
+}
+########## END LOGGING CONFIGURATION
 
 ########## CELERY CONFIGURATION
 # See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
