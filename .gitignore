@@ -41,3 +41,4 @@ default.db
 .idea/misc.xml
 *.iml
 .scrapy
+logs
