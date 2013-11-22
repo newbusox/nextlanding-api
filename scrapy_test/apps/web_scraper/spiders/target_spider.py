@@ -15,7 +15,7 @@ class DmozSpider(BaseSpider):
   ]
 
   items = []
-  pages = 3
+  pages = 198
   current_page = 1
 
   def parse(self, response):
@@ -26,7 +26,8 @@ class DmozSpider(BaseSpider):
       item = DmozItem()
       text__extract = site.select('td[2]/span[1]/text()').extract()
       item['company'] = text__extract[0] if text__extract else None
-      item['email'] = site.select('td[2]/span[3]/a[1]/text()').extract()[0]
+      a_text__extract = site.select('td[2]/span[3]/a[1]/text()').extract()
+      item['email'] = a_text__extract[0] if a_text__extract else None
       self.items.append(item)
 
     self.current_page += 1
