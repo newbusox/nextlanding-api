@@ -532,7 +532,7 @@
     "model": "dynamic_scraper.scraperelem",
     "fields": {
       "proc_ctxt": "'func':'scrapy_test.apps.web_scraper.scrapy.processors.pre_url_from_ref_object'",
-      "x_path": "//div[@class='body']/*[contains(text(),'Listed at')]/a[last()]/@href",
+      "x_path": "//*[contains(text(),'Listed at')]/a[last()]/@href",
       "processors": "dynamic",
       "scraped_obj_attr": 18,
       "scraper": 3,
