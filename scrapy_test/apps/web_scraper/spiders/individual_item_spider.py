@@ -3,6 +3,10 @@ from scrapy.item import BaseItem
 
 
 class IndividualItemSpider(DjangoSpider):
+  """
+  This is a base class that can be used to represent a single web page instance for any given django spider.
+  For example, if you want to run a listing spider for one detail page, you can use this class
+  """
   def parse(self, response):
     url_elem = self.scraper.get_detail_page_url_elem()
 
