@@ -7,6 +7,8 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (("listing_source", "0001_initial"),)
+
     def forwards(self, orm):
         # Adding model 'Listing'
         db.create_table(u'listing_listing', (
