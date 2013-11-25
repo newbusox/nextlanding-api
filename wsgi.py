@@ -14,6 +14,7 @@ framework.
 
 """
 import os
+from django.conf import settings
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "scrapy_test.settings.dev")
 
@@ -21,7 +22,12 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "scrapy_test.settings.dev")
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
 from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+
+if settings.DEBUG:
+  application = get_wsgi_application()
+else:
+  from dj_static import Cling
+  application = Cling(get_wsgi_application())
 
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
