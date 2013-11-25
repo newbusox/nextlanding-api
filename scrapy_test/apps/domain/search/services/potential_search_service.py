@@ -2,7 +2,6 @@ import json
 from django.conf import settings
 from django.db import transaction
 from django.forms import model_to_dict
-from scrapy_test.aggregates.search.models import Search
 from scrapy_test.apps.domain.search.models import PotentialSearch
 from scrapy_test.apps.domain.search.signals import potential_search_completed
 from scrapy_test.libs.payment_utils.services import payment_service
@@ -22,6 +21,12 @@ def get_potential_search(pk):
 
 
 def get_search_attrs(search_attrs_dict):
+  # for some reason, this was generating an Import Error in heroku only
+  # ImportError: cannot import name potential_search_service
+  # moving this import here solved it
+  from scrapy_test.aggregates.search.models import Search
+
+
   amenities = search_attrs_dict.pop('amenities', None)
   search = Search(**search_attrs_dict)
 
