@@ -1,3 +1,5 @@
 web: python manage.py collectstatic --noinput; newrelic-admin run-program gunicorn -c gunicorn.py.ini wsgi:application
-scheduler: python manage.py celery worker -B -E --maxtasksperchild=1000
-worker: python manage.py celery worker -E --maxtasksperchild=1000
+# scheduler: python manage.py celery worker -B -E --maxtasksperchild=1000 -- This can be used once we have a bigger
+# need for more workers and concurrent schedulers. Remove the '-B' from worker when this is ready as we can only ever
+# have one scheduler or we'll have concurrency issues.
+worker: python manage.py celery worker -B -E --maxtasksperchild=1000
