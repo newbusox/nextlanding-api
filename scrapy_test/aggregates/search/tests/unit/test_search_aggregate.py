@@ -13,7 +13,7 @@ def test_search_throws_appropriate_error_for_invalid_max_settings(min_value, max
   search_attrs = {
     'description': 'My Search',
     'specified_location': 'My Location',
-    'geo_boundary_points': [{}, {}, {}],
+    'geo_boundary_points': {'0':[1,2,3]},
     search_attr + "_min": min_value,
     search_attr + "_max": max_value,
 
