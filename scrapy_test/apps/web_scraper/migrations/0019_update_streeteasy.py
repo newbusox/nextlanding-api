@@ -7,17 +7,17 @@ from django.db import models
 class Migration(DataMigration):
 
     def forwards(self, orm):
-      orm['dynamic_scraper.scraperelem'].objects.get(22).update(x_path="//div/*[contains(@*,'details')]//h1/text()")
-      orm['dynamic_scraper.scraperelem'].objects.get(38).update(x_path="//*[@*='content']//h1/text()")
-      orm['dynamic_scraper.scraperelem'].objects.get(24).update(x_path="//div[@class='description']")
-      orm['dynamic_scraper.scraperelem'].objects.get(31).update(
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=22).update(x_path="//div/*[contains(@*,'details')]//h1/text()")
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=38).update(x_path="//*[@*='content']//h1/text()")
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=24).update(x_path="//div[@class='description']")
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=31).update(
         x_path="//section[@class='description split_in_thirds']/table[@class='clean_table legible']"
       )
-      orm['dynamic_scraper.scraperelem'].objects.get(32).update(x_path="//section[@class='details with_images']/div["
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=32).update(x_path="//section[@class='details with_images']/div["
                                                                       "@class='right_half']/div[@class='left_half']/text()")
-      orm['dynamic_scraper.scraperelem'].objects.get(33).update(x_path="//section[@class='details with_images']/div["
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=33).update(x_path="//section[@class='details with_images']/div["
                                                                       "@class='right_half']/div[@class='left_half']/text()")
-      orm['dynamic_scraper.scraperelem'].objects.get(34).update(x_path="//section[@class='details with_images']/div["
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=34).update(x_path="//section[@class='details with_images']/div["
                                                                       "@class='right_half']/div[@class='left_half']/text()")
 
 
