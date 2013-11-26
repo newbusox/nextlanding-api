@@ -74,6 +74,9 @@ class ListingBuilder(object):
     attr = attr.strip(strip_chars)
     return attr
 
+  def _get_unique_stripped_value(self, attr, strip_chars=_newline_strip):
+    return set(x.strip(strip_chars) for x in attr)
+
   #region listing source
   def _build_listing_source(self):
     listing_source_id = self.listing_attrs_input.get(LISTING_SOURCE_ID)
@@ -145,7 +148,7 @@ class ListingBuilder(object):
     addresses = self.listing_attrs_input.get(ADDRESS, None)
 
     if addresses:
-      addresses = set(addresses)
+      addresses = self._get_unique_stripped_value(addresses)
 
       for address in addresses:
         if self._is_valid_address(address):
