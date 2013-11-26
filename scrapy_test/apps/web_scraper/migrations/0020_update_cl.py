@@ -7,25 +7,23 @@ from django.db import models
 class Migration(DataMigration):
 
     def forwards(self, orm):
-      orm['dynamic_scraper.scraperelem'].objects.filter(pk=22).update(x_path="//div/*[contains(@*,'details')]//h1/text()")
-      orm['dynamic_scraper.scraperelem'].objects.filter(pk=38).update(x_path="//*[@*='content']//h1/text()")
-      orm['dynamic_scraper.scraperelem'].objects.filter(pk=24).update(x_path="//div[@class='description']//text()")
-      orm['dynamic_scraper.scraperelem'].objects.filter(pk=31).update(
-        x_path="//section[@class='description split_in_thirds']/table[@class='clean_table legible']"
-      )
-      orm['dynamic_scraper.scraperelem'].objects.filter(pk=32).update(x_path="//section[@class='details with_images']/div["
-                                                                      "@class='right_half']/div[@class='left_half']/text()")
-      orm['dynamic_scraper.scraperelem'].objects.filter(pk=33).update(x_path="//section[@class='details with_images']/div["
-                                                                      "@class='right_half']/div[@class='left_half']/text()")
-      orm['dynamic_scraper.scraperelem'].objects.filter(pk=34).update(x_path="//section[@class='details with_images']/div["
-                                                                      "@class='right_half']/div[@class='left_half']/text()")
-      orm['dynamic_scraper.scraperelem'].objects.filter(pk=39).update(
-        proc_ctxt="'func':'scrapy_test.apps.web_scraper.scrapy.processors.composite_func','funcs':('scrapy_test.apps"
-                  ".web_scraper.scrapy.processors.replace','scrapy_test.apps.web_scraper.scrapy.processors"
-                  ".split_reverse','scrapy_test.apps.web_scraper.scrapy.processors.pre_string','scrapy_test.apps.web_scraper.scrapy.processors.post_string'),'replace':{'linkToEmail(':'',\"'\":'',')':'','-':',','SE.':''},'pre_string':'fromCharCode(','post_string':')','split_reverse':','"
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=6).update(
+        x_path="//*[@*='mapaddress']/text()[1]"
       )
 
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=9).update(
+        x_path="//*[@id='map']/@data-latitude"
+      )
 
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=10).update(
+        x_path="//*[@id='map']/@data-longitude"
+      )
+
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=18).update(
+        x_path="//*[@*='postinginfo'][contains(.,'Posted')]/time/@datetime"
+      )
+
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=14).delete()
 
     def backwards(self, orm):
         "Write your backwards methods here."
