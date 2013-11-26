@@ -8,7 +8,7 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
       orm['dynamic_scraper.scraperelem'].objects.filter(pk=6).update(
-        x_path="//*[@*='mapaddress']/text()[1]"
+        x_path="//*[@*='mapaddress']/text()"
       )
 
       orm['dynamic_scraper.scraperelem'].objects.filter(pk=9).update(
