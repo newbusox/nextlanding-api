@@ -23,7 +23,15 @@ class Migration(DataMigration):
         x_path="//*[@*='postinginfo'][contains(.,'Posted')]/time/@datetime"
       )
 
+      orm['dynamic_scraper.scraperelem'].objects.filter(pk=1).update(
+        x_path="//*[@class='row']/span[@class='pl']"
+      )
+
       orm['dynamic_scraper.scraperelem'].objects.filter(pk=14).delete()
+
+      orm['dynamic_scraper.scraper'].objects.filter(pk=1).update(
+        pagination_page_replace="//a[@class='button next']/@href"
+      )
 
     def backwards(self, orm):
         "Write your backwards methods here."
