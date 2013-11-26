@@ -17,6 +17,7 @@ class ProxyMiddleware(object):
       )
       self.proxy_host = proxy_host
     else:
+      #this will not kill the process, scrapy will just bypass this middleware
       raise NotConfigured
 
   def process_request(self, request, spider):
