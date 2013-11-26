@@ -7,6 +7,8 @@ task :deploy_production_light => ['deploy:set_production_app', 'deploy:push', 'd
 namespace :deploy do
   PRODUCTION_APP = 'nextlanding-api-prod'
   QA_APP = 'nextlanding-api-qa'
+  web_worker = 'web'
+  celery_worker = 'worker'
 
   task :qa_migrations => [:set_qa_app, :push, :off, :migrate, :restart, :on, :tag]
   task :qa_rollback => [:set_qa_app, :off, :rollback, :restart, :on]
@@ -63,14 +65,14 @@ namespace :deploy do
   task :off do
     puts 'Taking the app offline ...'
     puts `heroku maintenance:on --app #{APP}`
-    puts `heroku ps:scale web=0 --app #{APP}`
-    puts `heroku ps:scale celeryd=0 --app #{APP}`
+    puts `heroku ps:scale #{web_worker}=0 --app #{APP}`
+    puts `heroku ps:scale #{celery_worker}=0 --app #{APP}`
   end
 
   task :on do
     puts 'Bringing the app online ...'
-    puts `heroku ps:scale web=1 --app #{APP}`
-    puts `heroku ps:scale celeryd=1 --app #{APP}`
+    puts `heroku ps:scale #{web_worker}=1 --app #{APP}`
+    puts `heroku ps:scale #{celery_worker}=1 --app #{APP}`
     puts `heroku maintenance:off --app #{APP}`
   end
 
