@@ -93,3 +93,10 @@ CORS_ORIGIN_REGEX_WHITELIST = (
   '^http(s)?://qa.nextlanding\.com/?',
 )
 ########## END CORS CONFIGURATION
+
+########## MIDDLEWARE CONFIGURATION
+MIDDLEWARE_CLASSES += (
+  'sslify.middleware.SSLifyMiddleware',
+  # ...
+)
+########## END MIDDLEWARE CONFIGURATION
