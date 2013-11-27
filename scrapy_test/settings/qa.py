@@ -26,6 +26,11 @@ DATABASES = postgresify()
 
 
 ########## LOGGING CONFIGURATION
+# See: Raven sends errors to sentry
+INSTALLED_APPS += (
+  'raven.contrib.django.raven_compat',
+)
+
 LOGGING['handlers']['console_handler'] = {
   'level': 'INFO',
   'class': 'logging.StreamHandler',
