@@ -9,13 +9,16 @@ class ProxyMiddleware(object):
 
     proxy_username = getattr(settings, 'PROXY_USERNAME', '')
     proxy_password = getattr(settings, 'PROXY_PASSWORD', '')
-    proxy_host = getattr(settings, 'PROXY_HOST', '')
+    proxy_url = getattr(settings, 'PROXY_URL', '')
 
-    if proxy_username and proxy_password and proxy_host:
+    if proxy_username and proxy_password and proxy_url:
+      if not proxy_url.startswith('http'):
+        raise Exception('Scrapy expects a url for the proxy url. Example: http://proxy.mysite.com')
+
       self.proxy_auth_header = (
         'Basic ' + base64.encodestring('%s:%s' % (proxy_username, proxy_password)).replace('\n', '')
       )
-      self.proxy_host = proxy_host
+      self.proxy_url = proxy_url
     else:
       #this will not kill the process, scrapy will just bypass this middleware
       raise NotConfigured
@@ -28,5 +31,5 @@ class ProxyMiddleware(object):
 
 
   def _set_proxy(self, request):
-    request.meta['proxy'] = self.proxy_host
+    request.meta['proxy'] = self.proxy_url
     request.headers['Authorization'] = self.proxy_auth_header
