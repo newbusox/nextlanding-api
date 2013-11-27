@@ -2,6 +2,7 @@
 
 
 from os import environ
+import os
 
 from postgresify import postgresify
 import sys
@@ -99,4 +100,8 @@ MIDDLEWARE_CLASSES += (
   'sslify.middleware.SSLifyMiddleware',
   # ...
 )
+
+PROXY_HOST = os.environ['PROXY_HOST']
+PROXY_USERNAME = os.environ['PROXY_USERNAME']
+PROXY_PASSWORD = os.environ['PROXY_PASSWORD']
 ########## END MIDDLEWARE CONFIGURATION
