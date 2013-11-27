@@ -112,6 +112,8 @@ LOGGING['loggers'] = {
   'celery.task': app_logger
   #there is a bug with celery 3.0 where the logger doesn't display the task id, unique id, worker, name etc
   #https://github.com/celery/django-celery/issues/211
+
+  #why celery logs all as warning: http://stackoverflow.com/questions/12664250/celery-marks-all-output-as-warning
 }
 ########## END LOGGING CONFIGURATION
 
