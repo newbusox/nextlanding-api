@@ -50,6 +50,10 @@ CACHES = {
 #celery hijacks its logging to prevent other libs from screwing it up. In dev only, it'd be nice to write to a log file.
 #http://docs.celeryproject.org/en/latest/configuration.html#logging
 #why: http://stackoverflow.com/a/6942030/173957
+#code: /celery/app/log.py
+#if self.app.conf.CELERYD_HIJACK_ROOT_LOGGER:
+#  root.handlers = []
+
 CELERYD_HIJACK_ROOT_LOGGER = False
 
 LOGGING['handlers']['console_handler'] = {
@@ -106,6 +110,8 @@ LOGGING['loggers'] = {
   'apps': app_logger,
   'libs': app_logger,
   'celery.task': app_logger
+  #there is a bug with celery 3.0 where the logger doesn't display the task id, unique id, worker, name etc
+  #https://github.com/celery/django-celery/issues/211
 }
 ########## END LOGGING CONFIGURATION
 
