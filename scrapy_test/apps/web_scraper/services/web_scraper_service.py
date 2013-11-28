@@ -1,12 +1,19 @@
 from datetime import timedelta
+import logging
+
 from django.utils import timezone
 from dynamic_scraper.models import SchedulerRuntime
 from dynamic_scraper.utils.task_utils import ProcessBasedUtils
+
 from scrapy_test.apps.web_scraper.models import ListingSourceScraperConfig, ListingCheckerConfig
 from scrapy_test.apps.web_scraper.scrapy.task_utils import IndividualProcessBasedItemLauncher
 
 
+logger = logging.getLogger(__name__)
+
+
 def run_spiders():
+  logger.info('running the check spiders process')
   t = ProcessBasedUtils()
   t.run_spiders(ListingSourceScraperConfig, 'scraper', 'scraper_runtime', 'listing_spider')
 
