@@ -106,9 +106,9 @@ LOGGING['loggers'] = {
     'level': 'DEBUG',
     'propagate': False
   },
-  'aggregates': app_logger,
-  'apps': app_logger,
-  'libs': app_logger,
+  'scrapy_test.aggregates': app_logger,
+  'scrapy_test.apps': app_logger,
+  'scrapy_test.libs': app_logger,
   'celery.task': app_logger
   #there is a bug with celery 3.0 where the logger doesn't display the task id, unique id, worker, name etc
   #https://github.com/celery/django-celery/issues/211

@@ -60,9 +60,9 @@ LOGGING['loggers'] = {
     'level': 'WARNING',
     'propagate': False
   },
-  'aggregates': app_logger,
-  'apps': app_logger,
-  'libs': app_logger
+  'scrapy_test.aggregates': app_logger,
+  'scrapy_test.apps': app_logger,
+  'scrapy_test.libs': app_logger
 }
 ########## END LOGGING CONFIGURATION
 
