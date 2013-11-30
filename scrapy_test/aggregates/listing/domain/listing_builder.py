@@ -155,7 +155,10 @@ class ListingBuilder(object):
           self._assign_output_attr(ADDRESS, address)
           break
       else:
-        self._assign_output_attr(ADDRESS, self._address_parser.join_cross_street(addresses))
+        cross_street_format = self._address_parser.join_cross_street(addresses)
+        if self._is_valid_address(cross_street_format):
+          #migt be invalid if both cross street names were the same. ex: 8th ave and 8th ave
+          self._assign_output_attr(ADDRESS, cross_street_format)
 
   def _build_city(self):
     city = self.listing_attrs_input.get(CITY)
