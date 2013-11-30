@@ -245,7 +245,7 @@
     "model": "dynamic_scraper.scraper",
     "fields": {
       "status": "A",
-      "pagination_page_replace": "//*[@*='pager pager_bottom unsponsored']/a/@href",
+      "pagination_page_replace": "//*[@*='listing_block loadable unloaded'] ^|^ se:url=\"(.+)\"\s",
       "checker_ref_url": "http://streeteasy.com/nyc/rental/1111504-rental-331-east-33-street-kips-bay-new-york",
       "checker_x_path_result": "price  closed ",
       "name": "StreetEasy Scraper",
@@ -254,7 +254,7 @@
       "pagination_append_str": "",
       "max_items_read": 20,
       "pagination_on_start": false,
-      "pagination_type": "O",
+      "pagination_type": "C",
       "checker_type": "X",
       "comments": "",
       "content_type": "H",
