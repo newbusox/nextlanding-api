@@ -77,4 +77,4 @@ class StatsReporter(object):
       stats_to_log['listing_source_name'] = spider.ref_object.listing_source.name
       stats_to_log['listing_source_url'] = spider.ref_object.listing_source.url
 
-    self._analytics_service.send_event("Crawler Finished", **stats_to_log)
+    self._analytics_service.send_event("Crawler Finished", stats_to_log)
