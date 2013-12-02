@@ -265,13 +265,13 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERY_CHORD_PROPAGATES = True
 
 CELERY_IMPORTS = (
-  'aggregates.apartment.services.apartment_tasks',
-  'aggregates.listing.services.listing_tasks',
-  'aggregates.result.services.result_tasks',
-  'aggregates.search.services.search_tasks',
-  'apps.communication_associater.availability.email.services.email_tasks',
-  'apps.domain.search.services.potential_search_tasks',
-  'apps.web_scraper.services.web_scraper_tasks',
+  'scrapy_test.aggregates.apartment.services.apartment_tasks',
+  'scrapy_test.aggregates.listing.services.listing_tasks',
+  'scrapy_test.aggregates.result.services.result_tasks',
+  'scrapy_test.aggregates.search.services.search_tasks',
+  'scrapy_test.apps.communication_associater.availability.email.services.email_tasks',
+  'scrapy_test.apps.domain.search.services.potential_search_tasks',
+  'scrapy_test.apps.web_scraper.services.web_scraper_tasks',
 )
 
 # See: http://celery.github.com/celery/django/
