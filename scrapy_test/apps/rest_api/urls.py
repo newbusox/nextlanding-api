@@ -28,16 +28,16 @@ potential_search_complete = PotentialSearchViewSet.as_view({
 # endregion
 
 # region apartment views
-add_apartments_config = AddApartmentsView.as_view({'get', 'config'})
+add_apartments_config = AddApartmentsView.as_view()
 # endregion
 
 urlpatterns = patterns(
   '',
   url(r'^', include(router.urls)),
   url(r'^api-auth', include('rest_framework.urls', namespace='rest_framework')),
-  url(r'^potential_search_init$', potential_search_init, name="potential_search_init"),
-  url(r'^potential_search_complete$', potential_search_complete, name="potential_search_complete"),
-  url(r'^emailer_sender/(?P<pk>[0-9]+)$', EmailerSenderView.as_view(), name="emailer-sender"),
+  url(r'^search/potential_search_init$', potential_search_init, name="potential_search_init"),
+  url(r'^search/potential_search_complete$', potential_search_complete, name="potential_search_complete"),
+  url(r'^search/(?P<pk>[0-9]+)/emailer_sender$', EmailerSenderView.as_view(), name="emailer-sender"),
   url(r'^add_apartments/(?P<pk>[0-9]+)$', AddApartmentsView.as_view(), name="add-apartments"),
   url(r'^add_apartments_config/(?P<pk>[0-9]+)$', add_apartments_config, name="add-apartments-config"),
 )

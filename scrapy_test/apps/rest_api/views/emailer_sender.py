@@ -15,7 +15,6 @@ class EmailerSenderView(APIView):
     search = search_service.get_search(pk)
 
     search_data = {
-      'id': search.pk,
       'location': search.specified_location,
       'search_description': search.description,
       'subject': EMAILER_SENDER_SUBJECT_TEMPLATE,
