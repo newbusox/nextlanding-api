@@ -4,7 +4,8 @@ from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 from scrapy_test.aggregates.search.services import search_service
-from scrapy_test.apps.domain.constants import POTENTIAL_SEARCH_SESSION_ID
+from scrapy_test.apps.domain.constants import POTENTIAL_SEARCH_SESSION_ID, EMAILER_SENDER_SUBJECT_TEMPLATE, \
+  EMAILER_SENDER_BODY_TEMPLATE
 from scrapy_test.apps.domain.search.models import PotentialSearch
 from scrapy_test.apps.domain.search.services import potential_search_service
 from scrapy_test.apps.rest_api.serializers.potential_search import PotentialSearchSerializer
@@ -18,11 +19,16 @@ class EmailerSenderView(APIView):
   def get(self, request, *args, **kwargs):
     pk = kwargs['pk']
     search = search_service.get_search(pk)
-    search_data = {'location': search.specified_location}
-    serializer = Serializer(data=search_data)
-    return Response(serializer.data)
 
-  def update_init(self, request, *args, **kwargs):
+    search_data = {
+      'location': search.specified_location,
+      'subject_template': EMAILER_SENDER_SUBJECT_TEMPLATE,
+      'body_template': EMAILER_SENDER_BODY_TEMPLATE,
+    }
+
+    return Response(search_data)
+
+  def post(self, request, *args, **kwargs):
     potential_search_id = request.session.get(POTENTIAL_SEARCH_SESSION_ID)
 
     if not potential_search_id: raise Http404
