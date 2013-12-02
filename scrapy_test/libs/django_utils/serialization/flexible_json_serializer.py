@@ -95,6 +95,8 @@ class JSONSerializer():
       self.handle_simple(object)
     elif isinstance(object, datetime):
       self.handle_date(object)
+    elif hasattr(object,'_asdict'):
+      self.handle_dictionary(object._asdict())
     else:
       raise UnableToSerializeError(type(object))
 

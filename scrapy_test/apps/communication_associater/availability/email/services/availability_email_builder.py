@@ -33,7 +33,7 @@ class AvailabilityEmailBuilder(object):
 
 
   def get_availability_email_message(self, result, search_specific_email_message_request):
-    ret_val = {}
+    variables = {}
 
     self.result = result
     self.search_specific_email_message_request = search_specific_email_message_request
@@ -43,20 +43,20 @@ class AvailabilityEmailBuilder(object):
     from_name = self._get_from_name()
     to_address = self._get_to_email_address()
 
-    ret_val['address'] = self._get_address()
-    ret_val['bedroom_count'] = self._get_bedroom_count()
-    ret_val['price'] = self._get_price()
+    variables['address'] = self._get_address()
+    variables['bedroom_count'] = self._get_bedroom_count()
+    variables['price'] = self._get_price()
 
-    ret_val['signature'] = self._get_signature()
-    ret_val['from_name'] = from_name
-    ret_val['from_email_address'] = from_address
+    variables['signature'] = self._get_signature()
+    variables['from_name'] = from_name
+    variables['from_email_address'] = from_address
 
-    ret_val['contact'] = self._get_contact_name()
-    ret_val['source'] = self._get_source_name()
-    ret_val['to_address'] = to_address
+    variables['contact_name'] = self._get_contact_name()
+    variables['source'] = self._get_source_name()
+    variables['to_address'] = to_address
 
-    ret_val['availability_identifier'] = self._get_availability_identifier()
-    context = Context(ret_val)
+    variables['availability_identifier'] = self._get_availability_identifier()
+    context = Context(variables)
 
     subject_template = Template(self.search_specific_email_message_request.subject)
     subject = subject_template.render(context)

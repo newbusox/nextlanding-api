@@ -104,14 +104,14 @@ class Search(models.Model, AggregateBase):
     if not body or not subject or not from_name:
       raise ValidationError("subject, body, and from_name are required")
 
-    _availability_email_service.validate_availability_email(self.availability_email_body_template)
+    _availability_email_service.validate_availability_email(body)
 
     search_specific_email_message_request = SearchSpecificEmailMessageRequest(from_name, subject, body)
 
     self._raise_event(initiated_availability_request, sender=Search, instance=self,
                       search_specific_email_message_request=search_specific_email_message_request)
 
-  def _handle_initiated_availability_request_event(self):
+  def _handle_initiated_availability_request_event(self, **kwargs):
     pass
 
   def save(self, internal=False, *args, **kwargs):

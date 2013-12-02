@@ -9,5 +9,7 @@ EMAILER_SENDER_BODY_TEMPLATE = textwrap.dedent("""\
     I saw your listing on {{ source }} for an apartment at {{ address }} ({% if bedroom %}{{ bedroom|floatformat }} BR{% else %}studio{% endif %} for ${{ price|floatformat:"-2" }}). I'm interested in this apartment. Is it still available? If so, when can I see it? Can you tell me anything else about the place?
 
     Thanks,
-    {{ from_name }}\
+    {{ signature }}
+
+    {{ availability_identifier }}\
 """)
