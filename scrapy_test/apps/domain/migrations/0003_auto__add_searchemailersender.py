@@ -13,6 +13,7 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('search_aggregate_id', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('specified_location', self.gf('django.db.models.fields.CharField')(max_length=2048)),
+            ('description', self.gf('django.db.models.fields.TextField')()),
             ('subject', self.gf('django.db.models.fields.TextField')()),
             ('body', self.gf('django.db.models.fields.TextField')()),
         ))
@@ -37,6 +38,7 @@ class Migration(SchemaMigration):
         'domain.searchemailersender': {
             'Meta': {'object_name': 'SearchEmailerSender'},
             'body': ('django.db.models.fields.TextField', [], {}),
+            'description': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'search_aggregate_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'specified_location': ('django.db.models.fields.CharField', [], {'max_length': '2048'}),

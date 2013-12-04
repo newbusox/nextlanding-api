@@ -38,8 +38,8 @@ class SearchEmailerSender(models.Model):
 
   specified_location = models.CharField(max_length=2048)
   description = models.TextField()
-  subject = description = models.TextField()
-  body = description = models.TextField()
+  subject = models.TextField()
+  body = models.TextField()
 
   class Meta:
     app_label = 'domain'
