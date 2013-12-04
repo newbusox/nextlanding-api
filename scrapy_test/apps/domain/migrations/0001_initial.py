@@ -15,13 +15,29 @@ class Migration(SchemaMigration):
             ('purchased', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('created_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('changed_date', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('search_aggregate_id', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
         ))
         db.send_create_signal('domain', ['PotentialSearch'])
+
+        # Adding model 'SearchEmailerSender'
+        db.create_table(u'domain_searchemailersender', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('search_aggregate_id', self.gf('django.db.models.fields.IntegerField')()),
+            ('specified_location', self.gf('django.db.models.fields.CharField')(max_length=2048)),
+            ('description', self.gf('django.db.models.fields.TextField')()),
+            ('from_name', self.gf('django.db.models.fields.CharField')(max_length=2048, null=True, blank=True)),
+            ('subject', self.gf('django.db.models.fields.TextField')()),
+            ('body', self.gf('django.db.models.fields.TextField')()),
+        ))
+        db.send_create_signal('domain', ['SearchEmailerSender'])
 
 
     def backwards(self, orm):
         # Deleting model 'PotentialSearch'
         db.delete_table(u'domain_potentialsearch')
+
+        # Deleting model 'SearchEmailerSender'
+        db.delete_table(u'domain_searchemailersender')
 
 
     models = {
@@ -31,7 +47,18 @@ class Migration(SchemaMigration):
             'created_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'purchased': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'search_aggregate_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'search_attrs': ('jsonfield.fields.JSONField', [], {})
+        },
+        'domain.searchemailersender': {
+            'Meta': {'object_name': 'SearchEmailerSender'},
+            'body': ('django.db.models.fields.TextField', [], {}),
+            'description': ('django.db.models.fields.TextField', [], {}),
+            'from_name': ('django.db.models.fields.CharField', [], {'max_length': '2048', 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'search_aggregate_id': ('django.db.models.fields.IntegerField', [], {}),
+            'specified_location': ('django.db.models.fields.CharField', [], {'max_length': '2048'}),
+            'subject': ('django.db.models.fields.TextField', [], {})
         }
     }
 

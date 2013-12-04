@@ -7,6 +7,9 @@ class AddApartmentToSearch(models.Model):
   #do not use foreign keys for aggregates
   apartment_aggregate_id = models.IntegerField()
 
+  #can this apt be searched and used to be added to a search?
+  is_available = models.BooleanField()
+
   lat = models.FloatField()
   lng = models.FloatField()
   changed_date = models.DateTimeField()
@@ -17,7 +20,6 @@ class AddApartmentToSearch(models.Model):
   bedroom_count = models.PositiveSmallIntegerField(max_length=2, blank=True, null=True)
   bathroom_count = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
   sqfeet = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
-
 
   class Meta:
     app_label = 'domain'
