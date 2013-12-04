@@ -8,3 +8,9 @@ def create_apartment_task(apartment_id):
   apartment = apartment_service.get_apartment(apartment_id)
 
   return add_apartment_to_search_service.create_apartment(apartment).id
+
+@task
+def update_apartment_task(apartment_id):
+  apartment = apartment_service.get_apartment(apartment_id)
+
+  return add_apartment_to_search_service.update_apartment(apartment).id
