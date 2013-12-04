@@ -1,6 +1,6 @@
 from rest_framework import routers
 from django.conf.urls import patterns, include, url
-from scrapy_test.apps.rest_api.views.add_apartments import AddApartmentsConfigView
+from scrapy_test.apps.rest_api.views.add_apartments import AddApartmentsConfigView, AddApartmentsView
 
 from scrapy_test.apps.rest_api.views.amenity import AmenityViewSet
 from scrapy_test.apps.rest_api.views.emailer_sender import EmailerSenderView
@@ -29,6 +29,7 @@ potential_search_complete = PotentialSearchViewSet.as_view({
 # endregion
 
 # region apartment views
+add_apartments= AddApartmentsView.as_view()
 add_apartments_config = AddApartmentsConfigView.as_view()
 # endregion
 
@@ -39,6 +40,6 @@ urlpatterns = patterns(
   url(r'^search/potential_search_init$', potential_search_init, name="potential_search_init"),
   url(r'^search/potential_search_complete$', potential_search_complete, name="potential_search_complete"),
   url(r'^search/(?P<pk>[0-9]+)/emailer_sender$', EmailerSenderView.as_view(), name="emailer-sender"),
-  url(r'^search/add_apartments/(?P<pk>[0-9]+)$', AddApartmentsConfigView.as_view(), name="add-apartments"),
+  url(r'^search/(?P<pk>[0-9]+)/apartments$', add_apartments, name="add-apartments"),
   url(r'^search/(?P<pk>[0-9]+)/add_apartments_config$', add_apartments_config, name="add-apartments-config"),
 )

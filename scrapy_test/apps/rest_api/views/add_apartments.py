@@ -27,3 +27,24 @@ class AddApartmentsConfigView(APIView):
     ret_val['bathroom_max'] = search.bathroom_max or 3
 
     return Response(ret_val)
+
+
+class AddApartmentsView(APIView):
+  """
+  API endpoint for getting add apartment parameters.
+  """
+
+  def get(self, request, *args, **kwargs):
+    days_back = request.QUERY_PARAMS['days_back']
+    distance = request.QUERY_PARAMS['distance']
+    fees_allowed = request.QUERY_PARAMS['fees_allowed']
+    cats_required = request.QUERY_PARAMS['cats_required']
+    dogs_required = request.QUERY_PARAMS['dogs_required']
+    price_min = request.QUERY_PARAMS['price_min']
+    price_max = request.QUERY_PARAMS['price_max']
+    bedroom_min = request.QUERY_PARAMS['bedroom_min']
+    bedroom_max = request.QUERY_PARAMS['bedroom_max']
+    bathroom_min = request.QUERY_PARAMS['bathroom_min']
+    bathroom_min = request.QUERY_PARAMS['bathroom_max']
+
+    return Response()
