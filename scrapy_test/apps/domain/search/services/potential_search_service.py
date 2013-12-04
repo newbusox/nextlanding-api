@@ -54,6 +54,6 @@ def complete_potential_search(potential_search, token, _payment_service=payment_
 
 
 def associate_search(search_aggregate, potential_search):
-  potential_search.search_aggregate = search_aggregate
+  potential_search.search_aggregate_id = search_aggregate.pk
   save_or_update(potential_search)
   return potential_search
