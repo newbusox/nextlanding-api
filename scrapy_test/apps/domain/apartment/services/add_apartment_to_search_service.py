@@ -1,5 +1,7 @@
+import datetime
 from django.utils import timezone
 from scrapy_test.apps.domain.apartment.models import AddApartmentToSearch
+from scrapy_test.libs.geo_utils.services.geo_distance_service import km_distance
 
 
 def save_or_update(add_apartment_model):
@@ -30,6 +32,7 @@ def create_apartment(apartment_aggregate):
 
   return ret_val
 
+
 def update_apartment(apartment_aggregate):
   apartment_search_model = get_apartment(apartment_aggregate.pk)
 
@@ -39,3 +42,56 @@ def update_apartment(apartment_aggregate):
   save_or_update(apartment_search_model)
 
   return apartment_search_model
+
+
+def get_apartments_for_search(search, **kwargs):
+  days_back = int(kwargs['days_back'])
+  distance = int(kwargs['distance'])
+  fees_allowed = bool(kwargs['fees_allowed'])
+  cats_required = bool(kwargs['cats_required'])
+  dogs_required = bool(kwargs['dogs_required'])
+  price_min = float(kwargs['price_min'])
+  price_max = float(kwargs['price_max'])
+  bedroom_min = int(kwargs['bedroom_min'])
+  bedroom_max = int(kwargs['bedroom_max'])
+  bathroom_min = float(kwargs['bathroom_min'])
+  bathroom_max = float(kwargs['bathroom_max'])
+
+  apartments = (
+
+    AddApartmentToSearch
+    .objects
+    .filter(changed_date__gte=timezone.now() - datetime.timedelta(days=days_back))
+    .filter(price__range=(price_min, price_max))
+    .filter(bedroom_count__range=(bedroom_min, bedroom_max))
+    .filter(bathroom_count__range=(bathroom_min, bathroom_max))
+    .values_list('id', 'lat', 'lng')
+  )
+
+  if not fees_allowed:
+    apartments = apartments.exclude(broker_fee=True)
+
+  if cats_required:
+    apartments = apartments.filter(cats_ok=True)
+
+  if dogs_required:
+    apartments = apartments.filter(dogs_ok=True)
+
+  #don't show apartments already tied to search
+  results = search.results.all()
+
+  #doing __contains__ in a queryset is super slow
+  apartments_to_filter = [r.apartment_id for r in results]
+
+  search_geo = (search.lat, search.lng)
+
+  #doing the filtering before all the prefetching is much faster.
+  #however, we should actually be doing th distance filter in the db
+  apartments_to_lookup = [
+    a[0] for a in apartments if
+    a[0] not in apartments_to_filter and km_distance(search_geo, (a[1], a[2])) <= distance
+  ]
+
+  apartments = AddApartmentToSearch.objects.filter(apartment_aggregate_id__in=apartments_to_lookup)
+
+  return apartments

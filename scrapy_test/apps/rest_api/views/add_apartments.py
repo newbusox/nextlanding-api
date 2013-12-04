@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from scrapy_test.aggregates.search.services import search_service
+from scrapy_test.apps.domain.apartment.services import add_apartment_to_search_service
 
 
 class AddApartmentsConfigView(APIView):
@@ -35,16 +36,10 @@ class AddApartmentsView(APIView):
   """
 
   def get(self, request, *args, **kwargs):
-    days_back = request.QUERY_PARAMS['days_back']
-    distance = request.QUERY_PARAMS['distance']
-    fees_allowed = request.QUERY_PARAMS['fees_allowed']
-    cats_required = request.QUERY_PARAMS['cats_required']
-    dogs_required = request.QUERY_PARAMS['dogs_required']
-    price_min = request.QUERY_PARAMS['price_min']
-    price_max = request.QUERY_PARAMS['price_max']
-    bedroom_min = request.QUERY_PARAMS['bedroom_min']
-    bedroom_max = request.QUERY_PARAMS['bedroom_max']
-    bathroom_min = request.QUERY_PARAMS['bathroom_min']
-    bathroom_min = request.QUERY_PARAMS['bathroom_max']
+    ret_val = {}
+    pk = kwargs['pk']
+    search = search_service.get_search(pk)
+
+    apartments = add_apartment_to_search_service.get_apartments_for_search(search, **request.QUERY_PARAMS.dict())
 
     return Response()
