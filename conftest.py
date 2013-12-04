@@ -3,7 +3,7 @@ import pytest
 
 # region DJ Settings
 #http://pytest-django.readthedocs.org/en/latest/configuring_django.html#using-django-configurations
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "scrapy_test.settings.dev")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "scrapy_test.settings.dev_testing")
 # endregion
 
 # region Plugins
