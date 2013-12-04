@@ -12,12 +12,13 @@ def get_apartment(pk):
 
 def create_apartment(apartment_aggregate):
   ret_val = AddApartmentToSearch(
+    apartment_aggregate_id=apartment_aggregate.pk,
     lat=apartment_aggregate.lat,
     lng=apartment_aggregate.lng,
     changed_date=apartment_aggregate.changed_date,
     broker_fee=apartment_aggregate.broker_fee,
-    cats_required=bool(apartment_aggregate.amenities.filter(amenity_type__name='Cats').count()),
-    dogs_required=bool(apartment_aggregate.amenities.filter(amenity_type__name='Dogs').count()),
+    cats_ok=bool(apartment_aggregate.amenities.filter(amenity_type__name='Cats').count()),
+    dogs_ok=bool(apartment_aggregate.amenities.filter(amenity_type__name='Dogs').count()),
     price=apartment_aggregate.price,
     bedroom_count=apartment_aggregate.bedroom_count,
     bathroom_count=apartment_aggregate.bathroom_count,

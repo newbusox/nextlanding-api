@@ -31,6 +31,24 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('domain', ['SearchEmailerSender'])
 
+        # Adding model 'AddApartmentToSearch'
+        db.create_table(u'domain_addapartmenttosearch', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('apartment_aggregate_id', self.gf('django.db.models.fields.IntegerField')()),
+            ('is_available', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('lat', self.gf('django.db.models.fields.FloatField')()),
+            ('lng', self.gf('django.db.models.fields.FloatField')()),
+            ('changed_date', self.gf('django.db.models.fields.DateTimeField')()),
+            ('broker_fee', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('cats_ok', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('dogs_ok', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('price', self.gf('django.db.models.fields.DecimalField')(max_digits=10, decimal_places=2)),
+            ('bedroom_count', self.gf('django.db.models.fields.PositiveSmallIntegerField')(max_length=2, null=True, blank=True)),
+            ('bathroom_count', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=3, decimal_places=1, blank=True)),
+            ('sqfeet', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=10, decimal_places=3, blank=True)),
+        ))
+        db.send_create_signal('domain', ['AddApartmentToSearch'])
+
 
     def backwards(self, orm):
         # Deleting model 'PotentialSearch'
@@ -39,8 +57,27 @@ class Migration(SchemaMigration):
         # Deleting model 'SearchEmailerSender'
         db.delete_table(u'domain_searchemailersender')
 
+        # Deleting model 'AddApartmentToSearch'
+        db.delete_table(u'domain_addapartmenttosearch')
+
 
     models = {
+        'domain.addapartmenttosearch': {
+            'Meta': {'object_name': 'AddApartmentToSearch'},
+            'apartment_aggregate_id': ('django.db.models.fields.IntegerField', [], {}),
+            'bathroom_count': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '3', 'decimal_places': '1', 'blank': 'True'}),
+            'bedroom_count': ('django.db.models.fields.PositiveSmallIntegerField', [], {'max_length': '2', 'null': 'True', 'blank': 'True'}),
+            'broker_fee': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'cats_ok': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'changed_date': ('django.db.models.fields.DateTimeField', [], {}),
+            'dogs_ok': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_available': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'lat': ('django.db.models.fields.FloatField', [], {}),
+            'lng': ('django.db.models.fields.FloatField', [], {}),
+            'price': ('django.db.models.fields.DecimalField', [], {'max_digits': '10', 'decimal_places': '2'}),
+            'sqfeet': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '10', 'decimal_places': '3', 'blank': 'True'})
+        },
         'domain.potentialsearch': {
             'Meta': {'object_name': 'PotentialSearch'},
             'changed_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
