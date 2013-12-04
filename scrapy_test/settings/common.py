@@ -271,6 +271,8 @@ CELERY_IMPORTS = (
   'scrapy_test.aggregates.search.services.search_tasks',
   'scrapy_test.apps.communication_associater.availability.email.services.email_tasks',
   'scrapy_test.apps.domain.search.services.potential_search_tasks',
+  'scrapy_test.apps.domain.search.services.emailer_sender_tasks',
+  'scrapy_test.apps.domain.apartment.services.add_apartment_to_search_tasks',
   'scrapy_test.apps.web_scraper.services.web_scraper_tasks',
 )
 
