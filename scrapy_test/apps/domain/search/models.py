@@ -28,3 +28,30 @@ class PotentialSearch(models.Model):
 
   def __unicode__(self):
     return 'PotentialSearch #' + str(self.pk)
+
+
+class SearchEmailerSender(models.Model):
+  #this represents the model to be used for sending emails for a search. The body, subject can be modified and saved.
+
+  #do not use foreign keys for aggregates
+  search_aggregate_id = models.IntegerField(blank=True, null=True)
+
+  specified_location = models.CharField(max_length=2048)
+  description = models.TextField()
+  subject = description = models.TextField()
+  body = description = models.TextField()
+
+  class Meta:
+    app_label = 'domain'
+
+  def save(self, internal=False, *args, **kwargs):
+    if internal:
+      with transaction.commit_on_success():
+        super(SearchEmailerSender, self).save(*args, **kwargs)
+    else:
+      from scrapy_test.apps.domain.search.services import emailer_sender_service
+
+      emailer_sender_service.save_or_update(self)
+
+  def __unicode__(self):
+    return 'SearchEmailerSender #' + str(self.pk)
