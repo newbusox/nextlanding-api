@@ -34,7 +34,7 @@ class SearchEmailerSender(models.Model):
   #this represents the model to be used for sending emails for a search. The body, subject can be modified and saved.
 
   #do not use foreign keys for aggregates
-  search_aggregate_id = models.IntegerField(blank=True, null=True)
+  search_aggregate_id = models.IntegerField()
 
   specified_location = models.CharField(max_length=2048)
   description = models.TextField()

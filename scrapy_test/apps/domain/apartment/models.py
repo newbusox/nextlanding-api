@@ -5,11 +5,11 @@ class AddApartmentToSearch(models.Model):
   #this represents the model to be used for adding apts to a search
 
   #do not use foreign keys for aggregates
-  apartment_aggregate_id = models.IntegerField(blank=True, null=True)
+  apartment_aggregate_id = models.IntegerField()
 
   lat = models.FloatField()
   lng = models.FloatField()
-  changed_date = models.DateTimeField(auto_now=True)
+  changed_date = models.DateTimeField()
   broker_fee = models.BooleanField()
   cats_required = models.BooleanField()
   dogs_required = models.BooleanField()
