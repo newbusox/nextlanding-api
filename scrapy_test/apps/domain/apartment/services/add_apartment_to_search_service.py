@@ -39,8 +39,6 @@ def create_apartment(apartment_aggregate):
     is_available=True
   )
 
-  _update_with_newest_listing(apartment_aggregate, ret_val)
-
   ret_val.amenities = {
     x.amenity_type.name: {"is_available": x.is_available} for x in apartment_aggregate.amenities.all()
   }
