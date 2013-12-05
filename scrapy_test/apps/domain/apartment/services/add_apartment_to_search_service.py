@@ -22,7 +22,7 @@ def _update_with_newest_listing(apartment_search_model, listing):
   apartment_search_model.contact_phone_number = listing.contact_phone_number
   apartment_search_model.contact_email_address = listing.contact_email_address
 
-  apartment_search_model.listing_urls += listing.url
+  apartment_search_model.listing_urls.append(listing.url)
 
 
 def _create_search_apartment_from_aggregate(apartment_aggregate):
