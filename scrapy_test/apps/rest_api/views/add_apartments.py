@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from scrapy_test.aggregates.search.services import search_service
 from scrapy_test.apps.domain.apartment.services import add_apartment_to_search_service
+from scrapy_test.apps.rest_api.serializers.add_apartment_to_search import AddApartmentToSearchSerializer
 
 
 class AddApartmentsConfigView(APIView):
@@ -34,14 +35,15 @@ class AddApartmentsConfigView(APIView):
 
 class AddApartmentsView(APIView):
   """
-  API endpoint for getting add apartment parameters.
+  API endpoint for adding apartments to search.
   """
 
   def get(self, request, *args, **kwargs):
-    ret_val = {}
     pk = kwargs['pk']
     search = search_service.get_search(pk)
 
     apartments = add_apartment_to_search_service.get_apartments_for_search(search, **request.QUERY_PARAMS.dict())
 
-    return Response()
+    serializer = AddApartmentToSearchSerializer(apartments)
+
+    return Response(serializer.data)
