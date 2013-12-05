@@ -1,29 +1,31 @@
 import datetime
+from django.db import IntegrityError
 from django.utils import timezone
 from scrapy_test.apps.domain.apartment.models import AddApartmentToSearch
 from scrapy_test.libs.geo_utils.services.geo_distance_service import km_distance
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def save_or_update(add_apartment_model):
   add_apartment_model.save(internal=True)
 
 
-def get_apartment(pk):
-  return AddApartmentToSearch.objects.get(pk=pk)
+def get_search_add_apartment_from_aggregate(apartment_aggregate_id):
+  return AddApartmentToSearch.objects.get(apartment_aggregate_id=apartment_aggregate_id)
 
 
-def _update_with_newest_listing(apartment_aggregate, ret_val):
-  newest_listing = apartment_aggregate.listings.newest()
+def _update_with_newest_listing(apartment_search_model, listing):
+  apartment_search_model.description = listing.description
+  apartment_search_model.contact_name = listing.contact_name
+  apartment_search_model.contact_phone_number = listing.contact_phone_number
+  apartment_search_model.contact_email_address = listing.contact_email_address
 
-  ret_val.description = newest_listing.description
-  ret_val.contact_name = newest_listing.contact_name
-  ret_val.contact_phone_number = newest_listing.contact_phone_number
-  ret_val.contact_email_address = newest_listing.contact_email_address
-
-  ret_val.listing_urls = [l.url for l in apartment_aggregate.listings.all()]
+  apartment_search_model.listing_urls += listing.url
 
 
-def create_apartment(apartment_aggregate):
+def _create_search_apartment_from_aggregate(apartment_aggregate):
   ret_val = AddApartmentToSearch(
     apartment_aggregate_id=apartment_aggregate.pk,
     lat=apartment_aggregate.lat,
@@ -36,28 +38,45 @@ def create_apartment(apartment_aggregate):
     bedroom_count=apartment_aggregate.bedroom_count,
     bathroom_count=apartment_aggregate.bathroom_count,
     sqfeet=apartment_aggregate.sqfeet,
-    is_available=True
   )
+  return ret_val
+
+
+def update_apartment_from_listing(listing_aggregate):
+  apartment_aggregate = listing_aggregate.apartment
+
+  try:
+    ret_val = get_search_add_apartment_from_aggregate(apartment_aggregate.pk)
+  except:
+    ret_val = _create_search_apartment_from_aggregate(apartment_aggregate)
+
+  ret_val.changed_date = apartment_aggregate.changed_date
+  ret_val.is_available = apartment_aggregate.is_available
 
   ret_val.amenities = {
     x.amenity_type.name: {"is_available": x.is_available} for x in apartment_aggregate.amenities.all()
   }
 
-  save_or_update(ret_val)
+  _update_with_newest_listing(ret_val, listing_aggregate)
+
+  try:
+    save_or_update(ret_val)
+  except IntegrityError:
+    # There is a potential case where two listings are associated w/ an apartment at the same time. In this case,
+    # they'll both try to update the apartment. For now, whoever is first will win. That is probably good enough
+
+    logger.info(
+      "{0} tried to create a search_add_apartment model for {1} but it already existed"
+      .format(listing_aggregate, apartment_aggregate)
+    )
 
   return ret_val
 
 
-def update_apartment(apartment_aggregate):
-  apartment_search_model = get_apartment(apartment_aggregate.pk)
+def disable_apartment(apartment_aggregate):
+  apartment_search_model = get_search_add_apartment_from_aggregate(apartment_aggregate.pk)
 
-  apartment_search_model.changed_date = apartment_aggregate.changed_date
-  apartment_search_model.is_available = apartment_aggregate.is_available
-
-  if apartment_aggregate.is_available:
-    _update_with_newest_listing(apartment_aggregate, apartment_search_model)
-  else:
-    apartment_search_model.listing_urls = []
+  apartment_search_model.listing_urls = []
 
   save_or_update(apartment_search_model)
 

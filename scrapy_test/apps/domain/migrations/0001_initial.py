@@ -34,7 +34,7 @@ class Migration(SchemaMigration):
         # Adding model 'AddApartmentToSearch'
         db.create_table(u'domain_addapartmenttosearch', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('apartment_aggregate_id', self.gf('django.db.models.fields.IntegerField')()),
+            ('apartment_aggregate_id', self.gf('django.db.models.fields.IntegerField')(unique=True)),
             ('is_available', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('lat', self.gf('django.db.models.fields.FloatField')()),
             ('lng', self.gf('django.db.models.fields.FloatField')()),
@@ -71,7 +71,7 @@ class Migration(SchemaMigration):
         'domain.addapartmenttosearch': {
             'Meta': {'object_name': 'AddApartmentToSearch'},
             'amenities': ('jsonfield.fields.JSONField', [], {'null': 'True', 'blank': 'True'}),
-            'apartment_aggregate_id': ('django.db.models.fields.IntegerField', [], {}),
+            'apartment_aggregate_id': ('django.db.models.fields.IntegerField', [], {'unique': 'True'}),
             'bathroom_count': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '3', 'decimal_places': '1', 'blank': 'True'}),
             'bedroom_count': ('django.db.models.fields.PositiveSmallIntegerField', [], {'max_length': '2', 'null': 'True', 'blank': 'True'}),
             'broker_fee': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),

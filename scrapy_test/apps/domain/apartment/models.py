@@ -8,7 +8,7 @@ class AddApartmentToSearch(models.Model):
   #this represents the model to be used for adding apts to a search
 
   #do not use foreign keys for aggregates
-  apartment_aggregate_id = models.IntegerField()
+  apartment_aggregate_id = models.IntegerField(unique=True)
 
   #can this apt be searched and used to be added to a search?
   is_available = models.BooleanField()
