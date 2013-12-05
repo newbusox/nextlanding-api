@@ -45,22 +45,28 @@ def update_apartment(apartment_aggregate):
 
 
 def get_apartments_for_search(search, **kwargs):
+  """
+  json encoding will convert any decimal to a string - we might as well just make it be an int
+  https://github.com/tomchristie/django-rest-framework/issues/508
+  """
+
   days_back = int(kwargs['days_back'])
   distance = int(kwargs['distance'])
-  fees_allowed = bool(kwargs['fees_allowed'])
-  cats_required = bool(kwargs['cats_required'])
-  dogs_required = bool(kwargs['dogs_required'])
-  price_min = float(kwargs['price_min'])
-  price_max = float(kwargs['price_max'])
+  fees_allowed = bool(kwargs['fees_allowed'].lower() == 'true')
+  cats_required = bool(kwargs['cats_required'].lower() == 'true')
+  dogs_required = bool(kwargs['dogs_required'].lower() == 'true')
+  price_min = int(kwargs['price_min'])
+  price_max = int(kwargs['price_max'])
   bedroom_min = int(kwargs['bedroom_min'])
   bedroom_max = int(kwargs['bedroom_max'])
-  bathroom_min = float(kwargs['bathroom_min'])
-  bathroom_max = float(kwargs['bathroom_max'])
+  bathroom_min = int(kwargs['bathroom_min'])
+  bathroom_max = int(kwargs['bathroom_max'])
 
   apartments = (
 
     AddApartmentToSearch
     .objects
+    .filter(is_available=True)
     .filter(changed_date__gte=timezone.now() - datetime.timedelta(days=days_back))
     .filter(price__range=(price_min, price_max))
     .filter(bedroom_count__range=(bedroom_min, bedroom_max))
