@@ -12,6 +12,17 @@ def get_apartment(pk):
   return AddApartmentToSearch.objects.get(pk=pk)
 
 
+def _update_with_newest_listing(apartment_aggregate, ret_val):
+  newest_listing = apartment_aggregate.listings.newest()
+
+  ret_val.description = newest_listing.description
+  ret_val.contact_name = newest_listing.contact_name
+  ret_val.contact_phone_number = newest_listing.contact_phone_number
+  ret_val.contact_email_address = newest_listing.contact_email_address
+
+  ret_val.listing_urls = [l.url for l in apartment_aggregate.listings.all()]
+
+
 def create_apartment(apartment_aggregate):
   ret_val = AddApartmentToSearch(
     apartment_aggregate_id=apartment_aggregate.pk,
@@ -28,6 +39,12 @@ def create_apartment(apartment_aggregate):
     is_available=True
   )
 
+  _update_with_newest_listing(apartment_aggregate, ret_val)
+
+  ret_val.amenities = {
+    x.amenity_type.name: {"is_available": x.is_available} for x in apartment_aggregate.amenities.all()
+  }
+
   save_or_update(ret_val)
 
   return ret_val
@@ -38,6 +55,11 @@ def update_apartment(apartment_aggregate):
 
   apartment_search_model.changed_date = apartment_aggregate.changed_date
   apartment_search_model.is_available = apartment_aggregate.is_available
+
+  if apartment_aggregate.is_available:
+    _update_with_newest_listing(apartment_aggregate, apartment_search_model)
+  else:
+    apartment_search_model.listing_urls = []
 
   save_or_update(apartment_search_model)
 

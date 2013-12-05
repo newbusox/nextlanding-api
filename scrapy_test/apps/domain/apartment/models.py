@@ -1,4 +1,7 @@
 from django.db import models, transaction
+from jsonfield import JSONField
+from localflavor.us.models import PhoneNumberField
+from scrapy_test.libs.django_utils.fields.list_field import ListField
 
 
 class AddApartmentToSearch(models.Model):
@@ -15,11 +18,20 @@ class AddApartmentToSearch(models.Model):
   changed_date = models.DateTimeField()
   broker_fee = models.BooleanField()
   cats_ok = models.BooleanField()
-  dogs_ok= models.BooleanField()
+  dogs_ok = models.BooleanField()
   price = models.DecimalField(max_digits=10, decimal_places=2)
   bedroom_count = models.PositiveSmallIntegerField(max_length=2, blank=True, null=True)
   bathroom_count = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
   sqfeet = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
+
+  listing_urls = ListField()
+
+  description = models.TextField()
+  contact_name = models.CharField(max_length=255, blank=True, null=True)
+  contact_phone_number = PhoneNumberField(blank=True, null=True)
+  contact_email_address = models.EmailField(blank=True, null=True)
+
+  amenities = JSONField(blank=True, null=True)
 
   class Meta:
     app_label = 'domain'
