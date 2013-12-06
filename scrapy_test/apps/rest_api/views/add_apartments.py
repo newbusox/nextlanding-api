@@ -29,6 +29,9 @@ class AddApartmentsConfigView(APIView):
     ret_val['bedroom_max'] = search.bedroom_max or 3
     ret_val['bathroom_min'] = int(search.bathroom_min or 1)
     ret_val['bathroom_max'] = int(search.bathroom_max or 3)
+    ret_val['description'] = search.description
+    ret_val['address'] = search.formatted_address
+    ret_val['geo_boundary_points'] = search.geo_boundary_points
 
     return Response(ret_val)
 
