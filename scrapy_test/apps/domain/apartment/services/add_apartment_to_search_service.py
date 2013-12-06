@@ -22,6 +22,8 @@ def _update_with_newest_listing(apartment_search_model, listing):
   apartment_search_model.contact_phone_number = listing.contact_phone_number
   apartment_search_model.contact_email_address = listing.contact_email_address
 
+  apartment_search_model.last_updated_date = listing.last_updated_date or listing.posted_date
+
   apartment_search_model.listing_urls.append(listing.url)
 
 
@@ -31,7 +33,6 @@ def _create_search_apartment_from_aggregate(apartment_aggregate):
     address=apartment_aggregate.address,
     lat=apartment_aggregate.lat,
     lng=apartment_aggregate.lng,
-    changed_date=apartment_aggregate.changed_date,
     broker_fee=apartment_aggregate.broker_fee,
     cats_ok=bool(apartment_aggregate.amenities.filter(amenity_type__name='Cats Allowed').count()),
     dogs_ok=bool(apartment_aggregate.amenities.filter(amenity_type__name='Dogs Allowed').count()),
@@ -51,7 +52,6 @@ def update_apartment_from_listing(listing_aggregate):
   except:
     ret_val = _create_search_apartment_from_aggregate(apartment_aggregate)
 
-  ret_val.changed_date = apartment_aggregate.changed_date
   ret_val.is_available = apartment_aggregate.is_available
 
   ret_val.amenities = {
@@ -107,7 +107,7 @@ def get_apartments_for_search(search, **kwargs):
     AddApartmentToSearch
     .objects
     .filter(is_available=True)
-    .filter(changed_date__gte=timezone.now() - datetime.timedelta(days=days_back))
+    .filter(last_updated_date__gte=timezone.now() - datetime.timedelta(days=days_back))
     .filter(price__range=(price_min, price_max))
     .filter(bedroom_count__range=(bedroom_min, bedroom_max))
     .filter(bathroom_count__range=(bathroom_min, bathroom_max))

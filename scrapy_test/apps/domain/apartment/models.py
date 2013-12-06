@@ -15,7 +15,6 @@ class AddApartmentToSearch(models.Model):
   address = models.CharField(max_length=255, blank=True, null=True)
   lat = models.FloatField()
   lng = models.FloatField()
-  changed_date = models.DateTimeField()
   broker_fee = models.BooleanField()
   cats_ok = models.BooleanField()
   dogs_ok = models.BooleanField()
@@ -26,6 +25,8 @@ class AddApartmentToSearch(models.Model):
 
   listing_urls = JSONField(default=[])
 
+  #these are listing-specific things
+  last_updated_date = models.DateTimeField()
   description = models.TextField()
   contact_name = models.CharField(max_length=255, blank=True, null=True)
   contact_phone_number = PhoneNumberField(blank=True, null=True)
