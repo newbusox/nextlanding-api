@@ -5,7 +5,6 @@ from django.core.exceptions import ValidationError
 
 from scrapy_test.apps.communication_associater.availability.email.constants import EMAIL_AVAILABILITY_IDENTIFIER_RE, \
   EMAIL_AVAILABILITY_IDENTIFIER_VARIABLE_NAME
-from scrapy_test.aggregates.result.models import Result
 from scrapy_test.apps.communication_associater.availability.email.services.availability_email_builder import \
   AvailabilityEmailBuilder
 from scrapy_test.libs.communication_utils.services import email_service
@@ -16,6 +15,9 @@ availability_from_email_address_domain = settings.AVAILABILITY_FROM_EMAIL_ADDRES
 
 
 def request_availability_about_apartments(search, search_specific_email_message_request, _email_service=email_service):
+  #there is a circular dependency between result -> ... -> email_service.
+  from scrapy_test.aggregates.result.models import Result
+
   #only get results that have not gotten a response back yet. This is in case we re-email our contacts because we
   # haven't gotten enough responses. We don't want to re-contact those who've already responded.
   results_to_request_notification = (
