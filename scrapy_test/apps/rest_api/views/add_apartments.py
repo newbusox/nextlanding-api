@@ -21,8 +21,8 @@ class AddApartmentsConfigView(APIView):
     ret_val['days_back'] = 7
     ret_val['distance'] = 2
     ret_val['fees_allowed'] = not search.no_fee_preferred
-    ret_val['cats_required'] = bool(search.amenities.filter(amenity_type__name='Cats').count())
-    ret_val['dogs_required'] = bool(search.amenities.filter(amenity_type__name='Dogs').count())
+    ret_val['cats_required'] = bool(search.amenities.filter(amenity_type__name='Cats Allowed').count())
+    ret_val['dogs_required'] = bool(search.amenities.filter(amenity_type__name='Dogs Allowed').count())
     ret_val['price_min'] = int(search.price_min or 0)
     ret_val['price_max'] = int(search.price_max or 5000)
     ret_val['bedroom_min'] = search.bedroom_min or 0

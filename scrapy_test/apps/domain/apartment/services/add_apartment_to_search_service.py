@@ -28,12 +28,13 @@ def _update_with_newest_listing(apartment_search_model, listing):
 def _create_search_apartment_from_aggregate(apartment_aggregate):
   ret_val = AddApartmentToSearch(
     apartment_aggregate_id=apartment_aggregate.pk,
+    address=apartment_aggregate.address,
     lat=apartment_aggregate.lat,
     lng=apartment_aggregate.lng,
     changed_date=apartment_aggregate.changed_date,
     broker_fee=apartment_aggregate.broker_fee,
-    cats_ok=bool(apartment_aggregate.amenities.filter(amenity_type__name='Cats').count()),
-    dogs_ok=bool(apartment_aggregate.amenities.filter(amenity_type__name='Dogs').count()),
+    cats_ok=bool(apartment_aggregate.amenities.filter(amenity_type__name='Cats Allowed').count()),
+    dogs_ok=bool(apartment_aggregate.amenities.filter(amenity_type__name='Dogs Allowed').count()),
     price=apartment_aggregate.price,
     bedroom_count=apartment_aggregate.bedroom_count,
     bathroom_count=apartment_aggregate.bathroom_count,

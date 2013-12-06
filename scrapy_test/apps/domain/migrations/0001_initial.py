@@ -36,6 +36,7 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('apartment_aggregate_id', self.gf('django.db.models.fields.IntegerField')(unique=True)),
             ('is_available', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('address', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
             ('lat', self.gf('django.db.models.fields.FloatField')()),
             ('lng', self.gf('django.db.models.fields.FloatField')()),
             ('changed_date', self.gf('django.db.models.fields.DateTimeField')()),
@@ -46,12 +47,12 @@ class Migration(SchemaMigration):
             ('bedroom_count', self.gf('django.db.models.fields.PositiveSmallIntegerField')(max_length=2, null=True, blank=True)),
             ('bathroom_count', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=3, decimal_places=1, blank=True)),
             ('sqfeet', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=10, decimal_places=3, blank=True)),
-            ('listing_urls', self.gf('django.db.models.fields.TextField')()),
+            ('listing_urls', self.gf('django.db.models.fields.TextField')(default='[]')),
             ('description', self.gf('django.db.models.fields.TextField')()),
             ('contact_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
             ('contact_phone_number', self.gf('localflavor.us.models.PhoneNumberField')(max_length=20, null=True, blank=True)),
             ('contact_email_address', self.gf('django.db.models.fields.EmailField')(max_length=75, null=True, blank=True)),
-            ('amenities', self.gf('jsonfield.fields.JSONField')(null=True, blank=True)),
+            ('amenities', self.gf('django.db.models.fields.TextField')(default='{}', null=True, blank=True)),
         ))
         db.send_create_signal('domain', ['AddApartmentToSearch'])
 
@@ -70,7 +71,8 @@ class Migration(SchemaMigration):
     models = {
         'domain.addapartmenttosearch': {
             'Meta': {'object_name': 'AddApartmentToSearch'},
-            'amenities': ('jsonfield.fields.JSONField', [], {'null': 'True', 'blank': 'True'}),
+            'address': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'amenities': ('django.db.models.fields.TextField', [], {'default': "'{}'", 'null': 'True', 'blank': 'True'}),
             'apartment_aggregate_id': ('django.db.models.fields.IntegerField', [], {'unique': 'True'}),
             'bathroom_count': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '3', 'decimal_places': '1', 'blank': 'True'}),
             'bedroom_count': ('django.db.models.fields.PositiveSmallIntegerField', [], {'max_length': '2', 'null': 'True', 'blank': 'True'}),
@@ -85,7 +87,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_available': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'lat': ('django.db.models.fields.FloatField', [], {}),
-            'listing_urls': ('django.db.models.fields.TextField', [], {}),
+            'listing_urls': ('django.db.models.fields.TextField', [], {'default': "'[]'"}),
             'lng': ('django.db.models.fields.FloatField', [], {}),
             'price': ('django.db.models.fields.DecimalField', [], {'max_digits': '10', 'decimal_places': '2'}),
             'sqfeet': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '10', 'decimal_places': '3', 'blank': 'True'})

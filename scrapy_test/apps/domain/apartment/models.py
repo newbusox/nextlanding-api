@@ -12,6 +12,7 @@ class AddApartmentToSearch(models.Model):
   #can this apt be searched and used to be added to a search?
   is_available = models.BooleanField()
 
+  address = models.CharField(max_length=255, blank=True, null=True)
   lat = models.FloatField()
   lng = models.FloatField()
   changed_date = models.DateTimeField()
