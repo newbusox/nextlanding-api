@@ -84,6 +84,17 @@ def disable_apartment(apartment_aggregate):
   return apartment_search_model
 
 
+def get_coords_for_search(search):
+  if search.geo_boundary_points:
+    #use the first place they drew and if they didn't draw, take the geocoded search term
+    first_geo_point = search.geo_boundary_points["0"][0]
+    search_geo = (first_geo_point[0], first_geo_point[1])
+  else:
+    search_geo = (search.lat, search.lng)
+
+  return search_geo
+
+
 def get_apartments_for_search(search, **kwargs):
   """
   json encoding will convert any decimal to a string - we might as well just make it be an int
@@ -129,12 +140,7 @@ def get_apartments_for_search(search, **kwargs):
   #doing __contains__ in a queryset is super slow
   apartments_to_filter = [r.apartment_id for r in results]
 
-  if search.geo_boundary_points:
-    #use the first place they drew and if they didn't draw, take the geocoded search term
-    first_geo_point = search.geo_boundary_points["0"][0]
-    search_geo = (first_geo_point[0], first_geo_point[1])
-  else:
-    search_geo = (search.lat, search.lng)
+  search_geo = get_coords_for_search(search)
 
   #doing the filtering before all the prefetching is much faster.
   #however, we should actually be doing th distance filter in the db
