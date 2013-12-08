@@ -1,7 +1,9 @@
 import datetime
 from django.db import IntegrityError
 from django.utils import timezone
+from scrapy_test.aggregates.search.models import Search
 from scrapy_test.apps.domain.apartment.models import AddApartmentToSearch
+from scrapy_test.apps.domain.search.signals import apartment_added_to_search
 from scrapy_test.libs.geo_utils.services.geo_distance_service import km_distance
 import logging
 
@@ -152,3 +154,6 @@ def get_apartments_for_search(search, **kwargs):
   apartments = AddApartmentToSearch.objects.filter(apartment_aggregate_id__in=apartments_to_lookup)
 
   return apartments
+
+def add_apartment_to_search(search,apartment):
+  apartment_added_to_search.send(Search,instance=search,apartment=apartment)

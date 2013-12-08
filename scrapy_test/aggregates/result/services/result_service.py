@@ -9,8 +9,8 @@ from scrapy_test.libs.communication_utils.services import email_service as email
 from scrapy_test.libs.communication_utils.signals import email_consumed_by_model
 
 
-def create_result(apartment, listing):
-  result = factories.construct_result(apartment, listing)
+def create_result(apartment, search):
+  result = factories.construct_result(apartment, search)
 
   save_or_update(result)
 

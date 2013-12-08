@@ -1,5 +1,7 @@
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from scrapy_test.aggregates.apartment.services import apartment_service
 from scrapy_test.aggregates.search.services import search_service
 from scrapy_test.apps.domain.apartment.services import add_apartment_to_search_service
 from scrapy_test.apps.rest_api.serializers.add_apartment_to_search import AddApartmentToSearchSerializer
@@ -55,3 +57,15 @@ class AddApartmentsView(APIView):
     serializer = AddApartmentToSearchSerializer(apartments)
 
     return Response(serializer.data)
+
+  def post(self, request, *args, **kwargs):
+    pk = kwargs['pk']
+    search = search_service.get_search(pk)
+
+    apartment_id = request.DATA['apartment_aggregate_id']
+
+    apartment = apartment_service.get_apartment(apartment_id)
+
+    add_apartment_to_search_service.add_apartment_to_search(search, apartment)
+
+    return Response(status=status.HTTP_201_CREATED)
