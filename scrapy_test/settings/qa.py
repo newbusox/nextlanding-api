@@ -95,9 +95,7 @@ ALLOWED_HOSTS = ['.herokuapp.com', 'qa.api.nextlanding.com']
 ########## END ALLOWED HOST CONFIGURATION
 
 ########## CORS CONFIGURATION
-CORS_ORIGIN_REGEX_WHITELIST = (
-  '^http(s)?://qa.nextlanding\.com/?',
-)
+CORS_ORIGIN_ALLOW_ALL = True
 ########## END CORS CONFIGURATION
 
 ########## MIDDLEWARE CONFIGURATION
