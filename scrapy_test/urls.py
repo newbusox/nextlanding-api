@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.conf.urls import patterns, include, url
-from scrapy_test.libs.communication_utils import urls as communication_urls
 from scrapy_test.apps.rest_api import urls as api_urls
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/admin/#hooking-adminsite-instances-into-your-urlconf
@@ -18,10 +17,7 @@ urlpatterns = patterns(
 # endregion
 
 # region Lib Urls
-urlpatterns += patterns(
-  '',
-  url(r'^communication/', include(communication_urls)),
-)
+
 # endregion
 
 # region App Urls
