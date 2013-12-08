@@ -20,6 +20,7 @@ def became_unavailable_callback(sender, **kwargs):
   reason = kwargs.pop('reason')
   result_tasks.notify_results_unavailable_task.delay(kwargs['instance'].id, reason)
 
+
 @receiver(apartment_added_to_search, sender=Search)
 def apartment_added_to_search(sender, **kwargs):
-  result_tasks.create_result_task.delay(kwargs['instance'].id, kwargs['apartment'].id)
+  result_tasks.create_result_task.delay(kwargs['apartment'].id, kwargs['instance'].id)
