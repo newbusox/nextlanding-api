@@ -8,8 +8,8 @@ def save_or_update(emailer_sender):
   emailer_sender.save(internal=True)
 
 
-def get_search_emailer_sender(pk):
-  return SearchEmailerSender.objects.get(pk=pk)
+def get_search_emailer_sender(search_aggregate_id):
+  return SearchEmailerSender.objects.get(search_aggregate_id=search_aggregate_id)
 
 
 def create_search_emailer_sender(search):
