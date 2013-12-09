@@ -1,1 +1,1 @@
-from scrapy_test.apps.domain.apartment import event_handlers
+from scrapy_test.apps.domain.result import event_handlers

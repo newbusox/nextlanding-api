@@ -28,7 +28,7 @@ def create_search_result(result_aggregate):
     bathroom_count=apartment.bathroom_count,
     sqfeet=apartment.sqfeet,
     listing_urls=listing_urls,
-    last_updated_date=latest_listing.last_updated_date,
+    last_updated_date=latest_listing.last_updated_date or latest_listing.posted_date,
     description=latest_listing.description,
     contact_name=latest_listing.contact_name,
     contact_phone_number=latest_listing.contact_phone_number,
