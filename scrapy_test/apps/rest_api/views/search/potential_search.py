@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from scrapy_test.apps.domain.constants import POTENTIAL_SEARCH_SESSION_ID
 from scrapy_test.apps.domain.search.models import PotentialSearch
 from scrapy_test.apps.domain.search.services import potential_search_service
-from scrapy_test.apps.rest_api.serializers.potential_search import PotentialSearchSerializer
+from scrapy_test.apps.rest_api.serializers.search.potential_search import PotentialSearchSerializer
 
 
 class PotentialSearchViewSet(viewsets.ReadOnlyModelViewSet):

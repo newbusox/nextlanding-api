@@ -3,6 +3,8 @@ from django.db import IntegrityError
 from django.utils import timezone
 from scrapy_test.aggregates.search.models import Search
 from scrapy_test.apps.domain.apartment.models import AddApartmentToSearch
+from scrapy_test.apps.domain.apartment.services.apartment_amenity_service import get_amenities_dict
+from scrapy_test.apps.domain.search.services.search_location_service import get_coords_for_search
 from scrapy_test.apps.domain.search.signals import apartment_added_to_search
 from scrapy_test.libs.geo_utils.services.geo_distance_service import km_distance
 import logging
@@ -56,9 +58,7 @@ def update_apartment_from_listing(listing_aggregate):
 
   ret_val.is_available = apartment_aggregate.is_available
 
-  ret_val.amenities = {
-    x.amenity_type.name: {"is_available": x.is_available} for x in apartment_aggregate.amenities.all()
-  }
+  ret_val.amenities = get_amenities_dict(apartment_aggregate)
 
   _update_with_newest_listing(ret_val, listing_aggregate)
 
@@ -84,17 +84,6 @@ def disable_apartment(apartment_aggregate):
   save_or_update(apartment_search_model)
 
   return apartment_search_model
-
-
-def get_coords_for_search(search):
-  if search.geo_boundary_points:
-    #use the first place they drew and if they didn't draw, take the geocoded search term
-    first_geo_point = search.geo_boundary_points["0"][0]
-    search_geo = (first_geo_point[0], first_geo_point[1])
-  else:
-    search_geo = (search.lat, search.lng)
-
-  return search_geo
 
 
 def get_apartments_for_search(search, **kwargs):

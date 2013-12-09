@@ -25,7 +25,7 @@ class Result(models.Model, AggregateBase):
 
   search = models.ForeignKey('search.Search', related_name="results")
 
-  compliance_score = models.PositiveSmallIntegerField(max_length=2)
+  compliance_score = models.PositiveSmallIntegerField()
 
   # if we want to store a collection of availability details, we should consider replicating the amenities for our
   # listings and apartments. Listing.amenity -> amenity_type -> Amenity.amenity.

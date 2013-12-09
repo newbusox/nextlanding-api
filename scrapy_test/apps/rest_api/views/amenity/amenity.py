@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from scrapy_test.aggregates.amenity.models import Amenity
-from scrapy_test.apps.rest_api.serializers.amenity import AmenitySerializer
+from scrapy_test.apps.rest_api.serializers.amenity.amenity import AmenitySerializer
 
 
 class AmenityViewSet(viewsets.ReadOnlyModelViewSet):

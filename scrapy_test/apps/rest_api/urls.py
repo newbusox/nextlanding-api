@@ -9,6 +9,8 @@ from scrapy_test.apps.rest_api.views.search.potential_search import PotentialSea
 
 # our consumer, in this case, restangular, doesn't conventionally append a '/' suffix, so it's just easier to disable
 # the expectation on this side.
+from scrapy_test.apps.rest_api.views.search.results import SearchResultsView
+
 router = routers.DefaultRouter(trailing_slash=False)
 
 # Wire up our API using automatic URL routing.
@@ -27,11 +29,11 @@ potential_search_init = PotentialSearchViewSet.as_view({
 potential_search_complete = PotentialSearchViewSet.as_view({
   'post': 'complete_init',
 })
-# endregion
 
-# region apartment views
 add_apartments= AddApartmentsView.as_view()
 add_apartments_config = AddApartmentsConfigView.as_view()
+
+search_results= SearchResultsView.as_view()
 # endregion
 
 # region communication views
@@ -47,5 +49,6 @@ urlpatterns = patterns(
   url(r'^search/(?P<pk>[0-9]+)/emailer_sender$', EmailerSenderView.as_view(), name="emailer-sender"),
   url(r'^search/(?P<pk>[0-9]+)/apartments$', add_apartments, name="add-apartments"),
   url(r'^search/(?P<pk>[0-9]+)/add_apartments_config$', add_apartments_config, name="add-apartments-config"),
+  url(r'^search/(?P<pk>[0-9]+)/results$', search_results, name="search-results"),
   url(r'^communication/email/$', communication_email, name="communication-email"),
 )

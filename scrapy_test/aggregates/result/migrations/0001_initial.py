@@ -6,8 +6,6 @@ from django.db import models
 
 
 class Migration(SchemaMigration):
-    depends_on = (("search", "0001_initial"),)
-
 
     def forwards(self, orm):
         # Adding model 'Result'
@@ -15,7 +13,7 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('apartment', self.gf('django.db.models.fields.related.ForeignKey')(related_name='results', to=orm['apartment.Apartment'])),
             ('search', self.gf('django.db.models.fields.related.ForeignKey')(related_name='results', to=orm['search.Search'])),
-            ('compliance_score', self.gf('django.db.models.fields.PositiveSmallIntegerField')(max_length=2)),
+            ('compliance_score', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
             ('availability_contact_response', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('availability_last_response_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
             ('availability_type', self.gf('django.db.models.fields.related.ForeignKey')(related_name='result_instance', to=orm['availability.Availability'])),
@@ -70,7 +68,7 @@ class Migration(SchemaMigration):
             'availability_last_response_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'availability_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'result_instance'", 'to': u"orm['availability.Availability']"}),
             'changed_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'compliance_score': ('django.db.models.fields.PositiveSmallIntegerField', [], {'max_length': '2'}),
+            'compliance_score': ('django.db.models.fields.PositiveSmallIntegerField', [], {}),
             'created_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'search': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'results'", 'to': u"orm['search.Search']"})
