@@ -17,7 +17,7 @@ class CommunicationEmailView(APIView):
   API endpoint for incoming emails.
   """
   def post(self, request, *args, **kwargs):
-    if request.GET.get('token') != settings.EXTERNAL_API_TOKEN and not settings.DEBUG:
+    if request.QUERY_PARAMS.get('token') != settings.EXTERNAL_API_TOKEN and not settings.DEBUG:
       return HttpResponseForbidden()
 
     else:
