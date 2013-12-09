@@ -1,6 +1,7 @@
 from rest_framework import routers
 from django.conf.urls import patterns, include, url
 from scrapy_test.apps.rest_api.views.communication.email import CommunicationEmailView
+from scrapy_test.apps.rest_api.views.crawl.crawl import CrawlView
 from scrapy_test.apps.rest_api.views.search.add_apartments import AddApartmentsConfigView, AddApartmentsView
 
 from scrapy_test.apps.rest_api.views.amenity.amenity import AmenityViewSet
@@ -40,6 +41,10 @@ search_results= SearchResultsView.as_view()
 communication_email = CommunicationEmailView.as_view()
 # endregion
 
+# region crawl views
+crawl = CrawlView.as_view()
+# endregion
+
 urlpatterns = patterns(
   '',
   url(r'^', include(router.urls)),
@@ -50,5 +55,6 @@ urlpatterns = patterns(
   url(r'^search/(?P<pk>[0-9]+)/apartments$', add_apartments, name="add-apartments"),
   url(r'^search/(?P<pk>[0-9]+)/add_apartments_config$', add_apartments_config, name="add-apartments-config"),
   url(r'^search/(?P<pk>[0-9]+)/results$', search_results, name="search-results"),
+  url(r'^crawl$', crawl, name="crawl"),
   url(r'^communication/email/$', communication_email, name="communication-email"),
 )

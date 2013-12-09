@@ -25,3 +25,6 @@ def delete_listing_checker_task(listing_id):
   listing = listing_service.get_listing(listing_id)
   web_scraper_service.delete_listing_checker(listing)
 
+@task()
+def crawl_individual_page_task(crawl_url):
+  web_scraper_service.crawl_individual_page(crawl_url)

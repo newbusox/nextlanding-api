@@ -43,3 +43,11 @@ def add_listing_checker(listing):
 def delete_listing_checker(listing):
   listing_checker_cfg = ListingCheckerConfig.objects.get(pk=listing.id)
   listing_checker_cfg.delete()
+
+
+def crawl_individual_page(crawl_url):
+  crawl_url = crawl_url.strip()
+
+  t = IndividualProcessBasedItemLauncher()
+
+  t.run_spider('individual_listing_spider', crawl_url)
