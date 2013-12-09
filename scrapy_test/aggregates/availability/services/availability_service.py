@@ -7,6 +7,8 @@ def save_or_update(availability):
   availability.system_name = availability.system_name.lower()
   availability.save(internal=True)
 
+def get_availability_type(availability_id):
+  return Availability.objects.get(pk=availability_id)
 
 def get_keyword_hash():
   availability_hash = {

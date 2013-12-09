@@ -3,9 +3,9 @@ from scrapy_test.aggregates.availability.models import Availability
 from scrapy_test.aggregates.availability.services import availability_service
 from scrapy_test.aggregates.result import factories
 from scrapy_test.aggregates.result.models import Result
-from scrapy_test.apps.communication_associater.availability.email.services import email_service
+from scrapy_test.apps.communication_associater.availability.email.services import email_service as email_association_service
 from scrapy_test.libs.communication_utils.models import Email
-from scrapy_test.libs.communication_utils.services import email_service as email_association_service
+from scrapy_test.libs.communication_utils.services import email_service
 from scrapy_test.libs.communication_utils.signals import email_consumed_by_model
 
 
@@ -29,7 +29,7 @@ def associate_incoming_email_with_result(email,
                                          _email_service=email_service,
                                          _email_association_service=email_association_service,
                                          _availability_service=availability_service):
-  result_id = int(_email_association_service.get_result_from_email(email))
+  result_id = int(_email_association_service.get_availability_identifier_from_email(email))
 
   result = get_result(result_id)
 
