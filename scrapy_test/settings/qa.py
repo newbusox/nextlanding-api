@@ -101,11 +101,6 @@ CORS_ORIGIN_REGEX_WHITELIST = (
 ########## END CORS CONFIGURATION
 
 ########## MIDDLEWARE CONFIGURATION
-MIDDLEWARE_CLASSES += (
-  'sslify.middleware.SSLifyMiddleware',
-  # ...
-)
-
 PROXY_URL = os.environ['PROXY_URL']
 PROXY_USERNAME = os.environ['PROXY_USERNAME']
 PROXY_PASSWORD = os.environ['PROXY_PASSWORD']
