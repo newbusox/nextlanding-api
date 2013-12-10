@@ -308,7 +308,7 @@ class ListingBuilder(object):
 
     if broker_fee:
       broker_fee = self._get_single_stripped_value(broker_fee)
-      self._assign_output_attr(BROKER_FEE, broker_fee.lower() == 'true')
+      self._assign_output_attr(BROKER_FEE, broker_fee.lower() in ('true', '1'))
     else:
       url = self.listing_attrs_output.get(URL)
       if url:
