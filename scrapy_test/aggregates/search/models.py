@@ -27,7 +27,7 @@ class Search(models.Model, AggregateBase):
 
   # advanced usage and how to keep dicts ordered
   # upon deserializing https://github.com/bradjasper/django-jsonfield#advanced-usage
-  geo_boundary_points = JSONField(load_kwargs={'object_pairs_hook': collections.OrderedDict}, blank=True, null=True)
+  geo_boundary_points = JSONField(load_kwargs={'object_pairs_hook': collections.OrderedDict}, default={})
 
   address = models.CharField(max_length=255, blank=True, null=True)
   city = models.CharField(max_length=255)
