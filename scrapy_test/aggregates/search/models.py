@@ -3,7 +3,7 @@ import logging
 from django.core.exceptions import ValidationError
 
 from django.db import models, transaction
-from django_extensions.db.fields.json import JSONField
+from jsonfield import JSONField
 from localflavor.us.models import USStateField
 import reversion
 from scrapy_test.aggregates.search.signals import created, initiated_availability_request
@@ -27,7 +27,7 @@ class Search(models.Model, AggregateBase):
 
   # advanced usage and how to keep dicts ordered
   # upon deserializing https://github.com/bradjasper/django-jsonfield#advanced-usage
-  geo_boundary_points = JSONField(load_kwargs={'object_pairs_hook': collections.OrderedDict})
+  geo_boundary_points = JSONField(load_kwargs={'object_pairs_hook': collections.OrderedDict}, blank=True, null=True)
 
   address = models.CharField(max_length=255, blank=True, null=True)
   city = models.CharField(max_length=255)
