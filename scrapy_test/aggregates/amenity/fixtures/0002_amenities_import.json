@@ -40,14 +40,6 @@
     }
   },
   {
-    "pk": 15,
-    "model": "amenity.amenity",
-    "fields": {
-      "name": "Stove",
-      "aliases": "stove\r\nstove/oven"
-    }
-  },
-  {
     "pk": 16,
     "model": "amenity.amenity",
     "fields": {
@@ -96,14 +88,6 @@
     }
   },
   {
-    "pk": 19,
-    "model": "amenity.amenity",
-    "fields": {
-      "name": "No Pets",
-      "aliases": "no pets\r\nno dogs\r\nno cats\r\ndogs not allowed\r\npets not allowed"
-    }
-  },
-  {
     "pk": 4,
     "model": "amenity.amenity",
     "fields": {
@@ -139,7 +123,7 @@
     "pk": 21,
     "model": "amenity.amenity",
     "fields": {
-      "name": "Cats OK",
+      "name": "Cats Allowed",
       "aliases": "cats ok\r\ncat ok\r\npet friendly\r\npets allowed\r\npets upon approval"
     }
   },
@@ -147,7 +131,7 @@
     "pk": 22,
     "model": "amenity.amenity",
     "fields": {
-      "name": "Dogs OK",
+      "name": "Dogs Allowed",
       "aliases": "dogs ok\r\ndog ok\r\npet friendly\r\npets allowed\r\npets upon approval"
     }
   },
