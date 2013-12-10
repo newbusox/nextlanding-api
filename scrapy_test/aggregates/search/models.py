@@ -3,7 +3,7 @@ import logging
 from django.core.exceptions import ValidationError
 
 from django.db import models, transaction
-from jsonfield import JSONField
+from django_extensions.db.fields.json import JSONField
 from localflavor.us.models import USStateField
 import reversion
 from scrapy_test.aggregates.search.signals import created, initiated_availability_request
