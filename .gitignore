@@ -43,3 +43,5 @@ default.db
 .idea/misc.xml
 *.iml
 .scrapy
+
+dev_override.py

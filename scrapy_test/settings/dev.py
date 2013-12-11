@@ -154,3 +154,9 @@ INSTALLED_APPS += (
   'django_extensions',
 )
 ########## END DJANGO EXTENSIONS CONFIGURATION
+
+#Get a developer's local overrides (if they exist)
+try:
+  from dev_override import *
+except:
+  pass
