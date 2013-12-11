@@ -9,9 +9,6 @@ class SearchResult(models.Model):
   apartment_aggregate_id = models.IntegerField()
   search_aggregate_id = models.IntegerField()
 
-  #can this apt be searched and used to be added to a search?
-  is_available = models.BooleanField()
-
   address = models.CharField(max_length=255, blank=True, null=True)
   lat = models.FloatField()
   lng = models.FloatField()
