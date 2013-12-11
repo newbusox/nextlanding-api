@@ -34,3 +34,6 @@ class IndividualListingSpider(IndividualItemSpider, ListingSpider):
     self.ref_object = config
 
     super(IndividualListingSpider, self).__init__(*args, **kwargs)
+
+  def _set_start_urls(self, scrape_url):
+    self.start_urls.append(scrape_url)
