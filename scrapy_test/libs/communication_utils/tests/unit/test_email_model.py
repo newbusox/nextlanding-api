@@ -42,3 +42,7 @@ def test_email_model_corrects_from_keyword():
 def test_email_model_corrects_attachment():
   email_dict = dict(email_1, **{'attachments': 1})
   Email.construct_incoming_email(**email_dict)
+
+def test_email_model_validates():
+  email_dict = dict(email_1, **{'dkim': 'none'})
+  Email.construct_incoming_email(**email_dict)

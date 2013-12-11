@@ -2,11 +2,13 @@ from email import message_from_string
 from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.utils import timezone
 
 from jsonfield import JSONField
 from django.db import models
+from jsonfield.fields import JSONFormFieldBase
 from scrapy_test.libs.communication_utils.exceptions import EmailParseError
 from scrapy_test.libs.datetime_utils.parsers import datetime_parser
 
@@ -70,6 +72,10 @@ class Email(models.Model):
       ret_val.sent_date = _datetime_parser.get_datetime(message_dict['date'])
     except KeyError:
       raise EmailParseError()
+
+    #sometimes sendgrid sends the value "none" which is not valid json
+    ret_val.dkim = None if 'dkim' == "none" else ret_val.dkim
+    ret_val.SPF = None if 'SPF' == "none" else ret_val.SPF
 
     return ret_val
 
