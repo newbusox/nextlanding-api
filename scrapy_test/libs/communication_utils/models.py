@@ -74,8 +74,8 @@ class Email(models.Model):
       raise EmailParseError()
 
     #sometimes sendgrid sends the value "none" which is not valid json
-    ret_val.dkim = None if 'dkim' in ('none','pass') else ret_val.dkim
-    ret_val.SPF = None if 'SPF' in ('none', 'pass') else ret_val.SPF
+    ret_val.dkim = None if ret_val.dkim in ('none','pass') else ret_val.dkim
+    ret_val.SPF = None if ret_val.SPF in ('none', 'pass') else ret_val.SPF
 
     return ret_val
 
