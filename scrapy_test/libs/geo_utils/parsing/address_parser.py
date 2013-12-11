@@ -25,7 +25,7 @@ def is_cross_street_address(address):
 def join_cross_street(address):
   return ' & '.join(address)
 
-
+from django.core.mail import send_mail
 def is_valid_zip_code(zip_code):
   return bool(zip_code_pattern.search(zip_code))
 
