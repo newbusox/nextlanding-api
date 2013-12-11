@@ -1,5 +1,5 @@
 from django.db import models, transaction
-from django_extensions.db.fields.json import JSONField
+from jsonfield import JSONField
 from localflavor.us.models import PhoneNumberField
 
 
@@ -30,7 +30,7 @@ class SearchResult(models.Model):
   contact_phone_number = PhoneNumberField(blank=True, null=True)
   contact_email_address = models.EmailField(blank=True, null=True)
 
-  amenities = JSONField(blank=True, null=True)
+  amenities = JSONField(default={})
 
   compliance_score = models.PositiveSmallIntegerField()
   availability_contact_response = models.TextField(blank=True, null=True)
