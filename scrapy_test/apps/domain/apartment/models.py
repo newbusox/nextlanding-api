@@ -19,8 +19,8 @@ class AddApartmentToSearch(models.Model):
   cats_allowed = models.BooleanField()
   dogs_allowed = models.BooleanField()
   price = models.DecimalField(max_digits=10, decimal_places=2)
-  bedroom_count = models.PositiveSmallIntegerField(max_length=2, blank=True, null=True)
-  bathroom_count = models.DecimalField(max_digits=3, decimal_places=1, blank=True, null=True)
+  bedroom_count = models.PositiveSmallIntegerField(max_length=2)
+  bathroom_count = models.DecimalField(max_digits=3, decimal_places=1)
   sqfeet = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
 
   listing_urls = JSONField(default=[])
