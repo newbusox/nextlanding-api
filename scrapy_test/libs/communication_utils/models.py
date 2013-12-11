@@ -21,8 +21,8 @@ class Email(models.Model):
   from_address = models.TextField()
   cc = models.TextField(blank=True, null=True)
   subject = models.TextField(blank=True, null=True)
-  dkim = JSONField(blank=True, null=True)
-  SPF = JSONField(blank=True, null=True)
+  dkim = models.TextField(blank=True, null=True)
+  SPF = models.TextField(blank=True, null=True)
   envelope = JSONField(blank=True, null=True)
   charsets = models.CharField(max_length=255, blank=True, null=True)
   spam_score = models.FloatField(validators=[MaxValueValidator(settings.SPAM_SCORE_THRESHOLD)], blank=True, null=True)
@@ -72,10 +72,6 @@ class Email(models.Model):
       ret_val.sent_date = _datetime_parser.get_datetime(message_dict['date'])
     except KeyError:
       raise EmailParseError()
-
-    #sometimes sendgrid sends the value "none" which is not valid json
-    ret_val.dkim = None if ret_val.dkim in ('none','pass') else ret_val.dkim
-    ret_val.SPF = None if ret_val.SPF in ('none', 'pass') else ret_val.SPF
 
     return ret_val
 
