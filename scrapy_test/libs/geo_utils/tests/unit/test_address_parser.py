@@ -54,6 +54,13 @@ def test_address_parser_joins_cross_street():
     'zip_code': '11238',
     'formatted_address': 'Bergen Street, Brooklyn, NY 11238',
   }),
+  ('East 67th Street, New York, NY 10065', {
+    'address1': 'East 67th Street',
+    'city': 'New York',
+    'state': 'NY',
+    'zip_code': '10065',
+    'formatted_address': 'East 67th Street, New York, NY 10065'
+  }),
 ])
 def test_address_parser_parses_well_formatted_address(input_values, expected):
   complete_address = address_parser.parse_address(input_values)._asdict()

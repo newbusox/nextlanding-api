@@ -6,7 +6,7 @@ zip_code_pattern = re.compile(r'^\d{5}(?:-\d{4})?$')
 well_formatted_pattern = re.compile(
   r'(?:(?P<building_name>[\w\s\-]+)\s+at\s+)?'
   r'((?P<address_number>[\d\-]+)\s+)?'
-  r'(?P<street>[\w\s\-]+(?=\s+in)?)'
+  r'(?P<street>([\w\s\-]+(?=\sin))|([\w\s\-]+(?=,)))'
   r'(?: in (?P<neighborhood>[\w\s\-]+))?,\s*'
   r'(?P<city>[\w\s\-]+),\s*'
   r'(?P<state>\w{2})\s+'
