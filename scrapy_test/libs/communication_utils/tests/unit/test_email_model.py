@@ -44,5 +44,5 @@ def test_email_model_corrects_attachment():
   Email.construct_incoming_email(**email_dict)
 
 def test_email_model_validates():
-  email_dict = dict(email_1, **{'dkim': 'none'})
+  email_dict = dict(email_1, **{'dkim': 'none','spf':'pass'})
   Email.construct_incoming_email(**email_dict)
