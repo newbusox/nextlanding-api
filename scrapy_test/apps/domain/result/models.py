@@ -1,5 +1,5 @@
 from django.db import models, transaction
-from django_extensions.db.fields.json import JSONField
+from jsonfield import JSONField
 from localflavor.us.models import PhoneNumberField
 
 

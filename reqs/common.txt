@@ -20,4 +20,3 @@ sendgrid==0.1.4
 djangorestframework==2.3.8
 django-cors-headers==0.12
 stripe==1.9.8
-django-extensions==1.2.4
