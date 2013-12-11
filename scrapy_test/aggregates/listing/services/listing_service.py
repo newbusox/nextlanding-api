@@ -22,7 +22,7 @@ def update_listing(**listing_attrs):
   url = listing_attrs['url']
   listing = get_listing_by_url(url)
 
-  last_updated_date = listing_attrs['last_updated_date']
+  last_updated_date = listing_attrs.get('last_updated_date')
 
   if last_updated_date:
     listing.update_last_updated_date(datetime_parser.get_datetime(last_updated_date[0]))

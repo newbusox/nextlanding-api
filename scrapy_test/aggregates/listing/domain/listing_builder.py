@@ -1,4 +1,5 @@
 import os
+from django.utils import timezone
 from scrapy_test.aggregates.amenity.services import amenity_service
 from scrapy_test.aggregates.listing import factories
 from scrapy_test.aggregates.listing.services import listing_geo_service
@@ -114,6 +115,8 @@ class ListingBuilder(object):
         raise Exception("invalid date: %s" % posted_date)
 
       self._assign_output_attr(POSTED_DATE, posted_date)
+    else:
+      self._assign_output_attr(POSTED_DATE, timezone.now())
 
   def _build_last_updated_date(self):
     last_updated_date = self.listing_attrs_input.get(LAST_UPDATED_DATE, None)
