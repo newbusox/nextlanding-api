@@ -25,6 +25,7 @@ class Email(models.Model):
   charsets = models.CharField(max_length=255, blank=True, null=True)
   spam_score = models.FloatField(validators=[MaxValueValidator(settings.SPAM_SCORE_THRESHOLD)], blank=True, null=True)
   spam_report = models.TextField(blank=True, null=True)
+  sender_ip = models.CharField(max_length=255, blank=True, null=True)
 
   message_id = models.CharField(max_length=1024, blank=True, null=True)
   in_reply_to_message_id = models.CharField(max_length=1024, blank=True, null=True)
