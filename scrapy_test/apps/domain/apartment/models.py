@@ -32,7 +32,7 @@ class AddApartmentToSearch(models.Model):
   contact_phone_number = PhoneNumberField(blank=True, null=True)
   contact_email_address = models.EmailField(blank=True, null=True)
 
-  amenities = JSONField(default={})
+  amenities = JSONField(blank=True, null=True)
 
   class Meta:
     app_label = 'domain'

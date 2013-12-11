@@ -30,7 +30,7 @@ class SearchResult(models.Model):
   contact_phone_number = PhoneNumberField(blank=True, null=True)
   contact_email_address = models.EmailField(blank=True, null=True)
 
-  amenities = JSONField(default={})
+  amenities = JSONField(blank=True, null=True)
 
   compliance_score = models.PositiveSmallIntegerField()
   availability_contact_response = models.TextField(blank=True, null=True)
