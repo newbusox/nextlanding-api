@@ -38,8 +38,8 @@ def _create_search_apartment_from_aggregate(apartment_aggregate):
     lat=apartment_aggregate.lat,
     lng=apartment_aggregate.lng,
     broker_fee=apartment_aggregate.broker_fee,
-    cats_ok=bool(apartment_aggregate.amenities.filter(amenity_type__name='Cats Allowed').count()),
-    dogs_ok=bool(apartment_aggregate.amenities.filter(amenity_type__name='Dogs Allowed').count()),
+    cats_allowed=bool(apartment_aggregate.amenities.filter(amenity_type__name='Cats Allowed').count()),
+    dogs_allowed=bool(apartment_aggregate.amenities.filter(amenity_type__name='Dogs Allowed').count()),
     price=apartment_aggregate.price,
     bedroom_count=apartment_aggregate.bedroom_count,
     bathroom_count=apartment_aggregate.bathroom_count,
@@ -120,10 +120,10 @@ def get_apartments_for_search(search, **kwargs):
     apartments = apartments.exclude(broker_fee=True)
 
   if cats_required:
-    apartments = apartments.filter(cats_ok=True)
+    apartments = apartments.filter(cats_allowed=True)
 
   if dogs_required:
-    apartments = apartments.filter(dogs_ok=True)
+    apartments = apartments.filter(dogs_allowed=True)
 
   #don't show apartments already tied to search
   results = search.results.all()
