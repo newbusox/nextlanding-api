@@ -15,17 +15,10 @@ def send_email(from_address, from_name, to_address, subject, text, html):
 
   msg = sendgrid.Message((from_address, from_name), subject, text, html)
   msg.add_to(to_address)
-  logger.info('********************')
-  logger.info(to_address)
+
   if settings.DEBUG:
     logger.info(msg)
   else:
-
-
-    logger.info('to_domain is ' + to_domain)
-    logger.info('secondary domains ' + settings.SECONDARY_EMAIL_DOMAINS)
-    logger.info('if in ' + str(to_domain in settings.SECONDARY_EMAIL_DOMAINS))
-
     if to_domain in settings.SECONDARY_EMAIL_DOMAINS:
       secondary_emailer.smtp.send(msg)
     else:
