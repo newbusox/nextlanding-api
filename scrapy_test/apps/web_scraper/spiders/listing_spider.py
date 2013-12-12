@@ -62,14 +62,18 @@ class ListingSpider(DjangoSpider):
           }
         )
       elif self.from_detail_page and 'craigslist' in response.url:
-
-        scraper = Scraper.objects.get(name='Craigslist Contact Page Partial-Listing Scraper')
-        ret_val = Request(
-          parsed_item['contact_email_address'][0], callback=self.parse_item, meta={
-            'item': parsed_item,
-            'scraper': scraper
-          }
-        )
+        # sometimes craigslist has no "contact_email_addres" link (to contact page), so this would
+        # fail otherwise
+        if parsed_item['contact_email_address']:
+          scraper = Scraper.objects.get(name='Craigslist Contact Page Partial-Listing Scraper')
+          ret_val = Request(
+            parsed_item['contact_email_address'][0], callback=self.parse_item, meta={
+              'item': parsed_item,
+              'scraper': scraper
+            }
+          )
+        else:
+          ret_val = parsed_item
       else:
         ret_val = parsed_item
 
