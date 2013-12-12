@@ -1,3 +1,5 @@
+import pytz
+
 email_1 = {
   u'spam_score': u'0.101',
   u'spam_report': u'Spam detection software, running on the system "mx3.sendgrid.net", '
@@ -40,3 +42,42 @@ email_1 = {
   u'charsets': u'{"to":"UTF-8","cc":"UTF-8","html":"ISO-8859-1","subject":"UTF-8","from":"UTF-8","text":"ISO-8859-1"}',
   u'dkim': u'{@gmail.com : pass}', u'SPF': u'pass', u'subject': u'Hi'
 }
+
+eastern_time_zone = pytz.timezone('US/Eastern')
+
+# region result 1
+search_1 = {
+  'description': 'I want a great place to live',
+  'specified_location': 'Astoria NY',
+  'geo_boundary_points': {"0": [[40.738152838822934, -74.0741103887558], [40.717338733312495, -74.05419766902924],
+                                [40.701463603604594, -74.08990323543549]]},
+  'no_fee_preferred': True,
+  'bedroom_max': 2,
+  'bathroom_max': 1.5,
+  'sqfeet_max': 850.50,
+  'price_max': 2500.50,
+  'amenities': [1, 2]
+}
+
+cl_listing_4033538277 = {u'city': [u'brooklyn'], u'contact_phone_number': [u'bedstuy / clinton hill'],
+                         u'description': [u'\n\t\tBeautiful 3 Bedroom 2 Full bath', u'\nAmazing Finishes',
+                                          u'\nHuge Backyard',
+                                          u'\n100% no fee By owner',
+                                          u'\nAll Bedrooms can fit King and Queen sized beds',
+                                          u'\nSteps to the G train', u'\nLaundry in the Building',
+                                          u'\nClose to All your needs',
+                                          u'\nNo brokers Please', u'\nCall or Text Danny @ 646 338 3852 ',
+                                          u'\n3526+56+5\n\t'],
+                         u'title': [
+                           u'\n  - $2695 / 3br - 3 Bedroom 2 Full bath + Massive Backyard~Prime Location (bedstuy / '
+                           u'clinton hill)\n'],
+                         u'url': u'http://newyork.craigslist.org/brk/abo/4033538277.html', u'state': [u'ny'],
+                         u'last_updated_date': [],
+                         u'posted_date': [u'2013-08-29, 12:55PM EDT', u'2013-08-29, 12:55PM EDT'],
+                         u'contact_email_address': [u'test@hous.craigslist.org'],
+                         u'address': [u'vernon ave at nostrand', u'vernon ave', u'nostrand'], u'lat': [u'40.694263'],
+                         'listing_source_id': 1,
+                         u'lng': [u'-73.952341'], u'broker_fee': [u'/brk/abo/4033538277.html'],
+                         u'contact_name': [u'bedstuy / clinton hill']}
+
+#endregion

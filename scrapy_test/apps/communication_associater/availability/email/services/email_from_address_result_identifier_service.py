@@ -13,5 +13,8 @@ def get_availability_identifier_from_email(email):
 
 
 def prepare_outgoing_email(result, search_specific_email_message_request, template_vars):
-  template_vars['to_address'] = "{0}-{1}".format(['to_address'], result.pk)
+  addresss_parts  = template_vars['from_email_address'].split('@')
+  new_address = "{0}-{1}@{2}".format(addresss_parts[0],result.pk,addresss_parts[1])
+  template_vars['from_email_address'] = new_address
+  return search_specific_email_message_request
 

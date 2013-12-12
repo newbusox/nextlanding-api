@@ -62,7 +62,15 @@ class AvailabilityEmailBuilder(object):
     variables['availability_identifier'] = self._get_availability_identifier()
     context = Context(variables)
 
-    self.result_identifier_service.prepare_outgoing_email(result, search_specific_email_message_request)
+    #search_specific_email_message_request is immutable
+    self.search_specific_email_message_request = (
+      self.result_identifier_service
+      .prepare_outgoing_email(result, search_specific_email_message_request, context)
+    )
+
+    #allow us to get versions of vars after putting through result identifier
+    from_address= variables['from_email_address']
+
 
     subject_template = Template(self.search_specific_email_message_request.subject)
     subject = subject_template.render(context)

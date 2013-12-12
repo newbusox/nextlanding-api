@@ -2,7 +2,7 @@ import logging
 from django.conf import settings
 
 from scrapy_test.apps.communication_associater.availability.email.services import \
-  email_body_result_identifier_service, email_to_address_result_identifier_service
+  email_body_result_identifier_service, email_from_address_result_identifier_service
 from scrapy_test.apps.communication_associater.availability.email.services.availability_email_builder import \
   AvailabilityEmailBuilder
 from scrapy_test.libs.communication_utils.services import email_service
