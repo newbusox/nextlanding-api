@@ -56,10 +56,9 @@ class Email(models.Model):
     from_address = kwargs['from']
     kwargs['from_address'] = from_address
 
-    del kwargs['from']
-    del kwargs['attachments']
-
-    ret_val = cls(**kwargs)
+    # account for fields that are not in the model
+    field_names = cls._meta.get_all_field_names()
+    ret_val = cls(**{k:v for k,v in kwargs.items() if k in field_names})
 
     message = message_from_string(ret_val.headers)
     message_dict = {t[0].lower(): t[1] for t in message.items()}
