@@ -6,6 +6,7 @@ from scrapy_test.apps.communication_associater.availability.email import constan
 
 from scrapy_test.apps.communication_associater.availability.email.email_objects import \
   SearchSpecificEmailMessageInstance
+from scrapy_test.apps.communication_associater.availability.email.services import email_result_identifier_service
 
 logger = logging.getLogger(__name__)
 
@@ -13,6 +14,9 @@ availability_from_email_address_domain = settings.AVAILABILITY_FROM_EMAIL_ADDRES
 
 
 class AvailabilityEmailBuilder(object):
+  def __init__(self, result_identifier_service=email_result_identifier_service):
+    self.result_identifier_service = result_identifier_service
+
   def _get_listing(self):
     #get the 'best' contact - the most recent contact w/ name + email
     listing = (
@@ -57,6 +61,8 @@ class AvailabilityEmailBuilder(object):
 
     variables['availability_identifier'] = self._get_availability_identifier()
     context = Context(variables)
+
+    self.result_identifier_service.prepare_outgoing_email(result, search_specific_email_message_request)
 
     subject_template = Template(self.search_specific_email_message_request.subject)
     subject = subject_template.render(context)

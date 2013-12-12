@@ -1,10 +1,8 @@
 import logging
 from django.conf import settings
 
-from django.core.exceptions import ValidationError
-
-from scrapy_test.apps.communication_associater.availability.email.constants import EMAIL_AVAILABILITY_IDENTIFIER_RE, \
-  EMAIL_AVAILABILITY_IDENTIFIER_VARIABLE_NAME
+from scrapy_test.apps.communication_associater.availability.email.services import \
+  email_body_result_identifier_service, email_to_address_result_identifier_service
 from scrapy_test.apps.communication_associater.availability.email.services.availability_email_builder import \
   AvailabilityEmailBuilder
 from scrapy_test.libs.communication_utils.services import email_service
@@ -41,18 +39,3 @@ def request_availability_about_apartments(search, search_specific_email_message_
         )
       except:
         logger.exception("Error sending email message")
-
-
-def validate_availability_email(message_body_template):
-  if EMAIL_AVAILABILITY_IDENTIFIER_VARIABLE_NAME not in message_body_template:
-    raise ValidationError("body must contain identifier")
-
-
-def get_availability_identifier_from_email(email):
-  match = EMAIL_AVAILABILITY_IDENTIFIER_RE.search(email.text)
-
-  if not match:
-    raise ValidationError("email text did not contain availability identifier")
-
-  return match.groups(0)[0]
-
