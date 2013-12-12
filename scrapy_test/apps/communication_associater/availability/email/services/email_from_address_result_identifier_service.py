@@ -7,7 +7,7 @@ def get_availability_identifier_from_email(email):
   try:
     result_id = int(email.to_address.split('-')[1].split('@')[0])
   except:
-    raise ValueError("Error getting id from this address: {0}".format(email.to_address))
+    raise ValueError("Error getting id from this address: {0}".format(email.to))
 
   return result_id
 
