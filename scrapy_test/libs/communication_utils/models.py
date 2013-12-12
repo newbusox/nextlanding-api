@@ -84,3 +84,6 @@ class Email(models.Model):
 
   def associate_model(self, associated_model):
     self.content_object = associated_model
+
+  def __unicode__(self):
+    return 'Email #' + str(self.pk) + ': ' + self.subject
