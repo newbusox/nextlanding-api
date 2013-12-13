@@ -21,7 +21,12 @@ DATABASES = postgresify()
 
 
 ########## CACHE CONFIGURATION
-# See: django skell for robust examples
+CACHES = {
+  'default': {
+    'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+    'LOCATION': 'nextlanding_api_cache',
+    }
+}
 ########## END CACHE CONFIGURATION
 
 
