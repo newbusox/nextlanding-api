@@ -31,8 +31,10 @@ INSTALLED_APPS += (
   'raven.contrib.django.raven_compat',
 )
 
+APP_LOG_LEVEL = os.environ.get('APP_LOG_LEVEL','INFO')
+
 LOGGING['handlers']['console_handler'] = {
-  'level': 'INFO',
+  'level': APP_LOG_LEVEL,
   'class': 'logging.StreamHandler',
   'formatter': 'standard',
   'stream': sys.stdout # http://stackoverflow.com/questions/11866322/heroku-logs-for-django-projects-missing-errors
@@ -45,7 +47,7 @@ LOGGING['handlers']['exception_handler'] = {
 
 app_logger = {
   'handlers': ['console_handler', 'exception_handler'],
-  'level': 'INFO',
+  'level': APP_LOG_LEVEL,
   'propagate': False
 }
 
