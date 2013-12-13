@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 def get_availability_identifier_from_email(email):
   try:
-    result_id = int(email.to_address.split('-')[1].split('@')[0])
+    result_id = int(email.to.split('-')[1].split('@')[0])
   except:
     raise ValueError("Error getting id from this address: {0}".format(email.to))
 
