@@ -49,15 +49,11 @@ class StopOnDuplicateItem(object):
 
 
 class StatsReporter(object):
-  interested_stats = ['item_dropped', 'location_geocoded']
+  interested_stats = ('item_dropped',)
 
   def __init__(self, crawler, analytics_service=analytics_service):
     self.crawler = crawler
     self._analytics_service = analytics_service
-
-    @receiver(location_geocoded, weak=False)
-    def location_geocoded_callback(sender, **kwargs):
-      self.crawler.stats.inc_value('location_geocoded')
 
     crawler.signals.connect(self.spider_closed, signal=signals.spider_closed)
 
@@ -77,4 +73,5 @@ class StatsReporter(object):
       stats_to_log['listing_source_name'] = spider.ref_object.listing_source.name
       stats_to_log['listing_source_url'] = spider.ref_object.listing_source.url
 
-    self._analytics_service.send_event("Crawler Finished", stats_to_log)
+      #for now, we'll only log the listing spier (exclude listing checkers)
+      self._analytics_service.send_event("Crawler Finished", stats_to_log)
