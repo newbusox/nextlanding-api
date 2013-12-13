@@ -9,17 +9,24 @@ logger = logging.getLogger(__name__)
 
 @task
 def create_listing_task(**listing_attrs):
-  logger.debug("Received listing params: {0}".format(listing_attrs))
+  logger.debug("Received listing params for creating: {0}".format(listing_attrs['url']))
   try:
-    return listing_service.create_listing(**listing_attrs).id
+    ret_val = listing_service.create_listing(**listing_attrs).id
+    logger.debug("Finished listing creation: {0}".format(listing_attrs['url']))
+    return ret_val
   except Exception as e:
     logger.WARN(log_ex_with_message("Error creating listing", e))
 
 
 @task
 def update_listing_task(**listing_attrs):
-  return listing_service.update_listing(**listing_attrs).id
-
+  logger.debug("Received listing params for update: {0}".format(listing_attrs['url']))
+  try:
+    ret_val = listing_service.update_listing(**listing_attrs).id
+    logger.debug("Finished listing update: {0}".format(listing_attrs['url']))
+    return ret_val
+  except Exception as e:
+    logger.WARN(log_ex_with_message("Error updating listing", e))
 
 @task
 def kill_listing_task(listing_id):
