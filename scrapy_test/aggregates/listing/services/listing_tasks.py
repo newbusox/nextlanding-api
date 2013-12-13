@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 
 @task
 def create_listing_task(**listing_attrs):
+  logger.debug("Received listing params: {0}".format(listing_attrs))
   try:
     return listing_service.create_listing(**listing_attrs).id
   except Exception as e:
