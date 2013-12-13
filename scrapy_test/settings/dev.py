@@ -40,10 +40,10 @@ DATABASES = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
 CACHES = {
   'default': {
-    'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-    'LOCATION': 'nextlanding_api_cache',
-    }
+    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+  }
 }
+
 ########## END CACHE CONFIGURATION
 
 ########## LOGGING CONFIGURATION
