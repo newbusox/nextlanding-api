@@ -31,6 +31,16 @@ CACHES = {
 
 
 ########## LOGGING CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
+#celery hijacks its logging to prevent other libs from screwing it up.
+#http://docs.celeryproject.org/en/latest/configuration.html#logging
+#why: http://stackoverflow.com/a/6942030/173957
+#code: /celery/app/log.py
+#if self.app.conf.CELERYD_HIJACK_ROOT_LOGGER:
+#  root.handlers = []
+
+CELERYD_HIJACK_ROOT_LOGGER = False
+
 # See: Raven sends errors to sentry
 INSTALLED_APPS += (
   'raven.contrib.django.raven_compat',
