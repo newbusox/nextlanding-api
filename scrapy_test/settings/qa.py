@@ -6,6 +6,7 @@ import os
 
 from postgresify import postgresify
 import sys
+import urlparse
 
 from common import *
 
@@ -21,11 +22,16 @@ DATABASES = postgresify()
 
 
 ########## CACHE CONFIGURATION
+redis_url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
 CACHES = {
   'default': {
-    'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-    'LOCATION': 'nextlanding_api_cache',
-    }
+    'BACKEND': 'redis_cache.RedisCache',
+    'LOCATION': '%s:%s' % (redis_url.hostname, redis_url.port),
+    'OPTIONS': {
+      'PASSWORD': redis_url.password,
+      'DB': 0,
+      }
+  }
 }
 ########## END CACHE CONFIGURATION
 
@@ -59,7 +65,7 @@ app_logger = {
 LOGGING['loggers'] = {
   '': {
     'handlers': ['console_handler'],
-    'level': 'INFO',
+    'level': APP_LOG_LEVEL,
     'propagate': True
   },
   'django.request': {
