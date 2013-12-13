@@ -3,18 +3,6 @@ import datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
-
-class Migration(DataMigration):
-
-    def forwards(self, orm):
-      orm['dynamic_scraper.scraperelem'].objects.filter(pk=17).update(
-        x_path="//*[@id='pagecontainer']//a[@class='replylink']/text()"
-      )
-# -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import DataMigration
-from django.db import models
 from scrapy_test.libs.django_utils.extensions.migrations import load_data
 
 
