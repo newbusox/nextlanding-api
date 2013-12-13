@@ -22,7 +22,7 @@ class AggregateCommandPipeline(object):
           listing_tasks.create_listing_task.delay(**dict(item, listing_source_id=spider.ref_object.listing_source.id))
 
       spider.action_successful = True
-      spider.log("Iitem sent to application to be processed.", log.INFO)
+      spider.log("Item sent to application to be processed: {0}".format(item['url']), log.INFO)
     except:
       spider.log(traceback.format_exc(), log.ERROR)
       raise DropItem("Error sending item.")
