@@ -2,7 +2,6 @@ import logging
 from django.conf import settings
 
 from django.template import Context, Template
-from scrapy_test.apps.communication_associater.availability.email import constants
 
 from scrapy_test.apps.communication_associater.availability.email.email_objects import \
   SearchSpecificEmailMessageInstance
@@ -59,7 +58,6 @@ class AvailabilityEmailBuilder(object):
     variables['source'] = self._get_source_name()
     variables['to_address'] = to_address
 
-    variables['availability_identifier'] = self._get_availability_identifier()
     context = Context(variables)
 
     #search_specific_email_message_request is immutable
@@ -120,6 +118,3 @@ class AvailabilityEmailBuilder(object):
 
   def _get_to_email_address(self):
     return self.listing.contact_email_address
-
-  def _get_availability_identifier(self):
-    return constants.EMAIL_AVAILABILITY_IDENTIFIER.format(self.result.id)
