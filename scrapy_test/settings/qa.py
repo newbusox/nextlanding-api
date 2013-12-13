@@ -59,7 +59,7 @@ app_logger = {
 LOGGING['loggers'] = {
   '': {
     'handlers': ['console_handler'],
-    'level': 'INFO',
+    'level': APP_LOG_LEVEL,
     'propagate': True
   },
   'django.request': {
