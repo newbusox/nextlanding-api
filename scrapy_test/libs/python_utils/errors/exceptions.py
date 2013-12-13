@@ -3,7 +3,7 @@ import sys
 
 
 def re_throw_ex(ex_type, message, inner_ex):
-  raise (
+  return (
     ex_type,
     log_ex_with_message(message, inner_ex),
     sys.exc_info()[2] #this is the traceback
