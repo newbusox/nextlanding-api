@@ -55,6 +55,9 @@ CACHES = {
 #if self.app.conf.CELERYD_HIJACK_ROOT_LOGGER:
 #  root.handlers = []
 
+# celery controls the root logging behavior with --loglevel=LEVEL
+# we've set it to DEBUG so that our app controls the levels.
+
 CELERYD_HIJACK_ROOT_LOGGER = False
 
 LOGGING['handlers']['console_handler'] = {
