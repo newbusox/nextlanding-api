@@ -307,7 +307,7 @@ GMAIL_PASSWORD = environ.get('GMAIL_PASSWORD')
 SECONDARY_EMAIL_DOMAINS = ('hous.craigslist.org',)
 # these domains, like CL, will not work if you attach the result id to the "from" address because we cannot
 # reliably use a service like sendgrid to send emails - we instead might need individual email addresses
-BODY_RESULT_IDENTIFIER_DOMAINS = ('hous.craigslist.org',)
+BODY_RESULT_IDENTIFIER_DOMAINS = ('hous.craigslist.org','reply.craigslist.org')
 ########## END EMAIL CONFIGURATION
 
 ########### REST CONFIGURATION
