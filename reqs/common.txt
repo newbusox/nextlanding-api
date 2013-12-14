@@ -4,7 +4,7 @@ django-celery==3.0.17
 Fabric==1.6.1
 South==0.8.1
 Sphinx==1.1.3
-git+git://github.com/nextlanding/django-dynamic-scraper.git@b7de7e377abfc162080774951452317a16f82ad6#egg=django_dynamic_scraper-dev
+git+git://github.com/nextlanding/django-dynamic-scraper.git@cb0d28b1cd647d3a690d657926ef7f8826a17c34#egg=django_dynamic_scraper-dev
 Scrapy==0.16.5
 Pillow==2.1.0
 dingus==0.3.4
