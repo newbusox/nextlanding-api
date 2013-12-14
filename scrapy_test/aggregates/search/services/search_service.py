@@ -1,6 +1,6 @@
 import logging
 from django.conf import settings
-from scrapy_test.aggregates.search import factories
+from scrapy_test.aggregates.search import factories, constants
 from scrapy_test.aggregates.search.models import Search
 from scrapy_test.libs.communication_utils.services import email_service
 from scrapy_test.libs.geo_utils.services import geo_location_service
@@ -57,8 +57,8 @@ def notify_search_purchase(search, _email_service=email_service, ):
       settings.PUBLIC_EMAIL[1],
       settings.PUBLIC_EMAIL[0],
       search.email_address ,
-      "Your Search Was Successfully Created",
-      "You can see it here".format(search.pk),
+      constants.BUYER_PURCHASE_SUBJECT_TEMPLATE,
+      constants.BUYER_PURCHASE_BODY_TEMPLATE,
       search
     )
   except Exception as e:
