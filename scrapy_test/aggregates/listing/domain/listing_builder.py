@@ -213,20 +213,20 @@ class ListingBuilder(object):
           self.listing_attrs_output.get(CITY),
           self.listing_attrs_output.get(STATE),
         )
+
+        self.listing_attrs_output[LAT] = sanitized_address.lat
+        self.listing_attrs_output[LNG] = sanitized_address.lng
+        self.listing_attrs_output[ADDRESS] = sanitized_address.address
+        self.listing_attrs_output[CITY] = sanitized_address.city
+        self.listing_attrs_output[STATE] = sanitized_address.state
+        self.listing_attrs_output[ZIP_CODE] = sanitized_address.zip_code
+        self.listing_attrs_output[FORMATTED_ADDRESS] = sanitized_address.formatted_addressddress
+
     except GeocoderError as e:
       throw_ex = re_throw_ex(
         ListingBuilderError, "Error geocoding: {0}".format(self.listing_attrs_input[URL]), e
       )
       raise throw_ex[0], throw_ex[1], throw_ex[2]
-
-    self.listing_attrs_output[LAT] = sanitized_address.lat
-    self.listing_attrs_output[LNG] = sanitized_address.lng
-    self.listing_attrs_output[ADDRESS] = sanitized_address.address
-    self.listing_attrs_output[CITY] = sanitized_address.city
-    self.listing_attrs_output[STATE] = sanitized_address.state
-    self.listing_attrs_output[ZIP_CODE] = sanitized_address.zip_code
-    self.listing_attrs_output[FORMATTED_ADDRESS] = sanitized_address.formatted_address
-
   #endregion
 
   #region general
