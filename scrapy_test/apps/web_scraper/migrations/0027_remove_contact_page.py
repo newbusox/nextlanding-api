@@ -10,6 +10,7 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
       orm['web_scraper.listingsourcescraperconfig'].objects.filter(pk=2).delete()
+      orm['dynamic_scraper.schedulerruntime'].objects.filter(pk=5).delete()
       orm['dynamic_scraper.schedulerruntime'].objects.filter(pk=2).delete()
 
 
