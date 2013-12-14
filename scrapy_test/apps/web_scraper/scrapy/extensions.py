@@ -1,12 +1,10 @@
 from datetime import timedelta
-from django.dispatch import receiver
 from django.utils import timezone
 from scrapy import signals
 from scrapy_test.aggregates.listing.models import Listing
 from scrapy_test.apps.web_scraper.spiders.listing_spider import ListingSpider
 from scrapy_test.libs.analytics_utils.services import analytics_service
 from scrapy_test.libs.datetime_utils.parsers import datetime_parser
-from scrapy_test.libs.geo_utils.signals import location_geocoded
 
 
 class StopOnDuplicateItem(object):
