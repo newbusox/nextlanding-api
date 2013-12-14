@@ -186,10 +186,17 @@ class ListingBuilder(object):
     lng = self.listing_attrs_input.get(LNG)
 
     if lat and lng:
-      lat = self._get_single_stripped_value(lat, None)
-      lng = self._get_single_stripped_value(lng, None)
-      self._assign_output_attr(LAT, float(lat))
-      self._assign_output_attr(LNG, float(lng))
+
+      try:
+        lat = self._get_single_stripped_value(lat, None)
+        lng = self._get_single_stripped_value(lng, None)
+        self._assign_output_attr(LAT, float(lat))
+        self._assign_output_attr(LNG, float(lng))
+      except ValueError as e:
+        throw_ex = re_throw_ex(
+          ListingBuilderError, "Error getting lat/lng: {0}".format(self.listing_attrs_input[URL]), e
+        )
+        raise throw_ex[0], throw_ex[1], throw_ex[2]
 
   def _build_formatted_address(self):
     formatted_address = self.listing_attrs_input.get(FORMATTED_ADDRESS, None)
@@ -227,6 +234,7 @@ class ListingBuilder(object):
         ListingBuilderError, "Error geocoding: {0}".format(self.listing_attrs_input[URL]), e
       )
       raise throw_ex[0], throw_ex[1], throw_ex[2]
+
   #endregion
 
   #region general
