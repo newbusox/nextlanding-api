@@ -986,7 +986,7 @@
     "scraper": 4, 
     "from_detail_page": true, 
     "mandatory": true, 
-    "reg_exp": "\"latitude\":(-*\\d+\\.\\d+),"
+    "reg_exp": "\"latitude\":(-*\\d+\\.\\d+)"
   }
 },
 {
@@ -1000,7 +1000,7 @@
     "scraper": 4, 
     "from_detail_page": true, 
     "mandatory": true, 
-    "reg_exp": "\"longitude\":(-*\\d+\\.\\d+),"
+    "reg_exp": "\"longitude\":(-*\\d+\\.\\d+)"
   }
 },
 {
