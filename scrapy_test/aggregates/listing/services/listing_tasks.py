@@ -15,7 +15,7 @@ def create_listing_task(**listing_attrs):
     logger.debug("Finished listing creation: {0}".format(listing_attrs['url']))
     return ret_val
   except Exception as e:
-    logger.WARN(log_ex_with_message("Error creating listing", e))
+    logger.warn(log_ex_with_message("Error creating listing", e))
 
 
 @task
@@ -26,7 +26,7 @@ def update_listing_task(**listing_attrs):
     logger.debug("Finished listing update: {0}".format(listing_attrs['url']))
     return ret_val
   except Exception as e:
-    logger.WARN(log_ex_with_message("Error updating listing", e))
+    logger.warn(log_ex_with_message("Error updating listing", e))
 
 @task
 def kill_listing_task(listing_id):
