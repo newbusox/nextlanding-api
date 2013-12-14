@@ -1,4 +1,5 @@
 import logging
+from celery.exceptions import Ignore
 from celery.task import task
 from scrapy_test.aggregates.apartment.services import apartment_service
 from scrapy_test.aggregates.listing.services import listing_service
@@ -16,6 +17,7 @@ def create_listing_task(**listing_attrs):
     return ret_val
   except Exception as e:
     logger.warn(log_ex_with_message("Error creating listing", e))
+    raise Ignore()
 
 
 @task
@@ -27,6 +29,8 @@ def update_listing_task(**listing_attrs):
     return ret_val
   except Exception as e:
     logger.warn(log_ex_with_message("Error updating listing", e))
+    raise Ignore()
+
 
 @task
 def kill_listing_task(listing_id):
