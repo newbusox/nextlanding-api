@@ -1,6 +1,7 @@
 import os
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from pygeolib import GeocoderError
 from scrapy_test.aggregates.amenity.services import amenity_service
 from scrapy_test.aggregates.listing import factories
 from scrapy_test.aggregates.listing.exceptions import ListingBuilderError
@@ -205,21 +206,26 @@ class ListingBuilder(object):
 
   def _sanitize_address(self):
     listing_source = self.listing_attrs_output.get(LISTING_SOURCE)
-
-    if not listing_source.trusted_geo_data:
-      sanitized_address = self._listing_geo_service.get_sanitized_address(
-        self.listing_attrs_output.get(ADDRESS),
-        self.listing_attrs_output.get(CITY),
-        self.listing_attrs_output.get(STATE),
+    try:
+      if not listing_source.trusted_geo_data:
+        sanitized_address = self._listing_geo_service.get_sanitized_address(
+          self.listing_attrs_output.get(ADDRESS),
+          self.listing_attrs_output.get(CITY),
+          self.listing_attrs_output.get(STATE),
+        )
+    except GeocoderError as e:
+      throw_ex = re_throw_ex(
+        ListingBuilderError, "Error geocoding: {0}".format(self.listing_attrs_input[URL]), e
       )
+      raise throw_ex[0], throw_ex[1], throw_ex[2]
 
-      self.listing_attrs_output[LAT] = sanitized_address.lat
-      self.listing_attrs_output[LNG] = sanitized_address.lng
-      self.listing_attrs_output[ADDRESS] = sanitized_address.address
-      self.listing_attrs_output[CITY] = sanitized_address.city
-      self.listing_attrs_output[STATE] = sanitized_address.state
-      self.listing_attrs_output[ZIP_CODE] = sanitized_address.zip_code
-      self.listing_attrs_output[FORMATTED_ADDRESS] = sanitized_address.formatted_address
+    self.listing_attrs_output[LAT] = sanitized_address.lat
+    self.listing_attrs_output[LNG] = sanitized_address.lng
+    self.listing_attrs_output[ADDRESS] = sanitized_address.address
+    self.listing_attrs_output[CITY] = sanitized_address.city
+    self.listing_attrs_output[STATE] = sanitized_address.state
+    self.listing_attrs_output[ZIP_CODE] = sanitized_address.zip_code
+    self.listing_attrs_output[FORMATTED_ADDRESS] = sanitized_address.formatted_address
 
   #endregion
 
@@ -425,8 +431,11 @@ class ListingBuilder(object):
       self._build_amenities()
 
       return factories.construct_listing(**self.listing_attrs_output)
-    except (TypeError, ValidationError) as e:
-      throw_ex = re_throw_ex(ListingBuilderError, "Error building a listing: {0}".format(self.listing_attrs_input[URL]), e)
+    except (TypeError, ValidationError, ListingBuilderError) as e:
+      #catching the TypeError should help with errors when we pass None to create an aggregate.
+      throw_ex = re_throw_ex(
+        ListingBuilderError, "Error building a listing: {0}".format(self.listing_attrs_input[URL]), e
+      )
       raise throw_ex[0], throw_ex[1], throw_ex[2]
 
   def _assign_output_attr(self, key, value):
