@@ -75,6 +75,16 @@ LOGGING['loggers'] = {
     'level': 'WARNING',
     'propagate': False
   },
+  'celery.beat': {
+    'handlers': [],
+    'level': 'DEBUG',
+    'propagate': False
+  },
+  'django.db.backends': {
+    'handlers': [],
+    'level': 'DEBUG',
+    'propagate': False
+  },
   'scrapy_test.aggregates': app_logger,
   'scrapy_test.apps': app_logger,
   'scrapy_test.libs': app_logger
