@@ -28,7 +28,8 @@ class SearchResultsView(APIView):
     else:
       search_param['address'] = search_location_service.get_location_for_search(search)
 
-      search_param['geo_boundary_points'] = search.geo_boundary_points
+      if search.geo_boundary_points:
+        search_param['geo_boundary_points'] = search.geo_boundary_points
 
       results = search_result_service.get_results_from_search(search)
 

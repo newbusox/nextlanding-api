@@ -44,7 +44,8 @@ class AddApartmentsConfigView(APIView):
 
       search_param['address'] = search_location_service.get_location_for_search(search)
 
-      search_param['geo_boundary_points'] = search.geo_boundary_points
+      if search.geo_boundary_points:
+        search_param['geo_boundary_points'] = search.geo_boundary_points
 
       response = Response(search_param)
 
