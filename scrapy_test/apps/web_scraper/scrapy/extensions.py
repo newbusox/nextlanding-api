@@ -49,7 +49,7 @@ class StopOnDuplicateItem(object):
 
 
 class StatsReporter(object):
-  interested_stats = ('item_dropped',)
+  interested_stats = ('item_dropped','item_scraped','finished_reason','downloader/request_count')
 
   def __init__(self, crawler, analytics_service=analytics_service):
     self.crawler = crawler
@@ -70,6 +70,14 @@ class StatsReporter(object):
     stats_to_log['spider_name'] = spider.name
 
     if isinstance(spider, ListingSpider):
+      scraper = spider.ref_object.scraper
+
+      if scraper.max_items_read:
+        stats_to_log['max_items_read'] = scraper.max_items_read
+
+      if scraper.max_items_save:
+        stats_to_log['max_items_save'] = scraper.max_items_save
+
       stats_to_log['listing_source_name'] = spider.ref_object.listing_source.name
       stats_to_log['listing_source_url'] = spider.ref_object.listing_source.url
 
