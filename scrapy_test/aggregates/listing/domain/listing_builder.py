@@ -1,13 +1,16 @@
 import os
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 from scrapy_test.aggregates.amenity.services import amenity_service
 from scrapy_test.aggregates.listing import factories
+from scrapy_test.aggregates.listing.exceptions import ListingBuilderError
 from scrapy_test.aggregates.listing.services import listing_geo_service
 from scrapy_test.aggregates.listing_source.services import listing_source_service
 from scrapy_test.libs.communication_utils.parsing import contact_parser
 from scrapy_test.libs.datetime_utils.parsers import datetime_parser
 from scrapy_test.libs.geo_utils.parsing import address_parser
 from scrapy_test.libs.housing_utils.parsing import home_parser
+from scrapy_test.libs.python_utils.errors.exceptions import re_throw_ex
 from scrapy_test.libs.text_utils.parsers import text_parser
 
 LISTING_SOURCE_ID = 'listing_source_id'
@@ -393,34 +396,38 @@ class ListingBuilder(object):
   #endregion
 
   def build_listing(self):
-    self._build_listing_source()
+    try:
+      self._build_listing_source()
 
-    self._build_title()
-    self._build_description()
-    self._build_posted_date()
-    self._build_last_updated_date()
-    self._build_url()
+      self._build_title()
+      self._build_description()
+      self._build_posted_date()
+      self._build_last_updated_date()
+      self._build_url()
 
-    self._build_address()
-    self._build_city()
-    self._build_state()
-    self._build_lat_lng()
-    self._build_formatted_address()
-    self._sanitize_address()
+      self._build_address()
+      self._build_city()
+      self._build_state()
+      self._build_lat_lng()
+      self._build_formatted_address()
+      self._sanitize_address()
 
-    self._build_bedroom_count()
-    self._build_bathroom_count()
-    self._build_sqfeet()
-    self._build_price()
-    self._build_broker_fee()
+      self._build_bedroom_count()
+      self._build_bathroom_count()
+      self._build_sqfeet()
+      self._build_price()
+      self._build_broker_fee()
 
-    self._build_contact_name()
-    self._build_contact_phone_number()
-    self._build_contact_email_address()
+      self._build_contact_name()
+      self._build_contact_phone_number()
+      self._build_contact_email_address()
 
-    self._build_amenities()
+      self._build_amenities()
 
-    return factories.construct_listing(**self.listing_attrs_output)
+      return factories.construct_listing(**self.listing_attrs_output)
+    except (TypeError, ValidationError) as e:
+      throw_ex = re_throw_ex(ListingBuilderError, "Error building a listing: {0}".format(self.listing_attrs_input[URL]), e)
+      raise throw_ex[0], throw_ex[1], throw_ex[2]
 
   def _assign_output_attr(self, key, value):
     self.listing_attrs_output[key] = value

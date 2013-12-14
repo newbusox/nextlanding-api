@@ -2,6 +2,7 @@ import logging
 from celery.exceptions import Ignore
 from celery.task import task
 from scrapy_test.aggregates.apartment.services import apartment_service
+from scrapy_test.aggregates.listing.exceptions import ListingBuilderError
 from scrapy_test.aggregates.listing.services import listing_service
 from scrapy_test.libs.python_utils.errors.exceptions import log_ex_with_message
 
@@ -15,7 +16,7 @@ def create_listing_task(**listing_attrs):
     ret_val = listing_service.create_listing(**listing_attrs).id
     logger.debug("Finished listing creation: {0}".format(listing_attrs['url']))
     return ret_val
-  except Exception as e:
+  except ListingBuilderError as e:
     logger.warn(log_ex_with_message("Error creating listing", e))
     raise Ignore()
 
