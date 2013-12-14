@@ -42,6 +42,8 @@ INSTALLED_APPS += (
   'raven.contrib.django.raven_compat',
 )
 
+CELERYD_HIJACK_ROOT_LOGGER = False
+
 APP_LOG_LEVEL = os.environ.get('APP_LOG_LEVEL','INFO')
 
 LOGGING['handlers']['console_handler'] = {
