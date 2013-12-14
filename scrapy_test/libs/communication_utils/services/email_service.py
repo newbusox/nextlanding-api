@@ -1,10 +1,13 @@
 from email import utils
+import logging
 import os
 from django.conf import settings
 from email_reply_parser import EmailReplyParser
 from scrapy_test.libs.communication_utils.models import Email
 from scrapy_test.libs.communication_utils.services import emailer
 from scrapy_test.libs.communication_utils.signals import email_received
+
+logger = logging.getLogger(__name__)
 
 
 def is_spam(**kwargs):
@@ -66,3 +69,5 @@ def send_email(from_address, from_name, to_address, subject, plain_text_body, as
   save_or_update(email_model)
 
   associate_model_with_email(email_model, associated_model)
+
+  logger.debug("Email sent: {0}".format(email_model))
