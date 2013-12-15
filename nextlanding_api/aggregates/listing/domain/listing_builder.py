@@ -203,7 +203,14 @@ class ListingBuilder(object):
 
     if formatted_address:
       formatted_address = self._get_single_stripped_value(formatted_address)
-      complete_address = self._address_parser.parse_address(formatted_address)
+      try:
+        complete_address = self._address_parser.parse_address(formatted_address)
+      except ValueError as e:
+        throw_ex = re_throw_ex(
+          ListingBuilderError, "Error parsing address: {0}. Address: {1}".format(self.listing_attrs_input[URL],
+                                                                                 formatted_address), e
+        )
+        raise throw_ex[0], throw_ex[1], throw_ex[2]
 
       self._assign_output_attr(ADDRESS, complete_address.address1)
       self._assign_output_attr(CITY, complete_address.city)
