@@ -207,7 +207,7 @@ class ListingBuilder(object):
         complete_address = self._address_parser.parse_address(formatted_address)
       except ValueError as e:
         throw_ex = re_throw_ex(
-          ListingBuilderError, "Error parsing address: {0}. Address: {1}".format(self.listing_attrs_input[URL],
+          ListingBuilderError, u"Error parsing address: {0}. Address: {1}".format(self.listing_attrs_input[URL],
                                                                                  formatted_address), e
         )
         raise throw_ex[0], throw_ex[1], throw_ex[2]

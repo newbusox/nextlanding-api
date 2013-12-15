@@ -5,7 +5,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="15">
+          <list size="16">
             <item index="0" class="java.lang.String" itemvalue="gunicorn" />
             <item index="1" class="java.lang.String" itemvalue="django-heroku-postgresify" />
             <item index="2" class="java.lang.String" itemvalue="gevent" />
@@ -21,6 +21,7 @@
             <item index="12" class="java.lang.String" itemvalue="django-sslify" />
             <item index="13" class="java.lang.String" itemvalue="raven" />
             <item index="14" class="java.lang.String" itemvalue="django-dynamic-scraper" />
+            <item index="15" class="java.lang.String" itemvalue="django-redis-cache" />
           </list>
         </value>
       </option>
