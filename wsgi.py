@@ -1,5 +1,5 @@
 """
-WSGI config for scrapy_test project.
+WSGI config for nextlanding_api project.
 
 This module contains the WSGI application used by Django's development server
 and any production WSGI deployments. It should expose a module-level variable
@@ -16,7 +16,7 @@ framework.
 import os
 from django.conf import settings
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "scrapy_test.settings.dev")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nextlanding_api.settings.dev")
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION

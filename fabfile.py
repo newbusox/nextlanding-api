@@ -17,7 +17,7 @@ HEROKU_ADDONS = (
     'sentry:developer',
 )
 HEROKU_CONFIGS = (
-    'DJANGO_SETTINGS_MODULE=scrapy_test.settings.prod',
+    'DJANGO_SETTINGS_MODULE=nextlanding_api.settings.prod',
     'SECRET_KEY=to(rkb!6lj3bwbz&qs2go0@)1ctjcx43lm6lerci#s_vpg*%mr'
     'AWS_ACCESS_KEY_ID=xxx',
     'AWS_SECRET_ACCESS_KEY=xxx',

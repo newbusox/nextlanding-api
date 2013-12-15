@@ -3,13 +3,13 @@ import pytest
 
 # region DJ Settings
 #http://pytest-django.readthedocs.org/en/latest/configuring_django.html#using-django-configurations
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "scrapy_test.settings.dev_testing")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nextlanding_api.settings.dev_testing")
 # endregion
 
 # region Plugins
 #this line is required in order to use the db_with_migrations fixture
 #http://pytest.org/latest/plugins.html#requiring-loading-plugins-in-a-test-module-or-conftest-file
-pytest_plugins = "scrapy_test.libs.django_utils.testing.utils"
+pytest_plugins = "nextlanding_api.libs.django_utils.testing.utils"
 # endregion
 
 # region test type command line options
