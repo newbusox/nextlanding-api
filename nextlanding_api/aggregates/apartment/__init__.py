@@ -1,0 +1,2 @@
+from nextlanding_api.aggregates.apartment import event_handlers
+from nextlanding_api.aggregates.apartment import reversions

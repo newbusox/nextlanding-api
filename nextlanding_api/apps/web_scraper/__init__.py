@@ -1,0 +1,1 @@
+from nextlanding_api.apps.web_scraper import event_handlers
