@@ -36,7 +36,7 @@ TEMPLATE_DEBUG = DEBUG
 
 ########## MANAGER CONFIGURATION
 SYSTEM_EMAIL = ('System', 'system@nextlanding.com')
-PUBLIC_EMAIL = ('Info', 'info@nextlanding.com')
+PUBLIC_EMAIL = ('Nextlanding', 'info@nextlanding.com')
 ADMIN_EMAIL = ('Admin', 'admin@nextlanding.com')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
