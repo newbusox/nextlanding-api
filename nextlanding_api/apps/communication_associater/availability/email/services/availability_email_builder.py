@@ -58,7 +58,9 @@ class AvailabilityEmailBuilder(object):
     variables['source'] = self._get_source_name()
     variables['to_address'] = to_address
 
-    context = Context(variables)
+    # autoescape=False will prevent '&' from turning into '&amp;'
+    # http://stackoverflow.com/questions/237235/how-to-disable-html-encoding-when-using-context-in-django
+    context = Context(variables, autoescape=False)
 
     #search_specific_email_message_request is immutable
     self.search_specific_email_message_request = (
@@ -67,8 +69,7 @@ class AvailabilityEmailBuilder(object):
     )
 
     #allow us to get versions of vars after putting through result identifier
-    from_address= variables['from_email_address']
-
+    from_address = variables['from_email_address']
 
     subject_template = Template(self.search_specific_email_message_request.subject)
     subject = subject_template.render(context)
