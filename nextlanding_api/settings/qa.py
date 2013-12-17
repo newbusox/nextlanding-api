@@ -76,14 +76,10 @@ LOGGING['loggers'] = {
     'propagate': False
   },
   'celery.beat': {
-    'handlers': [],
-    'level': 'DEBUG',
-    'propagate': False
+    'level': APP_LOG_LEVEL,
   },
   'django.db.backends': {
-    'handlers': [],
-    'level': 'DEBUG',
-    'propagate': False
+    'level': APP_LOG_LEVEL,
   },
   'nextlanding_api.aggregates': app_logger,
   'nextlanding_api.apps': app_logger,
