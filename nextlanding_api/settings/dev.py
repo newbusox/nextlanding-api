@@ -114,6 +114,9 @@ LOGGING['loggers'] = {
   'celery': {
     'level': 'INFO',
   },
+  'django.db.backends': {
+    'level': 'INFO',
+  },
   'nextlanding_api.aggregates': app_logger,
   'nextlanding_api.apps': app_logger,
   'nextlanding_api.libs': app_logger,
