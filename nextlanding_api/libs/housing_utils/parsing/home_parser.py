@@ -19,7 +19,7 @@ def get_bedroom_count(bedroom_str):
       try:
         ret_val = int(match.groups()[0])
       except:
-        logger.warn("Error casting bedroom count: {0}".format(bedroom_str), exc_info=1)
+        logger.warn(u"Error casting bedroom count: {0}".format(bedroom_str), exc_info=1)
   return ret_val
 
 
@@ -30,7 +30,7 @@ def get_bathroom_count(bathroom_str):
     try:
       ret_val = float(match.groups()[0])
     except:
-      logger.warn("Error casting bathroom count: {0}".format(bathroom_str), exc_info=1)
+      logger.warn(u"Error casting bathroom count: {0}".format(bathroom_str), exc_info=1)
 
   return ret_val
 
@@ -42,7 +42,7 @@ def get_sqfeet(sqfeet_str):
     try:
       ret_val = float(match.groups()[0])
     except:
-      logger.warn("Error casting sqfeet count: {0}".format(sqfeet_str), exc_info=1)
+      logger.warn(u"Error casting sqfeet count: {0}".format(sqfeet_str), exc_info=1)
 
   return ret_val
 
@@ -55,7 +55,7 @@ def get_price(price_str):
     try:
       ret_val = float(match.groups()[0])
     except:
-      logger.warn("Error casting price count: {0}".format(price_str), exc_info=1)
+      logger.warn(u"Error casting price count: {0}".format(price_str), exc_info=1)
 
   return ret_val
 
