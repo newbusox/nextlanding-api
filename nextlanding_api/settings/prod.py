@@ -75,7 +75,7 @@ LOGGING['loggers'] = {
     'level': 'WARNING',
     'propagate': False
   },
-  'celery.beat': {
+  'celery': {
     'level': APP_LOG_LEVEL,
     'propagate': False
   },
