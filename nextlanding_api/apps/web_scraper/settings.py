@@ -25,6 +25,8 @@ ITEM_PIPELINES = [
 EXTENSIONS = {
   'nextlanding_api.apps.web_scraper.scrapy.extensions.StopOnDuplicateItem': 500,
   'nextlanding_api.apps.web_scraper.scrapy.extensions.StatsReporter': 500,
+  'scrapy.webservice.WebService': None,
+  'scrapy.telnet.TelnetConsole': None,
 }
 
 DOWNLOADER_MIDDLEWARES = {
