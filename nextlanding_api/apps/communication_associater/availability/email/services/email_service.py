@@ -1,5 +1,6 @@
 import logging
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from nextlanding_api.apps.communication_associater.availability.email.services.availability_email_builder import \
   AvailabilityEmailBuilder
@@ -28,6 +29,8 @@ def request_availability_about_apartments(search, search_specific_email_message_
   for r in results_to_request_notification:
     try:
       message = email_builder.get_availability_email_message(r, search_specific_email_message_request)
+    except ObjectDoesNotExist:
+      logger.debug("No suitable contact info found: {0}".format(r))
     except:
       logger.exception("Error creating email message")
     else:
