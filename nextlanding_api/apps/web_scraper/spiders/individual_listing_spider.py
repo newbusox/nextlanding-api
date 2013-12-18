@@ -23,6 +23,14 @@ class IndividualListingSpider(IndividualItemSpider, ListingSpider):
       domain = netloc_split[0]
 
     listing_sources = ListingSource.objects.filter(url__icontains=domain).all()
+
+    if not listing_sources and len(netloc_split) >= 3:
+      # this is a temp fix to get the next generic source in line
+      domain = netloc_split[1]
+      listing_sources = ListingSource.objects.filter(url__icontains=domain).all()
+
+    if not listing_sources:
+      raise Exception(u"url: {0} is not valid".format(url))
     source_dict = {k.url: k for k in listing_sources}
 
     closest_url = fuzzy_search.get_closest_word(url, source_dict.keys())
