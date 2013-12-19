@@ -1,13 +1,16 @@
 import datetime
+import logging
+
 from django.db import IntegrityError
 from django.utils import timezone
+
 from nextlanding_api.aggregates.search.models import Search
 from nextlanding_api.apps.domain.apartment.models import AddApartmentToSearch
 from nextlanding_api.apps.domain.apartment.services.apartment_amenity_service import get_amenities_dict
-from nextlanding_api.apps.domain.search.services.search_location_service import get_coords_for_search
+from nextlanding_api.apps.domain.search.services.search_location_service import get_bounds_for_search
 from nextlanding_api.apps.domain.search.signals import apartment_added_to_search
-from nextlanding_api.libs.geo_utils.services.geo_distance_service import km_distance
-import logging
+from nextlanding_api.libs.geo_utils.services import geo_spacial_service
+
 
 logger = logging.getLogger(__name__)
 
@@ -115,7 +118,7 @@ def get_apartments_for_search(search, **kwargs):
     .filter(price__range=(price_min, price_max))
     .filter(bedroom_count__range=(bedroom_min, bedroom_max))
     .filter(bathroom_count__range=(bathroom_min, bathroom_max))
-    .values_list('id', 'lat', 'lng')
+    .values_list('apartment_aggregate_id', 'lat', 'lng')
   )
 
   if not fees_allowed:
@@ -133,18 +136,19 @@ def get_apartments_for_search(search, **kwargs):
   #doing __contains__ in a queryset is super slow
   apartments_to_filter = [r.apartment_id for r in results]
 
-  search_geo = get_coords_for_search(search)
+  search_geo = get_bounds_for_search(search)
 
   #doing the filtering before all the prefetching is much faster.
   #however, we should actually be doing th distance filter in the db
   apartments_to_lookup = [
     a[0] for a in apartments if
-    a[0] not in apartments_to_filter and km_distance(search_geo, (a[1], a[2])) <= distance
+    a[0] not in apartments_to_filter and geo_spacial_service.point_resides_in_bounds((a[1], a[2]), *search_geo)
   ]
 
   apartments = AddApartmentToSearch.objects.filter(apartment_aggregate_id__in=apartments_to_lookup)
 
   return apartments
 
-def add_apartment_to_search(search,apartment):
-  apartment_added_to_search.send(Search,instance=search,apartment=apartment)
+
+def add_apartment_to_search(search, apartment):
+  apartment_added_to_search.send(Search, instance=search, apartment=apartment)
