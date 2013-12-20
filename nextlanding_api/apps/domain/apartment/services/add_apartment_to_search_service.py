@@ -138,11 +138,16 @@ def get_apartments_for_search(search, **kwargs):
 
   search_geo = get_bounds_for_search(search)
 
+  #its much faster to just get all the bounds that fit first
+  apartments_in_bounds = geo_spacial_service.points_resides_in_bounds(
+    {a[0]: (a[1], a[2]) for a in apartments}, *search_geo
+  )
+
   #doing the filtering before all the prefetching is much faster.
   #however, we should actually be doing th distance filter in the db
   apartments_to_lookup = [
     a[0] for a in apartments if
-    a[0] not in apartments_to_filter and geo_spacial_service.point_resides_in_bounds((a[1], a[2]), *search_geo)
+    a[0] not in apartments_to_filter and a[0] in apartments_in_bounds
   ]
 
   apartments = AddApartmentToSearch.objects.filter(apartment_aggregate_id__in=apartments_to_lookup)
