@@ -23,7 +23,7 @@ from nextlanding_api.libs.geo_utils.services import geo_spacial_service
   ),
 ])
 def test_point_resides_in_bounds(polygon, point):
-  assert geo_spacial_service.points_resides_in_bounds({1: point}, polygon)
+  assert geo_spacial_service.points_resides_in_bounds({1: point}, 0, polygon)
 
 
 @pytest.mark.parametrize(("polygons", "point"), [
@@ -63,4 +63,4 @@ def test_point_resides_in_bounds(polygon, point):
   ),
 ])
 def test_point_resides_in_multi_bounds(polygons, point):
-  assert geo_spacial_service.points_resides_in_bounds({1: point}, *polygons)
+  assert geo_spacial_service.points_resides_in_bounds({1: point}, 0, *polygons)

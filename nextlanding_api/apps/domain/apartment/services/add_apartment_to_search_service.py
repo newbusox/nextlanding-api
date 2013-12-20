@@ -140,7 +140,7 @@ def get_apartments_for_search(search, **kwargs):
 
   #its much faster to just get all the bounds that fit first
   apartments_in_bounds = geo_spacial_service.points_resides_in_bounds(
-    {a[0]: (a[1], a[2]) for a in apartments}, *search_geo
+    {a[0]: (a[1], a[2]) for a in apartments}, distance, *search_geo
   )
 
   #doing the filtering before all the prefetching is much faster.

@@ -30,7 +30,7 @@ class AddApartmentsConfigView(APIView):
       #json encoding will convert any decimal to a string - we might as well just make it be an int
       #https://github.com/tomchristie/django-rest-framework/issues/508
       search_param['days_back'] = 7
-      search_param['distance'] = 2
+      search_param['distance'] = 1
       search_param['fees_allowed'] = not search.no_fee_preferred
       search_param['cats_required'] = bool(search.amenities.filter(amenity_type__name='Cats Allowed').count())
       search_param['dogs_required'] = bool(search.amenities.filter(amenity_type__name='Dogs Allowed').count())
