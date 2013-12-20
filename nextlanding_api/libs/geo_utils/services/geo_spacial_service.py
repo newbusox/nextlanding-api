@@ -7,3 +7,6 @@ def point_resides_in_bounds(point, *polygons):
   prep_multi = multi.prepared
 
   return prep_multi.contains(Point(point))
+
+def point_within_distance(point, distance, *polygons):
+  return False
