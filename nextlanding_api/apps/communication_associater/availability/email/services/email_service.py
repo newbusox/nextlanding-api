@@ -4,14 +4,15 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from nextlanding_api.apps.communication_associater.availability.email.services.availability_email_builder import \
   AvailabilityEmailBuilder
-from nextlanding_api.libs.communication_utils.services import email_service
+from nextlanding_api.libs.communication_utils.services import email_service, email_sender_async
 
 logger = logging.getLogger(__name__)
 
 availability_from_email_address_domain = settings.AVAILABILITY_FROM_EMAIL_ADDRESS_DOMAIN
 
 
-def request_availability_about_apartments(search, search_specific_email_message_request, _email_service=email_service):
+def request_availability_about_apartments(search, search_specific_email_message_request,
+                                          _email_sender=email_sender_async):
   #there is a circular dependency between result -> ... -> email_service.
   from nextlanding_api.aggregates.result.models import Result
 
@@ -35,7 +36,7 @@ def request_availability_about_apartments(search, search_specific_email_message_
       logger.exception("Error creating email message")
     else:
       try:
-        _email_service.send_email(
+        _email_sender.send_email(
           message.from_address, message.from_name, message.to_address, message.subject, message.body, r
         )
       except:
