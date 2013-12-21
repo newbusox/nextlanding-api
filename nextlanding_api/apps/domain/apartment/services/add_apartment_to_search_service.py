@@ -118,15 +118,21 @@ def get_apartments_for_search(search, **kwargs):
 
   days_back = int(kwargs['days_back'])
   distance = int(kwargs['distance'])
-  fees_allowed = bool(kwargs['fees_allowed'].lower() == 'true')
-  cats_required = bool(kwargs['cats_required'].lower() == 'true')
-  dogs_required = bool(kwargs['dogs_required'].lower() == 'true')
   price_min = int(kwargs['price_min'])
   price_max = int(kwargs['price_max'])
   bedroom_min = int(kwargs['bedroom_min'])
   bedroom_max = int(kwargs['bedroom_max'])
   bathroom_min = int(kwargs['bathroom_min'])
   bathroom_max = int(kwargs['bathroom_max'])
+
+  if isinstance(kwargs['fees_allowed'], basestring):
+    fees_allowed = bool(kwargs['fees_allowed'].lower() == 'true')
+    cats_required = bool(kwargs['cats_required'].lower() == 'true')
+    dogs_required = bool(kwargs['dogs_required'].lower() == 'true')
+  else:
+    fees_allowed = bool(kwargs['fees_allowed'])
+    cats_required = bool(kwargs['cats_required'])
+    dogs_required = bool(kwargs['dogs_required'])
 
   apartments = (
 

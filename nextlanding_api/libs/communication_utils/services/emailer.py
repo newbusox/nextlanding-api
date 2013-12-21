@@ -1,4 +1,5 @@
 import logging
+import os
 from smtplib import SMTPException
 import sendgrid
 from django.conf import settings
@@ -20,7 +21,7 @@ def send_email(from_address, from_name, to_address, subject, text, html):
   msg.add_to(to_address)
 
   if settings.DEBUG:
-    logger.info(msg)
+    logger.debug(u"{sep}******{sep}{0}{sep}{1}{sep}******".format(msg.subject, msg.text, sep=os.linesep))
   else:
     try:
       if to_domain in settings.SECONDARY_EMAIL_DOMAINS:

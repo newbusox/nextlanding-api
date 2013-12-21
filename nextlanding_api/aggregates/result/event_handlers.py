@@ -28,4 +28,4 @@ def apartment_added_to_search(sender, **kwargs):
 
 @receiver(created, sender=Search)
 def search_created(sender, **kwargs):
-  result_tasks.create_result_task.delay(kwargs['instance'].id)
+  result_tasks.create_results_task.delay(kwargs['instance'].id)
