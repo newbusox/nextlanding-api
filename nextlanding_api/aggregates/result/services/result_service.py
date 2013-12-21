@@ -86,11 +86,14 @@ def create_results(search):
   if search.geo_boundary_points:
     params = add_apartment_to_search_service.get_search_default_params(search)
     apartments = add_apartment_to_search_service.get_apartments_for_search(search, **params)
+    # only get the last 150 - otherwise too many to be useful and this threshold can act as a short circuit for any
+    # logical errors before sending way too many emails
+    apartments = apartments.order_by("-last_updated_date")[:150]
 
     apartments_count = apartments.count()
 
     for a in apartments:
-      add_apartment_to_search_tasks.add_apartment_to_search_task.delay(search.pk, a.pk)
+      add_apartment_to_search_tasks.add_apartment_to_search_task.delay(search.pk, a.apartment_aggregate_id)
 
     if apartments_count < 20:
       _send_auto_add_error_email(
