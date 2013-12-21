@@ -23,6 +23,25 @@ def get_search_add_apartment_from_aggregate(apartment_aggregate_id):
   return AddApartmentToSearch.objects.get(apartment_aggregate_id=apartment_aggregate_id)
 
 
+def get_search_default_params(search):
+  #json encoding will convert any decimal to a string - we might as well just make it be an int
+  #https://github.com/tomchristie/django-rest-framework/issues/508
+  ret_val = {}
+  ret_val['days_back'] = 7
+  ret_val['distance'] = 1
+  ret_val['fees_allowed'] = not search.no_fee_preferred
+  ret_val['cats_required'] = bool(search.amenities.filter(amenity_type__name='Cats Allowed').count())
+  ret_val['dogs_required'] = bool(search.amenities.filter(amenity_type__name='Dogs Allowed').count())
+  ret_val['price_min'] = int(search.price_min or 0)
+  ret_val['price_max'] = int(search.price_max or 5000)
+  ret_val['bedroom_min'] = search.bedroom_min or 0
+  ret_val['bedroom_max'] = search.bedroom_max or 3
+  ret_val['bathroom_min'] = int(search.bathroom_min or 1)
+  ret_val['bathroom_max'] = int(search.bathroom_max or 3)
+
+  return ret_val
+
+
 def _update_with_newest_listing(apartment_search_model, listing):
   apartment_search_model.description = listing.description
   apartment_search_model.contact_name = listing.contact_name

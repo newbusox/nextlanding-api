@@ -10,6 +10,7 @@ from nextlanding_api.apps.rest_api.serializers.search.add_apartment_to_search im
 
 logger = logging.getLogger(__name__)
 
+
 class AddApartmentsConfigView(APIView):
   """
   API endpoint for getting add apartment parameters.
@@ -27,21 +28,9 @@ class AddApartmentsConfigView(APIView):
       logger.debug("Error getting search: {0}".format(pk))
       response = Response(status=status.HTTP_404_NOT_FOUND)
     else:
-      #json encoding will convert any decimal to a string - we might as well just make it be an int
-      #https://github.com/tomchristie/django-rest-framework/issues/508
-      search_param['days_back'] = 7
-      search_param['distance'] = 1
-      search_param['fees_allowed'] = not search.no_fee_preferred
-      search_param['cats_required'] = bool(search.amenities.filter(amenity_type__name='Cats Allowed').count())
-      search_param['dogs_required'] = bool(search.amenities.filter(amenity_type__name='Dogs Allowed').count())
-      search_param['price_min'] = int(search.price_min or 0)
-      search_param['price_max'] = int(search.price_max or 5000)
-      search_param['bedroom_min'] = search.bedroom_min or 0
-      search_param['bedroom_max'] = search.bedroom_max or 3
-      search_param['bathroom_min'] = int(search.bathroom_min or 1)
-      search_param['bathroom_max'] = int(search.bathroom_max or 3)
-      search_param['description'] = search.description
+      search_param.update(add_apartment_to_search_service.get_search_default_params(search))
 
+      search_param['description'] = search.description
       search_param['address'] = search_location_service.get_location_for_search(search)
 
       if search.geo_boundary_points:
@@ -50,6 +39,7 @@ class AddApartmentsConfigView(APIView):
       response = Response(search_param)
 
     return response
+
 
 class AddApartmentsView(APIView):
   """
