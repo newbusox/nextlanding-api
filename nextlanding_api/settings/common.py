@@ -276,6 +276,7 @@ CELERY_IMPORTS = (
   'nextlanding_api.apps.domain.apartment.services.add_apartment_to_search_tasks',
   'nextlanding_api.apps.domain.result.services.search_result_tasks',
   'nextlanding_api.apps.web_scraper.services.web_scraper_tasks',
+  'nextlanding_api.libs.communication_utils.services.email_tasks',
 )
 
 # See: http://celery.github.com/celery/django/
