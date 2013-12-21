@@ -2,7 +2,7 @@ import logging
 from django.conf import settings
 from nextlanding_api.aggregates.search import factories, constants
 from nextlanding_api.aggregates.search.models import Search
-from nextlanding_api.libs.communication_utils.services import email_service
+from nextlanding_api.libs.communication_utils.services import email_sender_async
 from nextlanding_api.libs.geo_utils.services import geo_location_service
 from nextlanding_api.libs.python_utils.errors.exceptions import log_ex_with_message
 
@@ -39,29 +39,23 @@ def get_search(search_id):
   return Search.objects.get(pk=search_id)
 
 
-def notify_search_purchase(search, _email_service=email_service, ):
-  try:
-    _email_service.send_email(
-      settings.SYSTEM_EMAIL[1],
-      settings.SYSTEM_EMAIL[0],
-      settings.ADMIN_EMAIL[1],
-      "New Search Created",
-      "Search: {0} was created".format(search.pk),
-      search
-    )
-  except Exception as e:
-    logger.exception(log_ex_with_message("Error sending email message to admin. Search: {0}".format(search.pk), e))
+def notify_search_purchase(search, _email_service=email_sender_async):
+  _email_service.send_email(
+    settings.SYSTEM_EMAIL[1],
+    settings.SYSTEM_EMAIL[0],
+    settings.ADMIN_EMAIL[1],
+    "New Search Created",
+    "Search: {0} was created".format(search.pk),
+    search
+  )
 
-  try:
-    _email_service.send_email(
-      settings.PUBLIC_EMAIL[1],
-      settings.PUBLIC_EMAIL[0],
-      search.email_address ,
-      constants.BUYER_PURCHASE_SUBJECT_TEMPLATE,
-      constants.BUYER_PURCHASE_BODY_TEMPLATE,
-      search
-    )
-  except Exception as e:
-    logger.exception(log_ex_with_message("Error sending email message to customer. Search: {0}".format(search.pk), e))
+  _email_service.send_email(
+    settings.PUBLIC_EMAIL[1],
+    settings.PUBLIC_EMAIL[0],
+    search.email_address,
+    constants.BUYER_PURCHASE_SUBJECT_TEMPLATE,
+    constants.BUYER_PURCHASE_BODY_TEMPLATE,
+    search
+  )
 
   return search
