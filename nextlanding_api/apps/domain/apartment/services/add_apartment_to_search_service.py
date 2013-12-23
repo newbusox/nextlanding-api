@@ -115,7 +115,7 @@ def get_apartments_for_search(search, **kwargs):
     .filter(price__range=(price_min, price_max))
     .filter(bedroom_count__range=(bedroom_min, bedroom_max))
     .filter(bathroom_count__range=(bathroom_min, bathroom_max))
-    .values_list('id', 'lat', 'lng')
+    .values_list('apartment_aggregate_id', 'lat', 'lng')
   )
 
   if not fees_allowed:
