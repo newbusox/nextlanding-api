@@ -39,6 +39,11 @@ def get_search(search_id):
   return Search.objects.get(pk=search_id)
 
 
+def update_geo_boundary_points(search, geo_boundary_points):
+  search.update_geo_boundary_points(geo_boundary_points)
+  save_or_update(search)
+
+
 def notify_search_purchase(search, _email_service=email_sender_async):
   _email_service.send_email(
     settings.SYSTEM_EMAIL[1],
