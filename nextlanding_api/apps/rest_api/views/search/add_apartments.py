@@ -2,9 +2,12 @@ import logging
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ViewSetMixin
 from nextlanding_api.aggregates.apartment.services import apartment_service
+from nextlanding_api.aggregates.result.services import result_tasks
 from nextlanding_api.aggregates.search.services import search_service
-from nextlanding_api.apps.domain.apartment.services import add_apartment_to_search_service
+from nextlanding_api.apps.domain.apartment.services import add_apartment_to_search_service, \
+  add_apartment_to_search_tasks
 from nextlanding_api.apps.domain.search.services import search_location_service
 from nextlanding_api.apps.rest_api.serializers.search.add_apartment_to_search import AddApartmentToSearchSerializer
 
@@ -74,3 +77,29 @@ class AddApartmentsView(APIView):
     add_apartment_to_search_service.add_apartment_to_search(search, apartment)
 
     return Response(status=status.HTTP_201_CREATED)
+
+
+class AddAvailableApartmentsView(APIView):
+  """
+  API endpoint for adding apartments to search.
+  """
+
+  def post(self, request, *args, **kwargs):
+    pk = kwargs['pk']
+
+    response = None
+
+    try:
+      search = search_service.get_search(pk)
+    except:
+      logger.debug("Error getting search: {0}".format(pk))
+      response = Response(status=status.HTTP_404_NOT_FOUND)
+    else:
+      apartments = add_apartment_to_search_service.get_apartments_for_search(search, **request.DATA)
+
+      for a in apartments:
+        add_apartment_to_search_tasks.add_apartment_to_search_task.delay(pk, a.apartment_aggregate_id)
+
+      response = Response()
+
+    return response
