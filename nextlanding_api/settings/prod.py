@@ -46,6 +46,7 @@ CELERYD_HIJACK_ROOT_LOGGER = False
 CELERY_REDIRECT_STDOUTS = False
 
 APP_LOG_LEVEL = os.environ.get('APP_LOG_LEVEL','INFO')
+SCRAPY_LOG_LEVEL = os.environ.get('SCRAPY_LOG_LEVEL','ERROR')
 
 LOGGING['handlers']['console_handler'] = {
   'level': APP_LOG_LEVEL,
