@@ -36,3 +36,9 @@ def create_result_task(apartment_id, search_id):
   search = search_service.get_search(search_id)
 
   return result_service.create_result(apartment, search).id
+
+@task
+def create_results_task(search_id):
+  search = search_service.get_search(search_id)
+
+  result_service.create_results(search)

@@ -59,6 +59,7 @@ CACHES = {
 # we've set it to DEBUG so that our app controls the levels.
 
 CELERYD_HIJACK_ROOT_LOGGER = False
+CELERY_REDIRECT_STDOUTS = False
 
 LOGGING['handlers']['console_handler'] = {
   'level': 'DEBUG',
@@ -106,19 +107,15 @@ LOGGING['loggers'] = {
     'propagate': True
   },
   'django.request': {
-    'handlers': ['request_handler', 'exception_handler'],
+    'handlers': ['request_handler', 'exception_handler', 'console_handler'],
     'level': 'DEBUG',
     'propagate': False
   },
-  'celery.beat': {
-    'handlers': [],
-    'level': 'DEBUG',
-    'propagate': False
+  'celery': {
+    'level': 'INFO',
   },
   'django.db.backends': {
-    'handlers': [],
-    'level': 'DEBUG',
-    'propagate': False
+    'level': 'INFO',
   },
   'nextlanding_api.aggregates': app_logger,
   'nextlanding_api.apps': app_logger,

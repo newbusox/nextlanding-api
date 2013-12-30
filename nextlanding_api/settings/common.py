@@ -36,7 +36,7 @@ TEMPLATE_DEBUG = DEBUG
 
 ########## MANAGER CONFIGURATION
 SYSTEM_EMAIL = ('System', 'system@nextlanding.com')
-PUBLIC_EMAIL = ('Info', 'info@nextlanding.com')
+PUBLIC_EMAIL = ('Nextlanding', 'info@nextlanding.com')
 ADMIN_EMAIL = ('Admin', 'admin@nextlanding.com')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
@@ -248,7 +248,7 @@ LOGGING = {
   'disable_existing_loggers': True,
   'formatters': {
     'standard': {
-      'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+      'format': '[%(levelname)s] %(name)s: %(message)s'
     },
     },
   'handlers': {}
@@ -276,6 +276,7 @@ CELERY_IMPORTS = (
   'nextlanding_api.apps.domain.apartment.services.add_apartment_to_search_tasks',
   'nextlanding_api.apps.domain.result.services.search_result_tasks',
   'nextlanding_api.apps.web_scraper.services.web_scraper_tasks',
+  'nextlanding_api.libs.communication_utils.services.email_tasks',
 )
 
 # See: http://celery.github.com/celery/django/

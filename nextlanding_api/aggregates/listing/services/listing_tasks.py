@@ -1,6 +1,7 @@
 import logging
 from celery.exceptions import Ignore
 from celery.task import task
+from django.db import IntegrityError
 from nextlanding_api.aggregates.apartment.services import apartment_service
 from nextlanding_api.aggregates.listing.exceptions import ListingBuilderError
 from nextlanding_api.aggregates.listing.services import listing_service
@@ -18,6 +19,9 @@ def create_listing_task(**listing_attrs):
     return ret_val
   except ListingBuilderError as e:
     logger.warn(log_ex_with_message("Error creating listing", e))
+    raise Ignore()
+  except IntegrityError as e:
+    logger.warn(log_ex_with_message("Listing already exists", e))
     raise Ignore()
 
 

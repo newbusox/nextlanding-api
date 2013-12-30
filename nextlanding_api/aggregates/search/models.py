@@ -6,7 +6,8 @@ from django.db import models, transaction
 from jsonfield import JSONField
 from localflavor.us.models import USStateField
 import reversion
-from nextlanding_api.aggregates.search.signals import created, initiated_availability_request
+from nextlanding_api.aggregates.search.signals import created, initiated_availability_request, \
+  updated_geo_boundary_points
 from nextlanding_api.apps.communication_associater.availability.email.email_objects import SearchSpecificEmailMessageRequest
 
 from nextlanding_api.libs.common_domain.aggregate_base import AggregateBase
@@ -108,6 +109,16 @@ class Search(models.Model, AggregateBase):
 
     self._raise_event(initiated_availability_request, sender=Search, instance=self,
                       search_specific_email_message_request=search_specific_email_message_request)
+
+  def update_geo_boundary_points(self, geo_boundary_points):
+    if geo_boundary_points and any(len(geo_points) < 3 for k, geo_points in geo_boundary_points.items()):
+      raise ValidationError('at least 3 points per geo_boundary_point are required')
+
+    self._raise_event(updated_geo_boundary_points, sender=Search, instance=self,
+                      geo_boundary_points=geo_boundary_points)
+
+  def _handle_updated_geo_boundary_points_event(self, **kwargs):
+    self.geo_boundary_points = kwargs['geo_boundary_points']
 
   def _handle_initiated_availability_request_event(self, **kwargs):
     pass

@@ -2,7 +2,8 @@ from rest_framework import routers
 from django.conf.urls import patterns, include, url
 from nextlanding_api.apps.rest_api.views.communication.email import CommunicationEmailView
 from nextlanding_api.apps.rest_api.views.crawl.crawl import CrawlView
-from nextlanding_api.apps.rest_api.views.search.add_apartments import AddApartmentsConfigView, AddApartmentsView
+from nextlanding_api.apps.rest_api.views.search.add_apartments import AddApartmentsConfigView, AddApartmentsView, \
+  AddAvailableApartmentsView
 
 from nextlanding_api.apps.rest_api.views.amenity.amenity import AmenityViewSet
 from nextlanding_api.apps.rest_api.views.search.emailer_sender import EmailerSenderView
@@ -11,6 +12,7 @@ from nextlanding_api.apps.rest_api.views.search.potential_search import Potentia
 # our consumer, in this case, restangular, doesn't conventionally append a '/' suffix, so it's just easier to disable
 # the expectation on this side.
 from nextlanding_api.apps.rest_api.views.search.results import SearchResultsView
+from nextlanding_api.apps.rest_api.views.search.search import SearchViewSet
 
 router = routers.DefaultRouter(trailing_slash=False)
 
@@ -18,6 +20,7 @@ router = routers.DefaultRouter(trailing_slash=False)
 # Additionally, we include login URLs for the browseable API.
 router.register('potential_search', PotentialSearchViewSet)
 router.register('amenity', AmenityViewSet)
+router.register('search', SearchViewSet)
 
 
 # region search views
@@ -31,10 +34,13 @@ potential_search_complete = PotentialSearchViewSet.as_view({
   'post': 'complete_init',
 })
 
-add_apartments= AddApartmentsView.as_view()
+add_apartments = AddApartmentsView.as_view()
 add_apartments_config = AddApartmentsConfigView.as_view()
+add_available_apartments = AddAvailableApartmentsView.as_view()
 
-search_results= SearchResultsView.as_view()
+search_results = SearchResultsView.as_view()
+
+search_geo = SearchViewSet.as_view({'post': 'update_geo'})
 # endregion
 
 # region communication views
@@ -55,6 +61,8 @@ urlpatterns = patterns(
   url(r'^search/(?P<pk>[0-9]+)/apartments$', add_apartments, name="add-apartments"),
   url(r'^search/(?P<pk>[0-9]+)/add_apartments_config$', add_apartments_config, name="add-apartments-config"),
   url(r'^search/(?P<pk>[0-9]+)/results$', search_results, name="search-results"),
+  url(r'^search/(?P<pk>[0-9]+)/geo$', search_geo, name="search-geo"),
+  url(r'^search/(?P<pk>[0-9]+)/add_available$', add_available_apartments, name="add-available-apartments"),
   url(r'^crawl$', crawl, name="crawl"),
   url(r'^communication/email/$', communication_email, name="communication-email"),
 )

@@ -1,11 +1,14 @@
+from django.conf import settings
 from nextlanding_api.aggregates.apartment.enums import ApartmentUnavailableReasonEnum
 from nextlanding_api.aggregates.availability.models import Availability
 from nextlanding_api.aggregates.availability.services import availability_service
 from nextlanding_api.aggregates.result import factories
 from nextlanding_api.aggregates.result.models import Result
 from nextlanding_api.apps.communication_associater.availability.email.services import email_result_identifier_service
+from nextlanding_api.apps.domain.apartment.services import add_apartment_to_search_service, \
+  add_apartment_to_search_tasks
 from nextlanding_api.libs.communication_utils.models import Email
-from nextlanding_api.libs.communication_utils.services import email_service
+from nextlanding_api.libs.communication_utils.services import email_service, email_sender_async
 from nextlanding_api.libs.communication_utils.signals import email_consumed_by_model
 
 
@@ -66,3 +69,47 @@ def notify_results_unavailable(apartment, reason):
     for r in results:
       r.change_availability(all_listings_deleted_type)
       save_or_update(r)
+
+
+def _send_auto_add_error_email(search, subject, body):
+  email_sender_async.send_email(
+    settings.SYSTEM_EMAIL[1],
+    settings.SYSTEM_EMAIL[0],
+    settings.ADMIN_EMAIL[1],
+    subject,
+    body,
+    search
+  )
+
+
+def create_results(search):
+  if search.geo_boundary_points:
+    params = add_apartment_to_search_service.get_search_default_params(search)
+    apartments = add_apartment_to_search_service.get_apartments_for_search(search, **params)
+    # only get the last 150 - otherwise too many to be useful and this threshold can act as a short circuit for any
+    # logical errors before sending way too many emails
+    apartments = apartments.order_by("-last_updated_date")[:150]
+
+    apartments_count = apartments.count()
+
+    for a in apartments:
+      add_apartment_to_search_tasks.add_apartment_to_search_task.delay(search.pk, a.apartment_aggregate_id)
+
+    if apartments_count < 20:
+      _send_auto_add_error_email(
+        search,
+        u"Problem auto add apartments. Too few apartments. {0}".format(search),
+        u"{0} only had {1} apartments.".format(search, apartments_count),
+      )
+    else:
+      _send_auto_add_error_email(
+        search,
+        u"Finished auto add apartments. Ready to send emails. {0}".format(search),
+        u"{0} had {1} apartments.".format(search, apartments_count),
+      )
+  else:
+    _send_auto_add_error_email(
+      search,
+      u"Cannot auto add apartments. Missing geo. {0}".format(search),
+      u"{0} did not have geo boundary points.".format(search),
+    )

@@ -43,6 +43,7 @@ INSTALLED_APPS += (
 )
 
 CELERYD_HIJACK_ROOT_LOGGER = False
+CELERY_REDIRECT_STDOUTS = False
 
 APP_LOG_LEVEL = os.environ.get('APP_LOG_LEVEL','INFO')
 
@@ -75,15 +76,11 @@ LOGGING['loggers'] = {
     'level': 'WARNING',
     'propagate': False
   },
-  'celery.beat': {
-    'handlers': [],
-    'level': 'DEBUG',
-    'propagate': False
+  'celery': {
+    'level': APP_LOG_LEVEL,
   },
   'django.db.backends': {
-    'handlers': [],
-    'level': 'DEBUG',
-    'propagate': False
+    'level': APP_LOG_LEVEL,
   },
   'nextlanding_api.aggregates': app_logger,
   'nextlanding_api.apps': app_logger,

@@ -15,7 +15,9 @@ def get_sanitized_address(address, city, state,
                                          existing_listing.zip_code,
                                          existing_listing.formatted_address)
   except Listing.DoesNotExist:
-    geocoded_listing = _geo_location_service.get_geocoded_address("{0} {1} {2}".format(address, city, state))._asdict()
+    geocoded_listing = _geo_location_service.get_geocoded_address(
+      u"{0} {1} {2}".format(address, city, state)
+    )._asdict()
 
     formatted_parts = geocoded_listing['formatted_address'].split(',')
 
@@ -26,7 +28,7 @@ def get_sanitized_address(address, city, state,
       geocoded_listing['address'] = formatted_parts[0]
     else:
       raise TypeError(
-        'address1 is required but was not returned from the geo location service. Geocoded Address:{0}'
+        u'address1 is required but was not returned from the geo location service. Geocoded Address:{0}'
         .format(geocoded_listing)
       )
 

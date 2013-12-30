@@ -5,3 +5,7 @@ initiated_availability_request = EventSignal(
   'initiated_availability_request', __name__, 1,
   providing_args=['instance', 'search_specific_email_message_request']
 )
+updated_geo_boundary_points = EventSignal(
+  'updated_geo_boundary_points', __name__, 1,
+  providing_args=['instance', 'geo_boundary_points']
+)
