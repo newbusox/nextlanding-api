@@ -3,7 +3,21 @@ from nextlanding_api.apps.domain.result.models import SearchResult
 
 
 def get_results_from_search(search):
-  return SearchResult.objects.filter(search_aggregate_id=search.pk).order_by('availability_last_response_date')
+  return (
+    SearchResult
+    .objects
+    .filter(search_aggregate_id=search.pk)
+    .extra(select=
+    {
+      'has_availability': '''
+                          CASE availability_last_response_date WHEN availability_last_response_date is NOT NULL
+                          THEN 1
+                          ELSE -1
+                          END
+                          '''
+    })
+    .order_by('has_availability', '-availability_last_response_date')
+  )
 
 
 def get_result_from_aggregate(result):
