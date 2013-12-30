@@ -20,8 +20,6 @@ router = routers.DefaultRouter(trailing_slash=False)
 # Additionally, we include login URLs for the browseable API.
 router.register('potential_search', PotentialSearchViewSet)
 router.register('amenity', AmenityViewSet)
-router.register('search', SearchViewSet)
-
 
 # region search views
 potential_search_init = PotentialSearchViewSet.as_view({
