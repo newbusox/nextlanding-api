@@ -71,7 +71,7 @@ def notify_results_unavailable(apartment, reason):
       save_or_update(r)
 
 
-def _send_auto_add_error_email(search, subject, body):
+def _send_auto_add_email(search, subject, body):
   email_sender_async.send_email(
     settings.SYSTEM_EMAIL[1],
     settings.SYSTEM_EMAIL[0],
@@ -96,19 +96,19 @@ def create_results(search):
       add_apartment_to_search_tasks.add_apartment_to_search_task.delay(search.pk, a.apartment_aggregate_id)
 
     if apartments_count < 20:
-      _send_auto_add_error_email(
+      _send_auto_add_email(
         search,
         u"Problem auto add apartments. Too few apartments. {0}".format(search),
         u"{0} only had {1} apartments.".format(search, apartments_count),
       )
     else:
-      _send_auto_add_error_email(
+      _send_auto_add_email(
         search,
         u"Finished auto add apartments. Ready to send emails. {0}".format(search),
         u"{0} had {1} apartments.".format(search, apartments_count),
       )
   else:
-    _send_auto_add_error_email(
+    _send_auto_add_email(
       search,
       u"Cannot auto add apartments. Missing geo. {0}".format(search),
       u"{0} did not have geo boundary points.".format(search),

@@ -206,6 +206,7 @@ THIRD_PARTY_APPS = (
 
     # Database
     'reversion',
+    'django_hstore',
 
     # Mixpanel
     'mixpanel',
@@ -229,6 +230,7 @@ LOCAL_APPS = (
   # APPS
   'nextlanding_api.apps.communication_associater',
   'nextlanding_api.apps.domain',
+  'nextlanding_api.apps.marketing',
   'nextlanding_api.apps.web_scraper',
   # LIBS
   'nextlanding_api.libs.common_domain',
@@ -275,6 +277,7 @@ CELERY_IMPORTS = (
   'nextlanding_api.apps.domain.search.services.emailer_sender_tasks',
   'nextlanding_api.apps.domain.apartment.services.add_apartment_to_search_tasks',
   'nextlanding_api.apps.domain.result.services.search_result_tasks',
+  'nextlanding_api.apps.marketing.services.correspondence_tasks',
   'nextlanding_api.apps.web_scraper.services.web_scraper_tasks',
   'nextlanding_api.libs.communication_utils.services.email_tasks',
 )
@@ -305,7 +308,7 @@ SENDGRID_USERNAME = environ.get('SENDGRID_USERNAME')
 SENDGRID_PASSWORD = environ.get('SENDGRID_PASSWORD')
 GMAIL_USERNAME = environ.get('GMAIL_USERNAME')
 GMAIL_PASSWORD = environ.get('GMAIL_PASSWORD')
-SECONDARY_EMAIL_DOMAINS = ('hous.craigslist.org',)
+SECONDARY_EMAIL_DOMAINS = ('hous.craigslist.org','reply.craigslist.org')
 # these domains, like CL, will not work if you attach the result id to the "from" address because we cannot
 # reliably use a service like sendgrid to send emails - we instead might need individual email addresses
 BODY_RESULT_IDENTIFIER_DOMAINS = ('hous.craigslist.org','reply.craigslist.org')

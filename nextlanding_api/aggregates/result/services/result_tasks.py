@@ -1,6 +1,8 @@
+from email.utils import parseaddr
 import logging
 from celery.exceptions import Ignore
 from celery.task import task
+from django.conf import settings
 from nextlanding_api.aggregates.apartment.services import apartment_service
 from nextlanding_api.aggregates.result.services import result_service
 from nextlanding_api.aggregates.search.services import search_service
@@ -8,20 +10,29 @@ from nextlanding_api.libs.communication_utils.models import Email
 from nextlanding_api.libs.python_utils.errors.exceptions import log_ex_with_message
 
 logger = logging.getLogger(__name__)
+availability_from_email_address_domain = settings.AVAILABILITY_FROM_EMAIL_ADDRESS_DOMAIN
 
 @task
 def associate_incoming_email_with_result_task(email_id):
   email = Email.objects.get(pk=email_id)
 
-  logger.debug("Received searchs params for email: {0}".format(email))
+  to_address = parseaddr(email.to)[1]
 
-  try:
-    ret_val = result_service.associate_incoming_email_with_result(email)
-    logger.debug("Finished email assocation: {0}".format(email))
-    return ret_val
-  except Exception as e:
-    logger.warn(log_ex_with_message("Error associating email", e))
-    raise Ignore()
+  to_domain = to_address.split('@')[1]
+
+  if to_domain.lower() == availability_from_email_address_domain:
+
+    logger.debug(u"Received searchs params for email: {0}".format(email))
+
+    try:
+      ret_val = result_service.associate_incoming_email_with_result(email)
+      logger.debug(u"Finished email assocation: {0}".format(email))
+      return ret_val
+    except Exception as e:
+      logger.warn(log_ex_with_message(u"Error associating email", e))
+      raise Ignore()
+  else:
+    logger.debug(u"Result was not associated with email: {0}".format(email))
 
 @task
 def notify_results_unavailable_task(apartment_id, reason):

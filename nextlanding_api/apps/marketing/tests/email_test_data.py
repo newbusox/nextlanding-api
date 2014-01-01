@@ -56,9 +56,27 @@ email_2 = {
                   u'.com)\r\n-1.9 BAYES_00               BODY: Bayes spam probability is 0 to 1%\r\n                 '
                   u'           score: 0.0000\r\n 0.0 HTML_MESSAGE           BODY: HTML included in message\r\n 2.0 '
                   u'MIME_NO_TEXT           No (properly identified) text body parts\r\n\r\n',
-  u'from': u'Scott Coates <scott.c.coates@gmail.com>', u'attachments': u'0',
-  u'to': u'Some Guy <dude@garbagetracker.com>, someone@somewhere.net', u'cc': u'ccuser@cctest.com',
-  u'text': u'This is a test, okay\r\n',
+  u'from': u'Test Dude <abc@reply.craigslist.org>', u'attachments': u'0',
+  u'to': u'Some Guy <dude@MarketTest1.com>',
+  u'text': u'''
+Hello,
+Is this apartment still available? Could I view Thursday around 6-7pm?
+Thanks look forward to hearing from you.
+-Some Dude
+
+
+http://newyork.craigslist.org/mnh/abo/123456789.html
+
+
+------------------------------------------------------------------------
+Original craigslist post:
+http://newyork.craigslist.org/mnh/abo/123456789.html
+About craigslist mail:
+http://craigslist.org/about/help/email-relay
+Please flag unwanted messages (spam, scam, other):
+http://craigslist.org/mf/abc123456789.1
+------------------------------------------------------------------------
+''',
   u'envelope': u'{"to":"dude@garbagetracker.com","from":"scoarescoare@gmail.com"}',
   u'headers': u'Received: by 127.0.0.1 with SMTP id 82yyH0rXMn Wed, 18 Sep 2013 13:19:42 -0500 (CDT)\r\nReceived: '
               u'from mail-wi0-f169.google.com (mail-wi0-f169.google.com 209.85.212.169) by mx3.sendgrid.net (Postfix)'
@@ -77,11 +95,30 @@ email_2 = {
               u'18 Sep 2013 11:19:40 -0700 (PDT)\r\nSender: scoarescoare@gmail.com\r\nReceived: by 10.194.78.82 with '
               u'HTTP; Wed, 18 Sep 2013 11:19:40 -0700 (PDT)\r\nDate: Wed, '
               u'18 Sep 2013 14:19:40 -0400\r\nX-Google-Sender-Auth: zE8IiRZJXpGBooQRsyrcfg-Szf8\r\nMessage-ID: '
-              u'<CAKGSGYxmaQ-g-hRrOnBTRm6XVRn0VwFbfzgmc8mw+rgeDR+bvg@mail.gmail.com>\r\nSubject: Hi\r\nFrom: Scott '
-              u'Coates <scott.c.coates@gmail.com>\r\nTo: Some Guy <dude@garbagetracker.com>, '
+              u'<CAKGSGYxmaQ-g-hRrOnBTRm6XVRn0VwFbfzgmc8mw+rgeDR+bvg@mail.gmail.com>\r\nSubject: Hi\r\nFrom: Test '
+              u'Test Dude <abc@reply.craigslist.org>\r\nTo: Some Guy <dude@garbagetracker.com>, '
               u'someone@somewhere.net\r\nCc: ccuser@cctest.com\r\nContent-Type: multipart/alternative; '
               u'boundary=001a11c25b481a923c04e6ac7bd0\r\n',
-  u'html': u'<div dir="ltr">This is a test, okay</div>\r\n',
+  u'html': u'''
+    <div dir=3D"ltr"><span style=3D"font-size:13px;font-family:arial,sans-serif=
+  ">Hello,</span><div style=3D"font-size:13px;font-family:arial,sans-serif">I=
+  s this apartment still available? Could I view Thursday around 6-7pm? Thank=
+  s look forward to hearing from you.</div>
+  <div style=3D"font-size:13px;font-family:arial,sans-serif">-Some Dude</div><d=
+  iv><br></div><br><a href=3D"http://newyork.craigslist.org/mnh/abo/123456789=
+  3.html">http://newyork.craigslist.org/mnh/abo/1234567893.html</a><br></div>
+  <br>
+  <hr>Original craigslist post:<br>
+  <a href=3D"http://newyork.craigslist.org/mnh/abo/1234567893.html">http://ne=
+  wyork.craigslist.org/mnh/abo/1234567893.html</a><br>
+  About craigslist mail:<br>
+  <a href=3D"http://craigslist.org/about/help/email-relay">http://craigslist.=
+  org/about/help/email-relay</a><br>
+  Please flag unwanted messages (spam, scam, other):<br>
+  <a href=3D"http://craigslist.org/mf/abc1297654=
+  2.1">http://craigslist.org/mf/abc123456789.1</a=
+  ><hr>=
+''',
   u'charsets': u'{"to":"UTF-8","cc":"UTF-8","html":"ISO-8859-1","subject":"UTF-8","from":"UTF-8","text":"ISO-8859-1"}',
   u'dkim': u'{@gmail.com : pass}', u'SPF': u'pass', u'subject': u'Hi'
 }
