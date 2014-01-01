@@ -5,6 +5,11 @@ from nextlanding_api.libs.geo_utils.services import geo_location_service
 
 def get_sanitized_address(address, city, state,
                           _listing_manager=Listing.objects, _geo_location_service=geo_location_service):
+
+  if not address: raise TypeError('address required')
+  if not city: raise TypeError('city required')
+  if not state: raise TypeError('state required')
+  
   try:
     existing_listing = _listing_manager.find_from_address(address, city, state)
     sanitized_listing = SanitizedAddress(existing_listing.lat,
