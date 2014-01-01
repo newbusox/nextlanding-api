@@ -27,7 +27,7 @@ def get_sanitized_address(address, city, state,
       # address like "5th st" when it should be "5th and 68th". The formatted address will contain this proper version
       geocoded_listing['address'] = formatted_parts[0]
     else:
-      raise TypeError(
+      raise ValueError(
         u'address1 is required but was not returned from the geo location service. Geocoded Address:{0}'
         .format(geocoded_listing)
       )

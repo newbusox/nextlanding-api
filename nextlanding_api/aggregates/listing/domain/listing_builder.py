@@ -446,7 +446,7 @@ class ListingBuilder(object):
       self._build_amenities()
 
       return factories.construct_listing(**self.listing_attrs_output)
-    except (TypeError, ValidationError, ListingBuilderError) as e:
+    except (TypeError, ValueError, ValidationError, ListingBuilderError) as e:
       #catching the TypeError should help with errors when we pass None to create an aggregate.
       throw_ex = re_throw_ex(
         ListingBuilderError, "Error building a listing: {0}".format(self.listing_attrs_input[URL]), e
