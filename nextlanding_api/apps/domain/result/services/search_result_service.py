@@ -10,7 +10,7 @@ def get_results_from_search(search):
     .extra(select=
     {
       'has_availability': '''
-                          CASE availability_last_response_date WHEN availability_last_response_date is NOT NULL
+                          CASE WHEN availability_last_response_date is NOT NULL
                           THEN 1
                           ELSE -1
                           END
