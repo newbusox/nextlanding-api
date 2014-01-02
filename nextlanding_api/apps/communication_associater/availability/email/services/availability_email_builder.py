@@ -55,7 +55,7 @@ class AvailabilityEmailBuilder(object):
     variables['from_email_address'] = from_address
 
     variables['contact_name'] = self._get_contact_name()
-    variables['source'] = self._get_source_name()
+    variables['source'] = self._get_source_public_name()
     variables['to_address'] = to_address
 
     # autoescape=False will prevent '&' from turning into '&amp;'
@@ -89,8 +89,8 @@ class AvailabilityEmailBuilder(object):
       return contact_name.strip() if len(contact_name_parts) == 0 else contact_name_parts[0]
 
 
-  def _get_source_name(self):
-    return self.listing.listing_source.name
+  def _get_source_public_name(self):
+    return self.listing.listing_source.public_name
 
 
   def _get_bedroom_count(self):
