@@ -1,3 +1,4 @@
+from nextlanding_api.aggregates.search.services import search_service
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from nextlanding_api.apps.domain.search.services import emailer_sender_service
@@ -31,5 +32,9 @@ class EmailerSenderView(APIView):
 
     #this will call save internally
     emailer_sender_service.send_search_email(emailer_sender_model, from_name, subject, body)
+
+    #this will also call save internally
+    search = search_service.get_search(pk)
+    emailer_sender_service.send_client_results_email(search)
 
     return Response()

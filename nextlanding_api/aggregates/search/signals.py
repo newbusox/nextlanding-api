@@ -9,3 +9,6 @@ updated_geo_boundary_points = EventSignal(
   'updated_geo_boundary_points', __name__, 1,
   providing_args=['instance', 'geo_boundary_points']
 )
+sending_client_results_email = EventSignal('sending_client_results_email', __name__, 1,
+  providing_args=['instance']
+)

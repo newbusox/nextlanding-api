@@ -58,7 +58,7 @@ def notify_search_purchase(search, _email_service=email_sender_async):
     settings.PUBLIC_EMAIL[1],
     settings.PUBLIC_EMAIL[0],
     search.email_address,
-    constants.BUYER_PURCHASE_SUBJECT_TEMPLATE,
+    "Nextlanding: Your Apartment Search Results",
     constants.BUYER_PURCHASE_BODY_TEMPLATE,
     search
   )
