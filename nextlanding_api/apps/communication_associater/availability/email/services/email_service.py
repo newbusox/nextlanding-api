@@ -1,4 +1,6 @@
 import logging
+import datetime
+from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -6,6 +8,7 @@ from nextlanding_api.apps.communication_associater.availability.email.services.a
   AvailabilityEmailBuilder
 from nextlanding_api.apps.communication_associater.results.email import constants
 from nextlanding_api.libs.communication_utils.services import email_sender_async
+import pytz
 
 logger = logging.getLogger(__name__)
 
@@ -47,11 +50,16 @@ def request_availability_about_apartments(search, search_specific_email_message_
 def send_client_results_email(search, _email_service=email_sender_async):
   search_id = search.pk
 
+  # send in 1 hour
+  eastern_now = datetime.datetime.now(pytz.timezone('US/Eastern'))
+  email_schedule_date = eastern_now + relativedelta(minutes=60)
+
   _email_service.send_email(
     settings.PUBLIC_EMAIL[1],
     settings.PUBLIC_EMAIL[0],
     search.email_address,
     constants.CLIENT_RESULTS_SUBJECT_TEMPLATE,
     constants.CLIENT_RESULTS_BODY_TEMPLATE.format(search_id),
-    search
+    search,
+    email_schedule_date
   )
