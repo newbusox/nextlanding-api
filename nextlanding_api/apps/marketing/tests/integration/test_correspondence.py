@@ -11,12 +11,17 @@ def test_correspondence_duplicate_is_not_responded():
                                        product=ProductEnum.Search
   )
 
-  correspondence = Correspondence.objects.create(to='some_test_acct@markettest1.com', from_address='123asd2@test.com',
-                                                 from_first_name='Dude',
-                                                 from_last_name='Last Name', product=ProductEnum.Search, subject='test',
-                                                 incoming_html='test',
-                                                 incoming_text='test', outgoing_html='test', outgoing_text='test',
-                                                 data={constants.GEOGRAPHIC_REGION: 'newyork'})
+  correspondence = Correspondence.objects.create(
+    to='some_test_acct@markettest1.com', from_address='123asd2@test.com',
+    from_first_name='Dude',
+    from_last_name='Last Name', product=ProductEnum.Search, subject='test',
+    incoming_html='test',
+    incoming_text='test', outgoing_html='test', outgoing_text='test',
+    data={
+      constants.GEOGRAPHIC_REGION: 'newyork',
+      constants.ASSOCIATED_URL: 'http://newyork.craigslist.org/mnh/abo/123.html'
+    }
+  )
 
   correspondence.pk = 2
   correspondence.save()
