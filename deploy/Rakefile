@@ -12,7 +12,8 @@ namespace :deploy do
 
   task :qa_migrations => [:set_qa_app, :push, :off, :migrate, :restart, :on, :tag]
   task :qa_rollback => [:set_qa_app, :off, :rollback, :restart, :on]
-  task :qa_migrations_clone_prod => [:set_qa_app, :backup_prod_db, :off, :transfer_prod_db_to_qa, :prepare_qa, :qa_migrations]
+  task :qa_migrations_clone_prod => [:backup_prod_db, :set_qa_app, :off, :transfer_prod_db_to_qa, :prepare_qa,
+                                     :qa_migrations]
 
   task :production_migrations => [:set_production_app, :push, :off, :backup_prod_db, :migrate, :restart, :on, :tag]
   task :production_rollback => [:set_production_app, :off, :rollback, :restart, :on]
