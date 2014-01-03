@@ -16,7 +16,7 @@ namespace :deploy do
   task :production_migrations => [:set_production_app, :push, :off, :backup_prod_db, :migrate, :restart, :on, :tag]
   task :production_rollback => [:set_production_app, :off, :rollback, :restart, :on]
 
-  task :refresh_qa_db => [:set_qa_app, :off, :transfer_prod_db_to_qa, :on]
+  task :refresh_qa_db => [:set_qa_app, :backup_prod_db, :off, :transfer_prod_db_to_qa, :on]
 
   task :backup_prod_db => :set_production_app do
     puts 'Backing up production database ...'
