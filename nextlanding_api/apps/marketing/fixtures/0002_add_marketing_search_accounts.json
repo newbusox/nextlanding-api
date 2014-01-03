@@ -1,0 +1,11 @@
+[
+  {
+    "pk": 1,
+    "model": "marketing.marketingemailaccount",
+    "fields": {
+      "product": 1,
+      "ignore_keywords": "Im a realtor\r\nI am a listings manager\r\nI am a broker\r\nI am a real estate agent\r\nI am a real estate professional\r\nI am an agent\r\nI have a client\r\nI have clients\r\nHave a client\r\na client i have\r\nWe currently have clients\r\nour clients\r\nwell qualified client\r\nhighly qualified client\r\na lot of clients\r\nwith a client\r\nmy clients\r\nqualified tenants\r\nLicensed Real Estate Salesperson\r\nreal estate broker\r\nRealty Group\r\nRental Manager\r\nReal Estate Agent\r\nSales Leasing Agent\r\nProperty Listing Manager\r\nLeasing Sales Associate\r\nrealty\r\nlicensed agent\r\nLeasing Agent",
+      "email_addresses": "\"JM\" <jmgerald21@gmail.com>\r\n\"RC\" <rcband064@gmail.com>\r\n\"CE\" <ceburgess2233@gmail.com>\r\n\"Michael\" <michaelaromero80@gmail.com>\r\n\"BB\" <bbmgroup09@gmail.com>\r\n\"MMM Realty\" <mmmrealty80@gmail.com>\r\n\"DMBY Theater\" <dmbytheater2000@gmail.com>\r\n\"MC Kool\" <mckool1975@gmail.com>\r\n\"Lifestyle Realty\" <lifestylerealty001@gmail.com>\r\n\"Monica\" <monicasouthbeach@gmail.com>"
+    }
+  }
+]
