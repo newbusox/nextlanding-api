@@ -22,7 +22,7 @@ def get_keyword_hash():
 def get_availability_from_str(availability_str, _text_parser=text_parser):
   unavailable_type = Availability.objects.get_unavailable_type()
   is_available_type = Availability.objects.get_is_available_type()
-  unknown_availability_type = Availability.objects.get_is_available_type()
+  unknown_availability_type = Availability.objects.get_unknown_availability_type()
 
   keyword_results = _text_parser.get_canonical_name_from_keywords(availability_str, get_keyword_hash())
   keyword_results = [x.keyword_id for x in keyword_results]

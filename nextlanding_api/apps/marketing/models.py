@@ -18,6 +18,8 @@ class Correspondence(models.Model):
 
   product = models.PositiveSmallIntegerField(max_length=2, choices=ProductChoices)
 
+  subject = models.TextField(blank=True, null=True)
+
   incoming_text = models.TextField(blank=True, null=True)
   incoming_html = models.TextField(blank=True, null=True)
 
@@ -47,6 +49,7 @@ class Correspondence(models.Model):
 class MarketingEmailAccount(models.Model):
   email_addresses = models.TextField()
   product = models.PositiveSmallIntegerField(max_length=2, choices=ProductChoices)
+  ignore_keywords = models.TextField(blank=True, null=True)
 
   def __unicode__(self):
     return 'MarketingEmailAccount #' + str(self.product)

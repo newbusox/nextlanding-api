@@ -2,11 +2,8 @@ from email.utils import parseaddr
 import logging
 from celery.exceptions import Ignore
 from celery.task import task
-from nextlanding_api.aggregates.apartment.services import apartment_service
-from nextlanding_api.aggregates.result.services import result_service
-from nextlanding_api.aggregates.search.services import search_service
 from nextlanding_api.apps.marketing.models import MarketingEmailAccount
-from nextlanding_api.apps.marketing.services import correspondence_service
+from nextlanding_api.apps.marketing.services import correspondence_service, source_correspondence_service
 from nextlanding_api.libs.communication_utils.models import Email
 from nextlanding_api.libs.python_utils.errors.exceptions import log_ex_with_message
 
@@ -17,7 +14,9 @@ logger = logging.getLogger(__name__)
 def associate_incoming_email_with_correspondence_task(email_id):
   email = Email.objects.get(pk=email_id)
 
-  to_address = parseaddr(email.to)[1]
+  correspondence = source_correspondence_service.construct_correspondence_from_email(email)
+
+  to_address = parseaddr(correspondence.to)[1]
 
   to_domain = to_address.split('@')[1]
 

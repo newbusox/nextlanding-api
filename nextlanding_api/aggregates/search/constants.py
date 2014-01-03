@@ -11,5 +11,5 @@ BUYER_PURCHASE_BODY_TEMPLATE = textwrap.dedent("""\
 
     Thanks, and good luck on your apartment hunt!
 
-    John, Gene, and Scott @ Nextlanding
+    John, Gene, and Scott @ Nextlanding\
 """)

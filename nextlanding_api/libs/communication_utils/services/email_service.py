@@ -52,7 +52,7 @@ def associate_model_with_email(email, associated_model):
 
 
 def send_email(from_address, from_name, to_address, subject, plain_text_body, associated_model):
-  html_body = plain_text_body.replace(os.linesep, '<br/>')
+  html_body = convert_text_to_html(plain_text_body)
   formatted_from_address = utils.formataddr((from_name, from_address))
 
   emailer.send_email(from_address, from_name, to_address, subject, plain_text_body, html_body)
@@ -71,3 +71,7 @@ def send_email(from_address, from_name, to_address, subject, plain_text_body, as
   associate_model_with_email(email_model, associated_model)
 
   logger.debug("Email sent: {0}".format(email_model))
+
+def convert_text_to_html(text):
+  html_body = text.replace(os.linesep, '<br/>')
+  return html_body
