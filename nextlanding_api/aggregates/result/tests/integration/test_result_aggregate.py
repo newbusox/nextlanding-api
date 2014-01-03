@@ -12,7 +12,10 @@ from nextlanding_api.aggregates.search.services import search_service
 
 
 @pytest.mark.django_db_with_migrations
-def test_result_is_created_from_attrs():
+def test_result_is_created_from_attrs(settings):
+  #needed to print emails
+  settings.DEBUG = True
+
   listing_id = listing_service.create_listing(**result_test_data.cl_listing_4033538277).id
 
   search_id = search_service.create_search(**result_test_data.search_1).id
@@ -31,7 +34,10 @@ def test_result_is_created_from_attrs():
 
 
 @pytest.mark.django_db_with_migrations
-def test_result_notified_unavailable_updates_apartment_and_listings():
+def test_result_notified_unavailable_updates_apartment_and_listings(settings):
+  #needed to print emails
+  settings.DEBUG = True
+
   listing_id = listing_service.create_listing(**result_test_data.cl_listing_4033538277).id
 
   search_id = search_service.create_search(**result_test_data.search_1).id

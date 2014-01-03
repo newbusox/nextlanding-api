@@ -91,6 +91,7 @@ eastern_time_zone = pytz.timezone('US/Eastern')
 # region result 1
 search_1 = {
   'description': 'I want a great place to live',
+  'email_address': 'test@test.com',
   'specified_location': 'Astoria NY',
   'geo_boundary_points': {"0": [[40.738152838822934, -74.0741103887558], [40.717338733312495, -74.05419766902924],
                                 [40.701463603604594, -74.08990323543549]]},

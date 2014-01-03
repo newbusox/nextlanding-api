@@ -6,7 +6,7 @@ from nextlanding_api.libs.communication_utils.models import Email
 
 
 @pytest.mark.django_db_with_migrations
-def test_email_is_created_from_post(client, settings):
+def test_correspondence_is_created_from_post(client, settings):
   #needed to print emails
   settings.DEBUG = True
   MarketingEmailAccount.objects.create(email_addresses='"Some Dude" <some_test_acct@markettest1.com>',

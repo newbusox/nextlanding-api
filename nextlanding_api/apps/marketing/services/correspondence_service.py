@@ -141,8 +141,8 @@ def _validate_correspondence_response(correspondence, _text_parser=text_parser):
         Correspondence
         .objects
         .filter(from_last_name=correspondence.from_last_name)
-        .filter(changed_date__lt=time_range)
-        .filter(data={constants.GEOGRAPHIC_REGION: correspondence.data[constants.GEOGRAPHIC_REGION]})
+        .filter(changed_date__gte=time_range)
+        .filter(data__contains={constants.GEOGRAPHIC_REGION: correspondence.data[constants.GEOGRAPHIC_REGION]})
         .exclude(id=correspondence.pk)
         .count()
       )
