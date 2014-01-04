@@ -10,6 +10,7 @@ cl_url_regex = re.compile("(?P<url>https?://(?:\S+)craigslist(?:\S+))")
 
 def construct_correspondence_from_email(email):
   correspondence = Correspondence(
+    originating_email = email,
     subject=email.subject,
     to=email.to,
     from_address=email.from_address,

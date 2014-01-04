@@ -102,14 +102,13 @@ def send_response_if_applicable(correspondence):
     # wait a day to send it
     email_schedule_date = email_schedule_date + relativedelta(days=1)
 
-    email_sender_async.send_email(
-      from_address,
-      from_name,
-      correspondence.from_address,
-      correspondence.subject,
+    email_sender_async.reply_to_email(
+      correspondence.originating_email,
       body,
       correspondence,
-      email_schedule_date
+      email_schedule_date,
+      from_address=from_address,
+      from_name=from_name,
     )
 
   save_or_update(correspondence)

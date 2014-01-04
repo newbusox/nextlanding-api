@@ -10,6 +10,8 @@ logger = logging.getLogger(__name__)
 class Correspondence(models.Model):
   objects = hstore.HStoreManager()
 
+  originating_email = models.OneToOneField('communication_utils.Email')
+
   to = models.TextField()
   from_address = models.TextField()
 
@@ -27,8 +29,9 @@ class Correspondence(models.Model):
   outgoing_html = models.TextField(blank=True, null=True)
 
   responded = models.BooleanField()
-  did_not_respond_reason = models.PositiveSmallIntegerField(max_length=2, choices=DidNotRespondChoices, blank=True,
-                                                      null=True)
+  did_not_respond_reason = models.PositiveSmallIntegerField(
+    max_length=2, choices=DidNotRespondChoices, blank=True, null=True
+  )
 
   data = hstore.DictionaryField()
 
@@ -41,10 +44,12 @@ class Correspondence(models.Model):
         super(Correspondence, self).save(*args, **kwargs)
     else:
       from nextlanding_api.apps.marketing.services import correspondence_service
+
       correspondence_service.save_or_update(self)
 
   def __unicode__(self):
     return 'Correspondence #' + str(self.pk)
+
 
 class MarketingEmailAccount(models.Model):
   email_addresses = models.TextField()
