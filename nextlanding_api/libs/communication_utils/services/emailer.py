@@ -1,3 +1,4 @@
+from email.utils import parseaddr
 import logging
 import os
 from smtplib import SMTPException
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 def send_email(from_address, from_name, to_address, subject, text, html, headers=None):
-  to_domain = to_address.split('@')[1]
+  to_domain = parseaddr(to_address)[1].split('@')[1]
 
   msg = sendgrid.Message((from_address, from_name), subject, text, html)
   msg.add_to(to_address)
