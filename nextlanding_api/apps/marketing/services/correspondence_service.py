@@ -132,7 +132,10 @@ def _validate_correspondence_response(correspondence, _text_parser=text_parser):
         ret_val = DidNotRespondEnum.IgnoreRecipient
 
   if not ret_val:
-    if not (correspondence.from_last_name or constants.GEOGRAPHIC_REGION in correspondence.data):
+    if not (
+        (correspondence.from_last_name and len(correspondence.from_last_name) > 1) and
+          constants.GEOGRAPHIC_REGION in correspondence.data
+    ):
       ret_val = DidNotRespondEnum.MissingInformation
     else:
 
