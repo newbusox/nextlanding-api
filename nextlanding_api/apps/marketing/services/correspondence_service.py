@@ -138,7 +138,7 @@ def _validate_correspondence_response(correspondence, _text_parser=text_parser):
       ret_val = DidNotRespondEnum.MissingInformation
     else:
 
-      time_range = timezone.now() - relativedelta(months=9)
+      time_range = timezone.now() - relativedelta(months=3)
       existing_correspondence = (
         Correspondence
         .objects
