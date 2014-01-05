@@ -1,9 +1,12 @@
 import logging
+import datetime
+from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from nextlanding_api.aggregates.search import factories, constants
 from nextlanding_api.aggregates.search.models import Search
 from nextlanding_api.libs.communication_utils.services import email_sender_async
 from nextlanding_api.libs.geo_utils.services import geo_location_service
+from nextlanding_api.apps.communication_associater.results.email import constants
 from nextlanding_api.libs.python_utils.errors.exceptions import log_ex_with_message
 
 logger = logging.getLogger(__name__)
@@ -44,6 +47,23 @@ def update_geo_boundary_points(search, geo_boundary_points):
   save_or_update(search)
 
 
+def send_client_results_email(search, _email_service=email_sender_async):
+  search_id = search.pk
+
+  # send in 1 hour
+  now = datetime.datetime.now()
+  email_schedule_date = now + relativedelta(minutes=60)
+
+  _email_service.send_email(
+    settings.PUBLIC_EMAIL[1],
+    settings.PUBLIC_EMAIL[0],
+    search.email_address,
+    constants.CLIENT_RESULTS_SUBJECT_TEMPLATE,
+    constants.CLIENT_RESULTS_BODY_TEMPLATE.format(search_id),
+    search,
+    email_schedule_date
+  )
+
 def notify_search_purchase(search, _email_service=email_sender_async):
   _email_service.send_email(
     settings.SYSTEM_EMAIL[1],
@@ -58,7 +78,7 @@ def notify_search_purchase(search, _email_service=email_sender_async):
     settings.PUBLIC_EMAIL[1],
     settings.PUBLIC_EMAIL[0],
     search.email_address,
-    "Nextlanding: Your Apartment Search Results",
+    constants.BUYER_PURCHASE_SUBJECT_TEMPLATE,
     constants.BUYER_PURCHASE_BODY_TEMPLATE,
     search
   )

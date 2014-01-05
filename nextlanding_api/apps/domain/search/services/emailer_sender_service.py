@@ -43,5 +43,5 @@ def send_search_email(emailer_sender_model, from_name, subject, body):
 
 def send_client_results_email(search):
   with transaction.commit_on_success():
-    search.send_client_results_email()
+    search.notify_customer_about_results()
     search_service.save_or_update(search)

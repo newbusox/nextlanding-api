@@ -33,8 +33,4 @@ class EmailerSenderView(APIView):
     #this will call save internally
     emailer_sender_service.send_search_email(emailer_sender_model, from_name, subject, body)
 
-    #this will also call save internally
-    search = search_service.get_search(pk)
-    emailer_sender_service.send_client_results_email(search)
-
     return Response()
