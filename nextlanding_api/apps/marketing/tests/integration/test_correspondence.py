@@ -7,8 +7,7 @@ from nextlanding_api.libs.communication_utils.models import Email
 
 
 @pytest.mark.django_db_with_migrations
-def test_correspondence_duplicate_is_not_responded(settings):
-  settings.DEBUG = True
+def test_correspondence_duplicate_is_not_responded():
   MarketingEmailAccount.objects.create(email_addresses='"Some Dude" <some_test_acct@markettest1.com>',
                                        product=ProductEnum.Search
   )
