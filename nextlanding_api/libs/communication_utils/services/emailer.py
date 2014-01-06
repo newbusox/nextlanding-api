@@ -1,3 +1,4 @@
+from email.utils import parseaddr
 import logging
 import os
 from smtplib import SMTPException
@@ -14,11 +15,15 @@ secondary_emailer.smtp.HOSTPORT = ('smtp.gmail.com', 587)
 logger = logging.getLogger(__name__)
 
 
-def send_email(from_address, from_name, to_address, subject, text, html):
-  to_domain = to_address.split('@')[1]
+def send_email(from_address, from_name, to_address, subject, text, html, headers=None):
+  to_domain = parseaddr(to_address)[1].split('@')[1]
 
   msg = sendgrid.Message((from_address, from_name), subject, text, html)
   msg.add_to(to_address)
+
+  if headers:
+    for k, v in headers.items():
+      msg.add_header(k, v)
 
   if settings.DEBUG:
     logger.debug(u"{sep}******{sep}{0}{sep}{1}{sep}******".format(msg.subject, msg.text, sep=os.linesep))

@@ -20,3 +20,4 @@ sendgrid==0.1.4
 djangorestframework==2.3.8
 django-cors-headers==0.12
 stripe==1.9.8
+git+git://github.com/djangonauts/django-hstore#egg=django-hstore

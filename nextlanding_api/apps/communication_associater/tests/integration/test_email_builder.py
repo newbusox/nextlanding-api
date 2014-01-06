@@ -15,55 +15,62 @@ from nextlanding_api.apps.communication_associater.tests import email_test_data
 
 
 @pytest.mark.django_db_with_migrations
-@patch('nextlanding_api.apps.communication_associater.availability.email.services.availability_email_builder'
-       '.availability_from_email_address_domain', 'mytest.com')
-def test_email_with_body_result_created_correctly():
-  listing_id = listing_service.create_listing(**email_test_data.cl_listing_4033538277).id
+def test_email_with_body_result_created_correctly(settings):
+  #needed to print emails
+  settings.DEBUG = True
 
-  search_id = search_service.create_search(**email_test_data.search_1).id
+  #patch decorator cannot be used with mock
+  with patch('nextlanding_api.apps.communication_associater.availability.email.services.availability_email_builder'
+             '.availability_from_email_address_domain', 'mytest.com'):
+    listing_id = listing_service.create_listing(**email_test_data.cl_listing_4033538277).id
 
-  listing = Listing.objects.get(pk=listing_id)
+    search_id = search_service.create_search(**email_test_data.search_1).id
 
-  apartment = listing.apartment
+    listing = Listing.objects.get(pk=listing_id)
 
-  search = Search.objects.get(pk=search_id)
+    apartment = listing.apartment
 
-  result_id = result_service.create_result(apartment, search).id
+    search = Search.objects.get(pk=search_id)
 
-  result = Result.objects.get(pk=result_id)
+    result_id = result_service.create_result(apartment, search).id
 
-  email_builder = AvailabilityEmailBuilder()
-  search_specific_email_message_request = SearchSpecificEmailMessageRequest("Jim", "Hey this is a test subject",
-                                                                            "Hey this is a test body")
+    result = Result.objects.get(pk=result_id)
 
-  email_message = email_builder.get_availability_email_message(result, search_specific_email_message_request)
+    email_builder = AvailabilityEmailBuilder()
+    search_specific_email_message_request = SearchSpecificEmailMessageRequest("Jim", "Hey this is a test subject",
+                                                                              "Hey this is a test body")
+
+    email_message = email_builder.get_availability_email_message(result, search_specific_email_message_request)
+
   assert EMAIL_AVAILABILITY_IDENTIFIER_RE.search(email_message.body)
 
-
 @pytest.mark.django_db_with_migrations
-@patch('nextlanding_api.apps.communication_associater.availability.email.services.availability_email_builder'
-       '.availability_from_email_address_domain', 'mytest.com')
-def test_email_with_from_result_created_correctly():
-  listing_dict = dict(email_test_data.cl_listing_4033538277, **{'contact_email_address': [u'test@somesite.com']})
+def test_email_with_from_result_created_correctly(settings):
+  #needed to print emails
+  settings.DEBUG = True
 
-  listing_id = listing_service.create_listing(**listing_dict).id
+  with patch('nextlanding_api.apps.communication_associater.availability.email.services.availability_email_builder'
+             '.availability_from_email_address_domain', 'mytest.com'):
+    listing_dict = dict(email_test_data.cl_listing_4033538277, **{'contact_email_address': [u'test@somesite.com']})
 
-  search_id = search_service.create_search(**email_test_data.search_1).id
+    listing_id = listing_service.create_listing(**listing_dict).id
 
-  listing = Listing.objects.get(pk=listing_id)
+    search_id = search_service.create_search(**email_test_data.search_1).id
 
-  apartment = listing.apartment
+    listing = Listing.objects.get(pk=listing_id)
 
-  search = Search.objects.get(pk=search_id)
+    apartment = listing.apartment
 
-  result_id = result_service.create_result(apartment, search).id
+    search = Search.objects.get(pk=search_id)
 
-  result = Result.objects.get(pk=result_id)
+    result_id = result_service.create_result(apartment, search).id
 
-  email_builder = AvailabilityEmailBuilder()
-  search_specific_email_message_request = SearchSpecificEmailMessageRequest("Jim", "Hey this is a test subject",
-                                                                            "Hey this is a test body")
+    result = Result.objects.get(pk=result_id)
 
-  email_message = email_builder.get_availability_email_message(result, search_specific_email_message_request)
+    email_builder = AvailabilityEmailBuilder()
+    search_specific_email_message_request = SearchSpecificEmailMessageRequest("Jim", "Hey this is a test subject",
+                                                                              "Hey this is a test body")
+
+    email_message = email_builder.get_availability_email_message(result, search_specific_email_message_request)
 
   assert "Jim-{0}@mytest.com".format(result_id) == email_message.from_address
