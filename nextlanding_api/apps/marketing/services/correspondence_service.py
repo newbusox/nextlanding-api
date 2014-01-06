@@ -1,6 +1,7 @@
 from email.utils import parseaddr
 import datetime
 from dateutil.relativedelta import relativedelta
+from django.db.models import Q
 
 from django.template import Context, Template
 from django.utils import timezone
@@ -131,25 +132,33 @@ def _validate_correspondence_response(correspondence, _text_parser=text_parser):
         ret_val = DidNotRespondEnum.IgnoreRecipient
 
   if not ret_val:
-    if not (
-        (correspondence.from_last_name and len(correspondence.from_last_name) > 1) and
-          constants.GEOGRAPHIC_REGION in correspondence.data
-    ):
+    try:
+      if not len(correspondence.from_first_name) > 1 and len(correspondence.from_last_name) > 1:
+        ret_val = DidNotRespondEnum.MissingInformation
+    except TypeError:
+      # either of the names or None
       ret_val = DidNotRespondEnum.MissingInformation
-    else:
 
-      time_range = timezone.now() - relativedelta(months=3)
-      existing_correspondence = (
-        Correspondence
-        .objects
-        .filter(from_last_name=correspondence.from_last_name)
-        .filter(changed_date__gte=time_range)
-        .filter(data__contains={constants.GEOGRAPHIC_REGION: correspondence.data[constants.GEOGRAPHIC_REGION]})
-        .exclude(id=correspondence.pk)
-        .count()
+  if not ret_val:
+    if not constants.GEOGRAPHIC_REGION in correspondence.data:
+      ret_val = DidNotRespondEnum.MissingInformation
+
+  if not ret_val:
+    time_range = timezone.now() - relativedelta(months=3)
+    existing_correspondence = (
+      Correspondence
+      .objects
+      .filter(
+        Q(from_first_name__iexact=correspondence.from_first_name, from_last_name__iexact=correspondence.from_last_name)
+        |
+        Q(from_last_name__iexact=correspondence.from_last_name, changed_date__gte=time_range)
       )
+      .filter(data__contains={constants.GEOGRAPHIC_REGION: correspondence.data[constants.GEOGRAPHIC_REGION]})
+      .exclude(id=correspondence.pk)
+      .count()
+    )
 
-      if existing_correspondence:
-        ret_val = DidNotRespondEnum.AlreadyMessaged
+    if existing_correspondence:
+      ret_val = DidNotRespondEnum.AlreadyMessaged
 
   return ret_val
