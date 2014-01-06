@@ -1,7 +1,7 @@
 import textwrap
 
 
-BUYER_PURCHASE_SUBJECT_TEMPLATE = "Nextlanding: Your Apartment Search Results"
+BUYER_PURCHASE_SUBJECT_TEMPLATE = "Nextlanding Search Complete"
 BUYER_PURCHASE_BODY_TEMPLATE = textwrap.dedent("""\
     Thank you for starting your search on Nextlanding!
 

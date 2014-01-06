@@ -12,5 +12,5 @@ def notify_search_purchase_task(search_id):
   return search_service.notify_search_purchase(search)
 
 @task
-def send_client_results_email(search):
-  return search_service.send_client_results_email(search)
+def send_client_results_email(search_id):
+  return search_service.send_client_results_email(search_id)

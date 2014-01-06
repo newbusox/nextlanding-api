@@ -47,8 +47,8 @@ def update_geo_boundary_points(search, geo_boundary_points):
   save_or_update(search)
 
 
-def send_client_results_email(search, _email_service=email_sender_async):
-  search_id = search.pk
+def send_client_results_email(search_id, _email_service=email_sender_async):
+  search = get_search(search_id)
 
   # send in 1 hour
   now = datetime.datetime.now()

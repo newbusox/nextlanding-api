@@ -21,5 +21,5 @@ def notify_search_purchase_task_callback(sender, **kwargs):
 @receiver(initiated_availability_request, sender=Search)
 def requested_availability_callback(sender, **kwargs):
   search_tasks.send_client_results_email.delay(
-    kwargs['instance']
+    kwargs['instance'].id
   )
