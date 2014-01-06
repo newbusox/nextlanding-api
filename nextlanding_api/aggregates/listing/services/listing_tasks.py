@@ -18,22 +18,22 @@ def create_listing_task(**listing_attrs):
     logger.debug("Finished listing creation: {0}".format(listing_attrs['url']))
     return ret_val
   except ListingBuilderError as e:
-    logger.warn(log_ex_with_message("Error creating listing", e))
+    logger.warn(log_ex_with_message(u"Error creating listing", e))
     raise Ignore()
   except IntegrityError as e:
-    logger.warn(log_ex_with_message("Listing already exists", e))
+    logger.warn(log_ex_with_message(u"Listing already exists", e))
     raise Ignore()
 
 
 @task
 def update_listing_task(**listing_attrs):
-  logger.debug("Received listing params for update: {0}".format(listing_attrs['url']))
+  logger.debug(u"Received listing params for update: {0}".format(listing_attrs['url']))
   try:
     ret_val = listing_service.update_listing(**listing_attrs).id
-    logger.debug("Finished listing update: {0}".format(listing_attrs['url']))
+    logger.debug(u"Finished listing update: {0}".format(listing_attrs['url']))
     return ret_val
   except Exception as e:
-    logger.warn(log_ex_with_message("Error updating listing", e))
+    logger.warn(log_ex_with_message(u"Error updating listing", e))
     raise Ignore()
 
 
