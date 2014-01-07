@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from nextlanding_api.apps.communication_associater.availability.email.services.availability_email_builder import \
   AvailabilityEmailBuilder
+
 from nextlanding_api.libs.communication_utils.services import email_sender_async
 
 logger = logging.getLogger(__name__)

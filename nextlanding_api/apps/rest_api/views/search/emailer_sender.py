@@ -1,3 +1,4 @@
+from nextlanding_api.aggregates.search.services import search_service
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from nextlanding_api.apps.domain.search.services import emailer_sender_service

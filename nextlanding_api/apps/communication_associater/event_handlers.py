@@ -1,5 +1,6 @@
 from django.dispatch import receiver
 from nextlanding_api.aggregates.search.models import Search
+from nextlanding_api.aggregates.search.services import search_tasks
 from nextlanding_api.aggregates.search.signals import initiated_availability_request
 from nextlanding_api.apps.communication_associater.availability.email.services import email_tasks
 

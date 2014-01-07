@@ -40,3 +40,7 @@ def send_search_email(emailer_sender_model, from_name, subject, body):
     save_or_update(emailer_sender_model)
 
   return emailer_sender_model
+
+def send_client_results_email(search):
+  search.notify_customer_about_results()
+  search_service.save_or_update(search)

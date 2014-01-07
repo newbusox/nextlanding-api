@@ -159,5 +159,3 @@ class Amenity(models.Model):
 
   class Meta:
     unique_together = ("search", "amenity_type")
-
-
