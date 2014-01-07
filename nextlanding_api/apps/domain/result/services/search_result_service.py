@@ -16,7 +16,7 @@ def get_results_from_search(search):
                           END
                           '''
     })
-    .order_by('has_availability', '-availability_last_response_date')
+    .order_by('-has_availability', '-availability_last_response_date')
   )
 
 
