@@ -14,7 +14,11 @@ logger = logging.getLogger(__name__)
 def associate_incoming_email_with_correspondence_task(email_id):
   email = Email.objects.get(pk=email_id)
 
-  correspondence = source_correspondence_service.construct_correspondence_from_email(email)
+  try:
+    correspondence = source_correspondence_service.construct_correspondence_from_email(email)
+  except Exception as e:
+    logger.warn(log_ex_with_message(u"Error constructing correspondence", e))
+    raise Ignore()
 
   to_address = parseaddr(correspondence.to)[1]
 
