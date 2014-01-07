@@ -16,7 +16,13 @@ availability_from_email_address_domain = settings.AVAILABILITY_FROM_EMAIL_ADDRES
 def associate_incoming_email_with_result_task(email_id):
   email = Email.objects.get(pk=email_id)
 
-  to_address = parseaddr(email.to)[1]
+  from_domain = email.from_address.split('@')[1]
+
+  if from_domain in settings.BODY_RESULT_IDENTIFIER_DOMAINS:
+    # in cases where we use a proxy, the 'to' address will not point to the correct availability_from_email_address_domain
+    to_address = parseaddr(email.to)[1]
+  else:
+    to_address = parseaddr(email.envelope['to'][0])[1]
 
   to_domain = to_address.split('@')[1]
 
