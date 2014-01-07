@@ -6,8 +6,6 @@ from nextlanding_api.aggregates.search import factories, constants
 from nextlanding_api.aggregates.search.models import Search
 from nextlanding_api.libs.communication_utils.services import email_sender_async
 from nextlanding_api.libs.geo_utils.services import geo_location_service
-from nextlanding_api.apps.communication_associater.results.email import constants
-from nextlanding_api.libs.python_utils.errors.exceptions import log_ex_with_message
 
 logger = logging.getLogger(__name__)
 
