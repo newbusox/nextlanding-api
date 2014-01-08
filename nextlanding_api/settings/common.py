@@ -3,11 +3,9 @@
 
 from datetime import timedelta
 from os import environ
+import os
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
-
-from djcelery import setup_loader
-
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
@@ -282,8 +280,6 @@ CELERY_IMPORTS = (
   'nextlanding_api.libs.communication_utils.services.email_tasks',
 )
 
-# See: http://celery.github.com/celery/django/
-setup_loader()
 ########## END CELERY CONFIGURATION
 
 
@@ -331,3 +327,7 @@ CORS_ALLOW_CREDENTIALS = True
 STRIPE_SECRET_KEY = environ.get('STRIPE_SECRET_KEY')
 SEARCH_PRICE = 35.00
 ########## END PAYMENT CONFIGURATION
+
+########### SCRAPING CONFIGURATION
+os.environ.setdefault("SCRAPY_SETTINGS_MODULE", "nextlanding_api.apps.web_scraper.settings")
+########## END SCRAPING CONFIGURATION

@@ -91,10 +91,10 @@ LOGGING['loggers'] = {
 
 ########## CELERY CONFIGURATION
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
-BROKER_TRANSPORT = 'django'
+BROKER_URL = 'django://'
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
-CELERY_RESULT_BACKEND = 'database'
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 ########## END CELERY CONFIGURATION
 
 ########## STORAGE CONFIGURATION
