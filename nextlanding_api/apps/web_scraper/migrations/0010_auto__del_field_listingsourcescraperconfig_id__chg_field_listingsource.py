@@ -6,6 +6,7 @@ from django.db import models
 
 
 class Migration(SchemaMigration):
+    depends_on = (("dynamic_scraper", "0001_initial"),)
 
     def forwards(self, orm):
         # Deleting field 'ListingSourceScraperConfig.id'
@@ -42,7 +43,7 @@ class Migration(SchemaMigration):
 
         # Adding field 'ListingSourceScraperConfig.id'
         db.add_column(u'web_scraper_listingsourcescraperconfig', u'id',
-                      self.gf('django.db.models.fields.AutoField')(default=0, primary_key=True),
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
                       keep_default=False)
 
 

@@ -6,6 +6,7 @@ from django.db import models
 
 
 class Migration(SchemaMigration):
+    depends_on = (("dynamic_scraper", "0001_initial"),)
 
     def forwards(self, orm):
         # Deleting field 'ListingSource.scraper_runtime'
