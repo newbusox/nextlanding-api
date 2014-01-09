@@ -8,7 +8,7 @@ well_formatted_pattern = re.compile(
   r'((?P<address_number>[\d\-]+)\s+)?'
   r'(?P<street>([\w\s\-]+(?=\sin))|([\w\s\-]+(?=,)))'
   r'(?: in (?P<neighborhood>[\w\s\-]+))?,\s*'
-  r'(?P<city>[\w\s\-]+),\s*'
+  r'(?P<city>[\w\s\-\.]+),\s*'
   r'(?P<state>\w{2})\s+'
   r'(?P<zip_code>\d{5})'
 )

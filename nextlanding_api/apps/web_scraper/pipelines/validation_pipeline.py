@@ -13,7 +13,7 @@ class ValidationPipeline(object):
     mandatory_elems = spider.scraper.get_mandatory_scrape_elems()
 
     for elem in mandatory_elems:
-      if not elem.scraped_obj_attr.name in item or \
+      if (not elem.scraped_obj_attr.name in item and not 'DOUBLE' in item['url']) or \
           (elem.scraped_obj_attr.name in item and not item[elem.scraped_obj_attr.name]):
         spider.log("Mandatory elem " + elem.scraped_obj_attr.name + " missing!", log.WARNING)
         spider.crawler.stats.inc_value(
