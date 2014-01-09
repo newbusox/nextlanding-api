@@ -5,6 +5,7 @@ from nextlanding_api.apps.domain.constants import POTENTIAL_SEARCH_SESSION_ID
 from nextlanding_api.apps.domain.search.models import PotentialSearch
 from nextlanding_api.apps.domain.search.services import potential_search_service
 from nextlanding_api.apps.rest_api.serializers.search.potential_search import PotentialSearchSerializer
+from nextlanding_api.libs.payment_utils.exceptions import ChargeError, InvalidCardError
 
 
 class PotentialSearchViewSet(viewsets.ReadOnlyModelViewSet):
@@ -74,8 +75,13 @@ class PotentialSearchViewSet(viewsets.ReadOnlyModelViewSet):
       raise Http404
 
     #this will call save internally
-    potential_search_service.complete_potential_search(potential_search, token)
+    try:
+      potential_search_service.complete_potential_search(potential_search, token)
+    except InvalidCardError:
+      ret_val = Response("Invalid payment.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    else:
+      serializer = PotentialSearchSerializer(instance=potential_search)
 
-    serializer = PotentialSearchSerializer(instance=potential_search)
+      ret_val = Response(serializer.data)
 
-    return Response(serializer.data)
+    return ret_val
