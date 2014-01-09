@@ -1,6 +1,6 @@
 from celery.task import task
 from nextlanding_api.aggregates.search.services import search_service
-from nextlanding_api.apps.domain.search.services import potential_search_service, emailer_sender_service
+from nextlanding_api.apps.domain.search.services import emailer_sender_service
 
 
 @task

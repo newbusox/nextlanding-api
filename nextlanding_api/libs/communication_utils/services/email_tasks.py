@@ -1,7 +1,9 @@
 import logging
 from smtplib import SMTPException
+from celery.exceptions import Ignore
 from celery.task import task
 from django.contrib.contenttypes.models import ContentType
+from nextlanding_api.libs.communication_utils.exceptions import InvalidOutboundEmailError
 from nextlanding_api.libs.communication_utils.services import email_service
 from nextlanding_api.libs.python_utils.errors.exceptions import log_ex_with_message
 
@@ -19,6 +21,8 @@ def send_email_task(from_address, from_name, to_address, subject, plain_text_bod
 
   try:
     email_service.send_email(from_address, from_name, to_address, subject, plain_text_body, associated_model)
+  except InvalidOutboundEmailError:
+    raise Ignore()
   except SMTPException as e:
     logger.warn(log_ex_with_message("SMTP Error sending email", e))
     raise send_email_task.retry(exc=e)
@@ -39,6 +43,8 @@ def reply_to_email_task(email_id, plain_text_body, associated_model_content_type
 
   try:
     email_service.reply_to_email(email, plain_text_body, associated_model, **kwargs)
+  except InvalidOutboundEmailError:
+    raise Ignore()
   except SMTPException as e:
     logger.warn(log_ex_with_message("SMTP Error replying to email", e))
     raise reply_to_email_task.retry(exc=e)
