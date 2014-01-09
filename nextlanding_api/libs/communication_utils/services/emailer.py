@@ -5,6 +5,7 @@ from smtplib import SMTPException
 import sendgrid
 from django.conf import settings
 from sendgrid.exceptions import SGServiceException
+from nextlanding_api.libs.communication_utils.exceptions import InvalidOutboundEmailError
 from nextlanding_api.libs.python_utils.errors.exceptions import re_throw_ex
 
 emailer = sendgrid.Sendgrid(settings.SENDGRID_USERNAME, settings.SENDGRID_PASSWORD, secure=True)
@@ -35,4 +36,9 @@ def send_email(from_address, from_name, to_address, subject, text, html, headers
         emailer.smtp.send(msg)
     except SGServiceException as e:
       throw_ex = re_throw_ex(SMTPException, "Error sending email", e)
+
+      if e.message:
+        if "find the recipient domain" in e.message.lower():
+          throw_ex = re_throw_ex(InvalidOutboundEmailError, "Invalid email", e)
+
       raise throw_ex[0], throw_ex[1], throw_ex[2]
