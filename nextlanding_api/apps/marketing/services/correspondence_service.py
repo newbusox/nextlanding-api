@@ -132,6 +132,10 @@ def _validate_correspondence_response(correspondence, _text_parser=text_parser):
         ret_val = DidNotRespondEnum.IgnoreRecipient
 
   if not ret_val:
+      if not source_correspondence_service.is_valid_recipient(correspondence):
+        ret_val = DidNotRespondEnum.IgnoreRecipient
+
+  if not ret_val:
     try:
       if not len(correspondence.from_first_name) > 1 and len(correspondence.from_last_name) > 1:
         ret_val = DidNotRespondEnum.MissingInformation
