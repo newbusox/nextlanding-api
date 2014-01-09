@@ -1,11 +1,11 @@
 from email.utils import parseaddr
 import datetime
 from dateutil.relativedelta import relativedelta
+from django.conf import settings
 from django.db.models import Q
 
 from django.template import Context, Template
 from django.utils import timezone
-import os
 import pytz
 
 from nextlanding_api.libs.communication_utils.services import email_sender_async, email_service
@@ -82,7 +82,7 @@ def send_response_if_applicable(correspondence):
     # http://stackoverflow.com/questions/237235/how-to-disable-html-encoding-when-using-context-in-django
     context = Context(variables, autoescape=False)
 
-    body_template = Template(os.environ[SEARCH_BODY_REPLY_TEMPLATE])
+    body_template = Template(settings.SEARCH_BODY_REPLY_TEMPLATE)
     body = body_template.render(context)
 
     correspondence.responded = True
