@@ -37,3 +37,11 @@ def construct_correspondence_from_email(email):
     correspondence.to = headers['Delivered-To']
 
   return correspondence
+
+def is_valid_recipient(correspondence):
+  ret_val = True
+
+  if len(correspondence.from_first_name) > 1 and 'craigslist' in correspondence.from_first_name.lower():
+    return False
+
+  return ret_val
