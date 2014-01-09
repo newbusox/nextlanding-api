@@ -327,7 +327,3 @@ CORS_ALLOW_CREDENTIALS = True
 STRIPE_SECRET_KEY = environ.get('STRIPE_SECRET_KEY')
 SEARCH_PRICE = 35.00
 ########## END PAYMENT CONFIGURATION
-
-########### SCRAPING CONFIGURATION
-os.environ.setdefault("SCRAPY_SETTINGS_MODULE", "nextlanding_api.apps.web_scraper.settings")
-########## END SCRAPING CONFIGURATION
