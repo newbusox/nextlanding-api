@@ -47,7 +47,7 @@ class AvailabilityEmailBuilder(object):
     to_address = self._get_to_email_address()
 
     variables['address'] = self._get_address()
-    variables['bedroom_count'] = self._get_bedroom_count()
+    variables['bedroom'] = self._get_bedroom_count()
     variables['price'] = self._get_price()
 
     variables['signature'] = self._get_signature()
