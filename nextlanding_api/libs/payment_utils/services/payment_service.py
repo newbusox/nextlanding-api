@@ -19,9 +19,8 @@ def charge_payment(amount_in_dollars, token, description):
   except stripe.CardError as e:
     throw_ex = re_throw_ex(ChargeError, "Error processing payment", e)
 
-    if e.message:
-      if "security code is incorrect" in e.message.lower():
-        throw_ex = re_throw_ex(InvalidCardError, "Invalid card", e)
+    if "security code is incorrect" in str(e).lower():
+      throw_ex = re_throw_ex(InvalidCardError, "Invalid card", e)
 
     raise throw_ex[0], throw_ex[1], throw_ex[2]
 
