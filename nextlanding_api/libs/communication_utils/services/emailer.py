@@ -37,8 +37,7 @@ def send_email(from_address, from_name, to_address, subject, text, html, headers
     except SGServiceException as e:
       throw_ex = re_throw_ex(SMTPException, "Error sending email", e)
 
-      if e.message:
-        if "find the recipient domain" in e.message.lower():
-          throw_ex = re_throw_ex(InvalidOutboundEmailError, "Invalid email", e)
+      if "find the recipient domain" in str(e).lower():
+        throw_ex = re_throw_ex(InvalidOutboundEmailError, "Invalid email", e)
 
       raise throw_ex[0], throw_ex[1], throw_ex[2]
