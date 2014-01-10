@@ -16,12 +16,7 @@ class Migration(SchemaMigration):
         db.alter_column(u'communication_utils_email', 'SPF', self.gf('django.db.models.fields.TextField')(null=True))
 
     def backwards(self, orm):
-
-        # Changing field 'Email.dkim'
-        db.alter_column(u'communication_utils_email', 'dkim', self.gf('jsonfield.fields.JSONField')(null=True))
-
-        # Changing field 'Email.SPF'
-        db.alter_column(u'communication_utils_email', 'SPF', self.gf('jsonfield.fields.JSONField')(null=True))
+      pass
 
     models = {
         u'communication_utils.email': {

@@ -1,7 +1,7 @@
 from email.utils import parseaddr
 import logging
 from celery.exceptions import Ignore
-from celery.task import task
+from celery import shared_task
 from nextlanding_api.apps.marketing.models import MarketingEmailAccount
 from nextlanding_api.apps.marketing.services import correspondence_service, source_correspondence_service
 from nextlanding_api.libs.communication_utils.models import Email
@@ -10,7 +10,7 @@ from nextlanding_api.libs.python_utils.errors.exceptions import log_ex_with_mess
 logger = logging.getLogger(__name__)
 
 
-@task
+@shared_task
 def associate_incoming_email_with_correspondence_task(email_id):
   email = Email.objects.get(pk=email_id)
 

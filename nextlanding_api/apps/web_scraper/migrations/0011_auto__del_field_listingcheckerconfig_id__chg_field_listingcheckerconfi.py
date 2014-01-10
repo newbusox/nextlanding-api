@@ -7,6 +7,8 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (("dynamic_scraper", "0001_initial"),)
+
     def forwards(self, orm):
         # Deleting field 'ListingCheckerConfig.id'
         db.delete_column(u'web_scraper_listingcheckerconfig', u'id')
@@ -33,7 +35,7 @@ class Migration(SchemaMigration):
 
         # Adding field 'ListingCheckerConfig.id'
         db.add_column(u'web_scraper_listingcheckerconfig', u'id',
-                      self.gf('django.db.models.fields.AutoField')(default=0, primary_key=True),
+                      self.gf('django.db.models.fields.IntegerField')(default=0),
                       keep_default=False)
 
 

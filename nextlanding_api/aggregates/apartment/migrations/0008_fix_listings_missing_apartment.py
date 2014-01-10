@@ -10,6 +10,7 @@ from nextlanding_api.aggregates.apartment.signals import adopted_listing
 
 
 class Migration(DataMigration):
+    depends_on = (("listing", "0019_auto__del_field_listing_is_dead__add_field_listing_deleted_reason"),)
 
     def forwards(self, orm):
       settings.CELERY_ALWAYS_EAGER = True

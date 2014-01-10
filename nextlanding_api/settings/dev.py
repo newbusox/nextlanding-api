@@ -129,10 +129,11 @@ LOGGING['loggers'] = {
 ########## END LOGGING CONFIGURATION
 
 ########## CELERY CONFIGURATION
-# See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
-BROKER_TRANSPORT = 'django'
+# See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
+BROKER_URL = 'django://'
 
-CELERY_RESULT_BACKEND = 'database'
+# See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 ########## END CELERY CONFIGURATION
 
 

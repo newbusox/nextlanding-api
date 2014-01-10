@@ -3,11 +3,9 @@
 
 from datetime import timedelta
 from os import environ
+import os
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
-
-from djcelery import setup_loader
-
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
@@ -264,8 +262,9 @@ CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
 
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
-# See: http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
-CELERY_CHORD_PROPAGATES = True
+# See: http://docs.celeryproject.org/en/latest/configuration.html#celery-accept-content
+# 3.2 is going to remove pickle http://docs.celeryproject.org/en/latest/whatsnew-3.1.html#last-version-to-enable-pickle-by-default
+CELERY_TASK_SERIALIZER = "json"
 
 CELERY_IMPORTS = (
   'nextlanding_api.aggregates.apartment.services.apartment_tasks',
@@ -282,8 +281,6 @@ CELERY_IMPORTS = (
   'nextlanding_api.libs.communication_utils.services.email_tasks',
 )
 
-# See: http://celery.github.com/celery/django/
-setup_loader()
 ########## END CELERY CONFIGURATION
 
 
