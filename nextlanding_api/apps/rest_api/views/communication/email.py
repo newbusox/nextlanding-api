@@ -1,6 +1,7 @@
 import logging
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.http import HttpResponseForbidden, HttpResponse, HttpResponseServerError
 from rest_framework.views import APIView
@@ -30,7 +31,7 @@ class CommunicationEmailView(APIView):
           email = Email.construct_incoming_email(**email_data)
           email_service.create_incoming_mail(email)
 
-        except (EmailParseError, IntegrityError):
+        except (EmailParseError, IntegrityError, ValidationError):
           logger.info('ignoring invalid email')
         except Exception:
           logger.exception('error accepting email')
