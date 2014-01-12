@@ -103,6 +103,8 @@ def update_apartment_from_listing(listing_aggregate):
 def disable_apartment(apartment_aggregate):
   apartment_search_model = get_search_add_apartment_from_aggregate(apartment_aggregate.pk)
 
+  apartment_search_model.is_available = False
+
   apartment_search_model.listing_urls = []
 
   save_or_update(apartment_search_model)
