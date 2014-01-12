@@ -1,5 +1,6 @@
 import os
 import sys
+from django.utils import encoding
 
 
 def re_throw_ex(ex_type, message, inner_ex):
@@ -11,10 +12,6 @@ def re_throw_ex(ex_type, message, inner_ex):
 
 
 def log_ex_with_message(message, inner_ex):
-  try:
-    print repr(inner_ex)
-    inner_ex = unicode(str(inner_ex), 'utf8')
-  except TypeError:
-    pass
-
-  return u"{0}{sep}Inner Exception: {1}{sep}\t{2}".format(message, type(inner_ex), inner_ex, sep=os.linesep)
+  return u"{0}{sep}Inner Exception: {1}{sep}\t{2}".format(
+    message, type(inner_ex), encoding.smart_unicode(inner_ex), sep=os.linesep
+  )
