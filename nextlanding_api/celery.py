@@ -1,12 +1,9 @@
 from __future__ import absolute_import
 import os
-from kombu.transport.django.models import Message
 
 from scrapy.utils.project import get_project_settings
 from celery import Celery
 from django.conf import settings
-from django.contrib import admin
-
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nextlanding_api.settings.dev')
 os.environ.setdefault("SCRAPY_SETTINGS_MODULE", "nextlanding_api.apps.web_scraper.settings")
@@ -20,7 +17,15 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 # web_scraper_service -> ProcessBasedUtils.
 get_project_settings()
 
-class CeleryMessageAdmin(admin.ModelAdmin):
+
+# import must come here - after djagno settings is imported.
+# this is for django stuff
+from django.contrib import admin
+from djcelery.models import TaskMeta
+
+
+class CeleryTaskMetaAdmin(admin.ModelAdmin):
   list_display = ['id', 'visible']
 
-admin.site.register(Message,CeleryMessageAdmin)
+
+admin.site.register(TaskMeta, CeleryTaskMetaAdmin)

@@ -1,7 +1,7 @@
 import logging
-import datetime
 from dateutil.relativedelta import relativedelta
 from django.conf import settings
+from django.utils import timezone
 from nextlanding_api.aggregates.search import factories, constants
 from nextlanding_api.aggregates.search.models import Search
 from nextlanding_api.libs.communication_utils.services import email_sender_async
@@ -49,7 +49,7 @@ def send_client_results_email(search_id, _email_service=email_sender_async):
   search = get_search(search_id)
 
   # send in 1 hour
-  now = datetime.datetime.now()
+  now = timezone.now()
   email_schedule_date = now + relativedelta(minutes=60)
 
   _email_service.send_email(
