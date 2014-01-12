@@ -21,9 +21,11 @@ get_project_settings()
 # import must come here - after djagno settings is imported.
 # this is for django stuff
 from django.contrib import admin
-from kombu.transport.django.models import Message
+from djcelery.models import TaskMeta
 
-class CeleryMessageAdmin(admin.ModelAdmin):
+
+class CeleryTaskMetaAdmin(admin.ModelAdmin):
   list_display = ['id', 'visible']
 
-admin.site.register(Message,CeleryMessageAdmin)
+
+admin.site.register(TaskMeta, CeleryTaskMetaAdmin)
