@@ -77,16 +77,13 @@ LOGGING['loggers'] = {
     'level': 'WARNING',
     'propagate': False
   },
-  'celery': {
-    'level': APP_LOG_LEVEL,
-    'propagate': False
-  },
   'django.db.backends': {
     'level': APP_LOG_LEVEL,
   },
   'nextlanding_api.aggregates': app_logger,
   'nextlanding_api.apps': app_logger,
-  'nextlanding_api.libs': app_logger
+  'nextlanding_api.libs': app_logger,
+  'celery': app_logger,
 }
 ########## END LOGGING CONFIGURATION
 
