@@ -3,7 +3,7 @@ from celery.exceptions import Ignore
 from celery import shared_task
 from django.db import IntegrityError
 from nextlanding_api.aggregates.apartment.services import apartment_service
-from nextlanding_api.aggregates.listing.exceptions import ListingBuilderError
+from nextlanding_api.aggregates.listing.exceptions import ListingBuilderError, ListingPersistError
 from nextlanding_api.aggregates.listing.services import listing_service
 from nextlanding_api.libs.python_utils.errors.exceptions import log_ex_with_message
 
@@ -17,7 +17,7 @@ def create_listing_task(**listing_attrs):
     ret_val = listing_service.create_listing(**listing_attrs).id
     logger.debug("Finished listing creation: {0}".format(listing_attrs['url']))
     return ret_val
-  except ListingBuilderError as e:
+  except (ListingBuilderError, ListingPersistError) as e:
     logger.warn(log_ex_with_message(u"Error creating listing", e))
     raise Ignore()
   except IntegrityError as e:

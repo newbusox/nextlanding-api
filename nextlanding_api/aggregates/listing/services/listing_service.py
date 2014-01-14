@@ -1,6 +1,9 @@
+from decimal import InvalidOperation
 from nextlanding_api.aggregates.listing.domain.listing_builder import ListingBuilder
+from nextlanding_api.aggregates.listing.exceptions import ListingPersistError
 from nextlanding_api.aggregates.listing.models import Listing
 from nextlanding_api.libs.datetime_utils.parsers import datetime_parser
+from nextlanding_api.libs.python_utils.errors.exceptions import re_throw_ex
 
 
 def get_listing(pk):
@@ -14,7 +17,14 @@ def get_listing_by_url(url):
 def create_listing(**listing_attrs):
   builder = ListingBuilder(**listing_attrs)
   listing = builder.build_listing()
-  save_or_update(listing)
+  try:
+    save_or_update(listing)
+  except InvalidOperation as e:
+    throw_ex = re_throw_ex(
+      ListingPersistError, u"Error with decimal: {0}".format(listing.url), e
+    )
+    raise throw_ex[0], throw_ex[1], throw_ex[2]
+
   return listing
 
 
@@ -37,6 +47,7 @@ def kill_listing(listing):
   save_or_update(listing)
 
   return listing
+
 
 def save_or_update(listing):
   listing.save(internal=True)
