@@ -33,6 +33,8 @@ def reply_to_email_task(self, email_id, plain_text_body, associated_model_conten
                         associated_model_content_type_model,
                         associated_model_id, **kwargs):
 
+  print ('reply email run %s' % self.request.id)
+
   associated_model_type = ContentType.objects.get(
     app_label=associated_model_content_type_app, model=associated_model_content_type_model
   )
