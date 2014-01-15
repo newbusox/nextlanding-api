@@ -39,7 +39,7 @@ def reply_to_email_task(self, email_id, plain_text_body, associated_model_conten
 
   email = email_service.get_email(email_id)
 
-  print ('reply email run %s email from: subject %s' % self.request.id, email.from_address)
+  print ('reply email run %s email from: subject %s' % (self.request.id, email.from_address))
 
   associated_model = associated_model_type.get_object_for_this_type(pk=associated_model_id)
 
