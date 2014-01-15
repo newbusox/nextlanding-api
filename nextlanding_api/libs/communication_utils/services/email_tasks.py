@@ -44,10 +44,9 @@ def reply_to_email_task(self, email_id, plain_text_body, associated_model_conten
   try:
     email_service.reply_to_email(email, plain_text_body, associated_model, **kwargs)
     print ('reply email run %s email from: subject %s' % (self.request.id, email.from_address))
-  except InvalidOutboundEmailError:
-    print ('error email run %s email from: subject %s' % (self.request.id, email.from_address))
+  except InvalidOutboundEmailError as e:
+    logger.warn(log_ex_with_message("Invalid outbound", e))
     raise Ignore()
   except SMTPException as e:
-    print ('error email run %s email from: subject %s' % (self.request.id, email.from_address))
     logger.warn(log_ex_with_message("SMTP Error replying to email", e))
     raise self.retry(exc=e)
