@@ -138,7 +138,7 @@ def _validate_correspondence_response(correspondence, _text_parser=text_parser):
 
   if not ret_val:
     try:
-      if not len(correspondence.from_first_name) > 1 and len(correspondence.from_last_name) > 1:
+      if not len(correspondence.from_first_name) > 1 or not len(correspondence.from_last_name) > 1:
         ret_val = DidNotRespondEnum.MissingInformation
     except TypeError:
       # either of the names or None
