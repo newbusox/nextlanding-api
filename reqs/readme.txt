@@ -15,3 +15,7 @@ This is used for geo spatial operations.
   "On Debian/Ubuntu, you are advised to install the following packages which will install, directly or by dependency, the required geospatial libraries:
 
    $ sudo apt-get install binutils libproj-dev gdal-bin"
+
+pyscopg:
+  This is in the common.txt becuase one of the packages, django_hstore, depends on postgres. Even if you plan to use
+  sqlite for dev purposes, you'll need pscopg installed.
