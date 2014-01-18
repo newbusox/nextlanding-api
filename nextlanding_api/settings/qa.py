@@ -114,7 +114,7 @@ BROKER_POOL_LIMIT = None
 
 # Do not scale up to 4 processes (default in heroku) but limit it to two. This will end up using less connections to
 # redis
-CELERYD_CONCURRENCY = 2
+CELERYD_CONCURRENCY = 1
 ########## END CELERY CONFIGURATION
 
 ########## STORAGE CONFIGURATION
