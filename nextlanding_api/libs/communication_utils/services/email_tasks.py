@@ -44,7 +44,8 @@ def reply_to_email_task(self, email_id, plain_text_body, associated_model_conten
 
   try:
     email_service.reply_to_email(email, plain_text_body, associated_model, **kwargs)
-    print (u'reply email run %s email from: subject %s' % encoding.smart_unicode((self.request.id, email.from_address),
+    print (u'reply email run email from: subject %s' % encoding.smart_unicode((self.request.id,
+                                                                                   email.from_address),
                                                                                  errors='ignore'))
   except InvalidOutboundEmailError as e:
     logger.warn(log_ex_with_message("Invalid outbound", e))

@@ -35,5 +35,5 @@ def reply_to_email(email, plain_text_body, associated_model, eta=None, **kwargs)
     eta=eta
   )
 
-  print (u'reply email send %s email from: %s' % encoding.smart_unicode((async_result.id,email.from_address),
+  print (u'reply email send email from: %s' % encoding.smart_unicode((async_result.id,email.from_address),
                                                                         errors='ignore'))
