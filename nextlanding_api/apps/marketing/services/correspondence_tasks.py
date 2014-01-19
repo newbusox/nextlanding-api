@@ -22,7 +22,10 @@ def associate_incoming_email_with_correspondence_task(email_id):
 
   to_address = parseaddr(correspondence.to)[1]
 
-  to_domain = to_address.split('@')[1]
+  try:
+    to_domain = to_address.split('@')[1]
+  except IndexError:
+    raise Ignore()
 
   if MarketingEmailAccount.objects.filter(email_addresses__icontains=to_domain):
 
