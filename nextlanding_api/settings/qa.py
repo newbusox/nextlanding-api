@@ -110,7 +110,6 @@ BROKER_TRANSPORT_OPTIONS = {'fanout_prefix': True,'visibility_timeout':3600 * 48
 # http://stackoverflow.com/questions/12013220/celery-creating-a-new-connection-for-each-task
 # Our Redis plan only supports 10 connections and some are used on the front end.
 # The front end will have 4 gunicorn workers
-BROKER_POOL_LIMIT = None
 ########## END CELERY CONFIGURATION
 
 ########## STORAGE CONFIGURATION

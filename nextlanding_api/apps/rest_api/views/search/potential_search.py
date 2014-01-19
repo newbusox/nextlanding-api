@@ -77,7 +77,7 @@ class PotentialSearchViewSet(viewsets.ReadOnlyModelViewSet):
     #this will call save internally
     try:
       potential_search_service.complete_potential_search(potential_search, token)
-    except InvalidCardError:
+    except (ChargeError, InvalidCardError) as e:
       ret_val = Response("Invalid payment.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     else:
       serializer = PotentialSearchSerializer(instance=potential_search)
