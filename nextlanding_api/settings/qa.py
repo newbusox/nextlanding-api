@@ -110,11 +110,6 @@ BROKER_TRANSPORT_OPTIONS = {'fanout_prefix': True,'visibility_timeout':3600 * 48
 # http://stackoverflow.com/questions/12013220/celery-creating-a-new-connection-for-each-task
 # Our Redis plan only supports 10 connections and some are used on the front end.
 # The front end will have 4 gunicorn workers
-BROKER_POOL_LIMIT = None
-
-# Do not scale up to 4 processes (default in heroku) but limit it to two. This will end up using less connections to
-# redis
-CELERYD_CONCURRENCY = 1
 ########## END CELERY CONFIGURATION
 
 ########## STORAGE CONFIGURATION
