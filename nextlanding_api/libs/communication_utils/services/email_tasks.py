@@ -3,6 +3,7 @@ from smtplib import SMTPException
 from celery.exceptions import Ignore
 from celery import shared_task
 from django.contrib.contenttypes.models import ContentType
+from django.utils import encoding
 from nextlanding_api.libs.communication_utils.exceptions import InvalidOutboundEmailError
 from nextlanding_api.libs.communication_utils.services import email_service
 from nextlanding_api.libs.python_utils.errors.exceptions import log_ex_with_message
@@ -43,7 +44,8 @@ def reply_to_email_task(self, email_id, plain_text_body, associated_model_conten
 
   try:
     email_service.reply_to_email(email, plain_text_body, associated_model, **kwargs)
-    print (u'reply email run %s email from: subject %s' % (self.request.id, email.from_address))
+    print (u'reply email run %s email from: subject %s' % encoding.smart_unicode((self.request.id, email.from_address),
+                                                                                 errors='ignore'))
   except InvalidOutboundEmailError as e:
     logger.warn(log_ex_with_message("Invalid outbound", e))
     raise Ignore()
