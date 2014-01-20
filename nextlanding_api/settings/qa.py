@@ -102,7 +102,7 @@ CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 # This causes problems with ETA/countdown/retry tasks where the time to execute exceeds the visibility timeout; in
 # fact if that happens it will be executed again, and again in a loop.
 # 3600 (1 hour) * 48 hours
-BROKER_TRANSPORT_OPTIONS = {'fanout_prefix': True,'visibility_timeout':3600 * 48}
+BROKER_TRANSPORT_OPTIONS = {'fanout_prefix': True, 'visibility_timeout': CELERY_LONGEST_RUNNING_TASK_SECONDS}
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-redis-max-connections
 # http://docs.celeryproject.org/en/latest/configuration.html#broker-pool-limit

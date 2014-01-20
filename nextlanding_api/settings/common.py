@@ -257,8 +257,9 @@ LOGGING = {
 
 
 ########## CELERY CONFIGURATION
+CELERY_LONGEST_RUNNING_TASK_SECONDS = 60 * 60 * 48 #seconds * minutes * hours = 2 days
 # See: http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
-CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
+CELERY_TASK_RESULT_EXPIRES = timedelta(seconds=CELERY_LONGEST_RUNNING_TASK_SECONDS)
 
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
