@@ -89,27 +89,11 @@ LOGGING['loggers'] = {
 
 ########## CELERY CONFIGURATION
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
-celery_redis_url = os.environ.get('REDISCLOUD_URL')
-BROKER_URL = celery_redis_url
+celery_rabbit_url = os.environ.get('RABBITMQ_BIGWIG_URL')
+BROKER_URL = celery_rabbit_url
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
-
-# See: http://docs.celeryproject.org/en/latest/getting-started/brokers/redis.html#caveats
-# You have to set a transport option to prefix the messages so that they will only be received by the active virtual host:
-
-# If a task is not acknowledged within the Visibility Timeout the task will be redelivered to another worker and executed.
-# This causes problems with ETA/countdown/retry tasks where the time to execute exceeds the visibility timeout; in
-# fact if that happens it will be executed again, and again in a loop.
-# 3600 (1 hour) * 48 hours
-BROKER_TRANSPORT_OPTIONS = {'fanout_prefix': True, 'visibility_timeout': CELERY_LONGEST_RUNNING_TASK_SECONDS}
-
-# See: http://docs.celeryproject.org/en/latest/configuration.html#celery-redis-max-connections
-# http://docs.celeryproject.org/en/latest/configuration.html#broker-pool-limit
-# http://stackoverflow.com/questions/16391428/heroku-celery-exceeding-connection-limit
-# http://stackoverflow.com/questions/12013220/celery-creating-a-new-connection-for-each-task
-# Our Redis plan only supports 10 connections and some are used on the front end.
-# The front end will have 4 gunicorn workers
 ########## END CELERY CONFIGURATION
 
 ########## STORAGE CONFIGURATION
