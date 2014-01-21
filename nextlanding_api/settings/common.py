@@ -282,6 +282,8 @@ CELERY_IMPORTS = (
   'nextlanding_api.libs.communication_utils.services.email_tasks',
 )
 
+# See: http://docs.celeryproject.org/en/master/configuration.html#celery-acks-late
+CELERY_ACKS_LATE = True
 ########## END CELERY CONFIGURATION
 
 
