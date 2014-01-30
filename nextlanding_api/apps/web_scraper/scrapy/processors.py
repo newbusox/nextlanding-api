@@ -3,7 +3,7 @@ from dynamic_scraper.utils import processors
 
 #this is called from the admin. The listing spider defines this method as a processor and is invoked dynamically
 def pre_url_from_ref_object(text, loader_context):
-  base_url = loader_context['spider'].ref_object.listing_source.url
+  base_url = loader_context['spider'].scrape_url
 
   ret_val = urljoin(base_url, text[0])
 
