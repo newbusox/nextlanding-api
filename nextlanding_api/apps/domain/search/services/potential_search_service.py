@@ -10,8 +10,13 @@ from nextlanding_api.libs.payment_utils.services import payment_service
 def save_or_update(potential_search):
   geo_points = potential_search.search_attrs.get('geo_boundary_points')
 
-  if geo_points is not None and len(geo_points) < 1:
-    del potential_search.search_attrs['geo_boundary_points']
+  if geo_points is not None:
+    geo_points = {k: v for k, v in geo_points.items() if len(v) >= 3}
+
+    if len(geo_points) < 1:
+      del potential_search.search_attrs['geo_boundary_points']
+    else:
+      potential_search.search_attrs['geo_boundary_points'] = geo_points
 
   potential_search.save(internal=True)
 
