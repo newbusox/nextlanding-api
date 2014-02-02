@@ -31,7 +31,7 @@ class CommunicationEmailView(APIView):
           email = Email.construct_incoming_email(**email_data)
           email_service.create_incoming_mail(email)
 
-        except (EmailParseError, IntegrityError, ValidationError):
+        except (EmailParseError, IntegrityError, ValidationError, KeyError):
           logger.info('ignoring invalid email')
         except Exception:
           logger.exception('error accepting email')
