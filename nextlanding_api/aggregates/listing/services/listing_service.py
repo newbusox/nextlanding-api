@@ -1,4 +1,5 @@
 from decimal import InvalidOperation
+from django.db import DatabaseError
 from nextlanding_api.aggregates.listing.domain.listing_builder import ListingBuilder
 from nextlanding_api.aggregates.listing.exceptions import ListingPersistError
 from nextlanding_api.aggregates.listing.models import Listing
@@ -19,9 +20,9 @@ def create_listing(**listing_attrs):
   listing = builder.build_listing()
   try:
     save_or_update(listing)
-  except InvalidOperation as e:
+  except (InvalidOperation, DatabaseError) as e:
     throw_ex = re_throw_ex(
-      ListingPersistError, u"Error with decimal: {0}".format(listing.url), e
+      ListingPersistError, u"Error persisting listing: {0}".format(listing.url), e
     )
     raise throw_ex[0], throw_ex[1], throw_ex[2]
 
