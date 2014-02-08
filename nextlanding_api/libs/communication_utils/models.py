@@ -69,7 +69,7 @@ class Email(models.Model):
     try:
       ret_val.message_id = message_dict['message-id']
       ret_val.sent_date = _datetime_parser.get_datetime(message_dict['date'])
-    except KeyError:
+    except (KeyError, ValueError):
       raise EmailParseError()
 
     return ret_val
