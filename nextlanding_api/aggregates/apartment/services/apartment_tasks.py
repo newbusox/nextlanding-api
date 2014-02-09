@@ -22,7 +22,12 @@ def adopt_listing_task(self, listing_id):
 def update_availability_task(listing_id):
   listing = listing_service.get_listing(listing_id)
   apartment = listing.apartment
-  apartment_service.update_availability(apartment)
+
+  if apartment:
+    apartment_service.update_availability(apartment)
+  else:
+    # This could happen if a listing was created, then marked as deleted, before the aparment was actually created
+    logger.debug("Apartment didn't exist: {0}".format(listing))
 
 
 @shared_task
